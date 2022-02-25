@@ -1,0 +1,5 @@
+-Fondo como el de Dr. Mario o parecido (no botella)
+-Escenas (static images) -> GameScene, MainMenuScene, InstructionsScene, CreditsScene
+-Tiles (Alejandro)
+-Sprites (Alejandro)
+
