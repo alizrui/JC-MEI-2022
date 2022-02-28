@@ -5,16 +5,16 @@
 function Scene()
 {
 	// Load bottle texture
-	var bottleTexture = new Texture("imgs/botella_pequena.png");
+	var bottleTexture = new Texture("../img/botella.png");
 	
 	// Create bottle Image object
-	this.bottle = new StaticImage(160, 48, 192, 400, bottleTexture);
+	this.bottle = new StaticImage(0, 0, 160, 348, bottleTexture);
 	
 	// Loading texture to use in a TileMap
-	var tilesheet = new Texture("imgs/tiles.png");
+	var tilesheet = new Texture("../tiles/tiles16.png");
 	
 	// Create tilemap
-	this.map = new Tilemap(tilesheet, [16, 16], [2, 2], [176, 112], level01);
+	this.map = new Tilemap(tilesheet, [16, 16], [5,5], [16, 100], tiles_yoshi_16);
 
 	// Store current time
 	this.currentTime = 0
