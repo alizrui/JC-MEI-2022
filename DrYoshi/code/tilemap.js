@@ -69,16 +69,16 @@ Tilemap.prototype.draw = function () {
 			tileId = this.map.layers[0].data[pos];
 			
 			if(tileId == 21){
-				this.virusSprite1.x = tilePositions[tileId - 1][0];
-				this.virusSprite1.y = tilePositions[tileId - 1][1];
+				this.virusSprite1.x = this.basePos[0] + this.tileSize[0] * i
+				this.virusSprite1.y = this.basePos[1] + this.tileSize[1] * j
 				this.virusSprite1.draw();
 			} else if (tileId == 22){
-				this.virusSprite2.x = tilePositions[tileId - 1][0];
-				this.virusSprite2.y = tilePositions[tileId - 1][1];
+				this.virusSprite2.x = this.basePos[0] + this.tileSize[0] * i
+				this.virusSprite2.y = this.basePos[1] + this.tileSize[1] * j
 				this.virusSprite2.draw();
 			} else if (tileId == 23){
-				this.virusSprite3.x = tilePositions[tileId - 1][0];
-				this.virusSprite3.y = tilePositions[tileId - 1][1];
+				this.virusSprite3.x = this.basePos[0] + this.tileSize[0] * i
+				this.virusSprite3.y = this.basePos[1] + this.tileSize[1] * j
 				this.virusSprite3.draw();
 			}
 
