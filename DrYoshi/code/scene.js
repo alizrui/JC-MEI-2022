@@ -1,4 +1,5 @@
 
+const VIRUS_ANIMATION = 0;
 
 // Scene. Updates and draws a single scene of the game.
 
@@ -25,6 +26,9 @@ Scene.prototype.update = function(deltaTime)
 {
 	// Keep track of time
 	this.currentTime += deltaTime;
+
+	this.map.update(deltaTime)
+	// this.virusSprite1.update(deltaTime)
 }
 
 Scene.prototype.draw = function ()
