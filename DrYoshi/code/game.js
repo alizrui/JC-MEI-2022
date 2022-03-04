@@ -8,6 +8,7 @@ var scene = new Scene();
 var previousTimestamp;
 var keyboard = [];
 var interacted;
+var whichScene = 2;
 
 
 // Control keyboard events
@@ -49,9 +50,9 @@ function frameUpdate(timestamp)
 	var deltaTime = timestamp - previousTimestamp;
 	if(deltaTime > TIME_PER_FRAME)
 	{
-		scene.update(TIME_PER_FRAME);
+		scene.update(TIME_PER_FRAME, whichScene);
 		previousTimestamp += TIME_PER_FRAME
-		scene.draw();
+		scene.draw(whichScene);
 	}
 	window.requestAnimationFrame(frameUpdate)
 }

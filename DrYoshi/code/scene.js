@@ -12,10 +12,10 @@ function Scene()
 	var instrucciones = new Texture("../img/instrucciones.png");
 		
 	// Create objects
-	this.fjuego = new StaticImage(0, 0, 512, 480, fondo_juego);
-	this.mprincipal = new StaticImage(0, 0, 512, 480, menu_principal);
-	this.fcreditos = new StaticImage(0, 0, 512, 480, fondo_creditos);
-	this.instr = new StaticImage(0, 0, 512, 480, instrucciones);
+	this.imageJuego = new StaticImage(0, 0, 512, 480, fondo_juego);
+	this.imagePrincipal = new StaticImage(0, 0, 512, 480, menu_principal);
+	this.imageCreditos = new StaticImage(0, 0, 512, 480, fondo_creditos);
+	this.imageInstr = new StaticImage(0, 0, 512, 480, instrucciones);
 	
 	
 	// Loading texture to use in a TileMap
@@ -29,16 +29,18 @@ function Scene()
 }
 
 
-Scene.prototype.update = function(deltaTime)
+Scene.prototype.update = function(deltaTime, whichScene)
 {
 	// Keep track of time
 	this.currentTime += deltaTime;
 
-	this.map.update(deltaTime)
+	if (whichScene == 1){
+		this.map.update(deltaTime);
+	}
 	// this.virusSprite1.update(deltaTime)
 }
 
-Scene.prototype.draw = function () // meter argumento
+Scene.prototype.draw = function (whichScene) // meter argumento
 {
 	// Get canvas object, then its context
 	var canvas = document.getElementById("game-layer");
@@ -48,11 +50,27 @@ Scene.prototype.draw = function () // meter argumento
 	context.fillStyle = "rgb(224, 224, 240)";
 	context.fillRect(0, 0, canvas.width, canvas.height);
 	
-	// Draw scenes (if else)
-	this.fondo_juego.draw();
+	/* Draw Scenes -> whichScene is drawed
+		0: menu principal
+		1: juego
+		2: instrucciones 
+		3: créditos
 
-	// Draw tilemap
-	this.map.draw();
+	*/
+	if (whichScene == 0) { 
+		this.imagePrincipal.draw();
+	} else if (whichScene == 1) {
+		this.imageJuego.draw();
+		
+		// Draw tilemap
+		this.map.draw();
+	} else if (whichScene == 2) {
+		this.imageInstr.draw();
+	} else {
+		this.imageCreditos.draw();
+	}
+
+	
 }
 
 
