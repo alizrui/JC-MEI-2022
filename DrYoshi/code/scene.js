@@ -70,6 +70,7 @@ Scene.prototype.update = function (deltaTime, whichScene) {
 	}
 	else if (whichScene == 1) {
 		this.map.update(deltaTime);
+		this.textoSalir.update(deltaTime);
 		
 	} else if (whichScene > 1){
 		this.textoSalir.update(deltaTime);
@@ -83,7 +84,6 @@ Scene.prototype.draw = function (whichScene, whichButton) // meter argumento
 	var canvas = document.getElementById("game-layer");
 	var context = canvas.getContext("2d");
 
-	console.log("hola")
 	// Clear background
 	context.fillStyle = "rgb(224, 224, 240)";
 	context.fillRect(0, 0, canvas.width, canvas.height);
@@ -112,15 +112,25 @@ Scene.prototype.draw = function (whichScene, whichButton) // meter argumento
 		// Draw tilemap
 		this.map.draw();
 
+		//Draw sprite salir (quitar en futuro)
+		this.textoSalir.x = 50;
+		this.textoSalir.y = 150;
+		this.textoSalir.draw();
+
 	} else if (whichScene == 2) {
 		this.imageInstr.draw();
 
 		// Draw sprite salir
+
+		this.textoSalir.x = 100;
+		this.textoSalir.y = 355;
 		this.textoSalir.draw();
 	} else {
 		this.imageCreditos.draw();
 
 		// Draw sprite salir
+		this.textoSalir.x = 100;
+		this.textoSalir.y = 355;
 		this.textoSalir.draw();
 	}
 
