@@ -11,7 +11,6 @@ function StaticImage(x, y, width, height, texture)
 	this.texture = texture;
 }
 
-
 // Draw Image
 
 StaticImage.prototype.draw = function ()
