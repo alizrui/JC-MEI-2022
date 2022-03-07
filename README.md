@@ -11,10 +11,10 @@ Proyecto de la asignatura "Juegos por Computador" del MEI en la UPC.
         - [x] Dibujados
         - [x] Diferentes versiones ensambladas y mostradas
     - Pantallas
-        - [ ] Fondo pantalla juego (botella + things)
-        - [ ] Pantalla menú principal con botones y navegación
-        - [ ] Pantalla instrucciones
-        - [ ] Pantalla créditos
+        - [x] Fondo pantalla juego (botella + things)
+        - [x] Pantalla menú principal con botones y navegación
+        - [x] Pantalla instrucciones
+        - [x] Pantalla créditos
 
     "El lliurament ha de contenir:
 
