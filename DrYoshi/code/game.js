@@ -52,6 +52,7 @@ function frameUpdate(timestamp) {
 	var deltaTime = timestamp - previousTimestamp;
 	if (deltaTime > TIME_PER_FRAME) {
 
+		// mantener esto aquí ??
 		if (keyboard[40]) {
 			keyboard[40] = false; 
 			if (whichScene == 0) {
@@ -78,8 +79,6 @@ function frameUpdate(timestamp) {
 			}
 		}
 	
-
-
 		scene.update(TIME_PER_FRAME, whichScene);
 		previousTimestamp += TIME_PER_FRAME
 		scene.draw(whichScene, whichButton);

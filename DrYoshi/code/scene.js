@@ -15,6 +15,7 @@ function Scene() {
 	var creditos = new Texture("../sprites/sprite_creditos.png");
 	var jugar = new Texture("../sprites/sprite_jugar.png");
 	var instr = new Texture("../sprites/sprite_instr.png");
+	var instr_anim = new Texture("../sprites/animacion_creditos.png");
 
 	// Create objects
 	this.imageJuego = new StaticImage(0, 0, 512, 480, fondo_juego);
@@ -27,6 +28,8 @@ function Scene() {
 	this.textoCreditos = new Sprite(187, 374, 160, 41, 1, creditos);
 	this.textoJugar = new Sprite(188, 253, 125, 51, 1, jugar);
 	this.textoInstr = new Sprite(189, 317, 221, 36, 1, instr);
+	this.animacionInstr = new Sprite(350,175, 16,64, 1, instr_anim);
+	
 	
 	this.textoSalir.addAnimation();
 	this.textoSalir.addKeyframe(0, [0, 0, 73, 21]);
@@ -47,6 +50,12 @@ function Scene() {
 	this.textoInstr.addKeyframe(0, [0, 0, 221, 36]);
 	this.textoInstr.addKeyframe(0, [0, 36, 221, 36]);
 	this.textoInstr.setAnimation(0);
+
+	this.animacionInstr.addAnimation();
+	this.animacionInstr.addKeyframe(0, [0, 0,  16, 64]);
+	this.animacionInstr.addKeyframe(0, [0, 64,  16, 64]);
+	this.animacionInstr.setAnimation(0);
+
 
 	// Loading texture to use in a TileMap
 	var tilesheet = new Texture("../tiles/tiles16.png");
@@ -72,7 +81,10 @@ Scene.prototype.update = function (deltaTime, whichScene) {
 		this.map.update(deltaTime);
 		this.textoSalir.update(deltaTime);
 		
-	} else if (whichScene > 1){
+	} else if (whichScene == 2){
+		this.textoSalir.update(deltaTime);
+		this.animacionInstr.update(deltaTime);
+	} else {
 		this.textoSalir.update(deltaTime);
 	}
 	// this.virusSprite1.update(deltaTime)
@@ -117,7 +129,7 @@ Scene.prototype.draw = function (whichScene, whichButton) // meter argumento
 		this.textoSalir.y = 150;
 		this.textoSalir.draw();
 
-	} else if (whichScene == 2) {
+	} else if (whichScene == 2) {	
 		this.imageInstr.draw();
 
 		// Draw sprite salir
@@ -125,6 +137,9 @@ Scene.prototype.draw = function (whichScene, whichButton) // meter argumento
 		this.textoSalir.x = 100;
 		this.textoSalir.y = 355;
 		this.textoSalir.draw();
+
+		// draw animacion instr
+		this.animacionInstr.draw();
 	} else {
 		this.imageCreditos.draw();
 
