@@ -3,10 +3,11 @@ Proyecto de la asignatura "Juegos por Computador" del MEI en la UPC.
 "Dr. Yoshi"
 
 # TO-DO List
-- Entrega 2
-    - Hay que crear una escena para cada pantalla, mover el código de lógica de game.js al scene.js de cada pantalla. Game.js debe saber en que pantalla está en cada momento
-    - Para crear las pastillas hay que crear 2 sprites (~/sprites/pastillas) que se moverán conjuntamente
-
+- Entrega 2 (13/04)
+    - [x] Hay que crear una escena para cada pantalla
+    - [ ] Para crear las pastillas hay que crear 2 sprites (~/sprites/pastillas) que se moverán conjuntamente
+    - [ ] Movimiento (sesión 4)
+    - [ ] Colisiones (sesión 5)(mirar cosa)
 
 
 - Entrega 1
