@@ -93,8 +93,6 @@ SceneMenu.prototype.draw = function () // meter argumento
 	} else {
 		this.textoCreditos.draw();
 	}
-
-	
 }
 
 

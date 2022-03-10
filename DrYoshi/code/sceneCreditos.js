@@ -58,8 +58,6 @@ SceneCreditos.prototype.draw = function () // meter argumento
 	this.textoSalir.x = 100;
 	this.textoSalir.y = 355;
 	this.textoSalir.draw();
-
-
 }
 
 
