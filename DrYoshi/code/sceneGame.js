@@ -110,15 +110,15 @@ SceneGame.prototype.update = function (deltaTime) {
 	if (keyboard[38]) { // KEY UP
 		keyboard[38] = false;
 
-		// which capsule changes
-		let x1 = this.pastillasSprites[pastilla1].x;
-		let y1 = this.pastillasSprites[pastilla1].y;
-		let x2 = this.pastillasSprites[pastilla2].x;
-		let y2 = this.pastillasSprites[pastilla2].y;
+		old_p1 = pastilla1;
+		old_p2 = pastilla2;
 
+		// which capsule changes
 		//compute new positions
-		data1 = rotate_position(pastilla1, x1, y1);
-		data2 = rotate_position(pastilla2, x2, y2);
+		data1 = rotate_position(pastilla1, 
+			this.pastillasSprites[pastilla1].x, this.pastillasSprites[pastilla1].y);
+		data2 = rotate_position(pastilla2, 
+			this.pastillasSprites[pastilla2].x, this.pastillasSprites[pastilla2].y);
 
 		// new form of pastilla
 		pastilla1 = data1[0];
@@ -129,6 +129,8 @@ SceneGame.prototype.update = function (deltaTime) {
 		this.pastillasSprites[pastilla1].y = data1[2];
 		this.pastillasSprites[pastilla2].x = data2[1];
 		this.pastillasSprites[pastilla2].y = data2[2];
+
+
 	}
 
 	// Correctores de posición
@@ -150,7 +152,6 @@ SceneGame.prototype.update = function (deltaTime) {
 		this.pastillasSprites[pastilla2].y = 160;
 	}
 
-	
 	// Salir (quitar luego)
 	if (keyboard[13]) {
 		keyboard[13] = false;
