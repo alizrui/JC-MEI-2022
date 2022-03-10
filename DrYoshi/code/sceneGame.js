@@ -4,7 +4,7 @@ const CAPSULE_INIT_TIMER_Y = 15;
 var pastilla1 = 2;
 var pastilla2 = 8;
 
-var first_auxiliar = 1;
+var crear_pastilla = 1;
 
 // Scene GAME . Updates and draws a single scene of the game.
 
@@ -45,7 +45,7 @@ function SceneGame() {
 	var tilesheet = new Texture("../tiles/tiles16.png");
 
 	// Create tilemap
-	this.map = new Tilemap(tilesheet, [16, 16], [5, 5], [184, 288], mapa_auxiliar1);
+	this.map = new Tilemap(tilesheet, [16, 16], [5, 5], [184, 176], mapa_auxiliar1);
 
 	// Store current time
 	this.currentTime = 0
@@ -60,6 +60,14 @@ SceneGame.prototype.update = function (deltaTime) {
 	this.currentTime += deltaTime;
 
 	// Game logic
+	// new capsule
+	if (crear_pastilla) {
+		crear_pastilla = 0;
+		this.pastillasSprites[pastilla1].x = 232;
+		this.pastillasSprites[pastilla1].y = 160;
+		this.pastillasSprites[pastilla2].x = 248;
+		this.pastillasSprites[pastilla2].y = 160;
+	}
 	// Move capsule down
 	this.capsuleTimerY--;
 	if (this.capsuleTimerY <= 0) {
@@ -68,34 +76,69 @@ SceneGame.prototype.update = function (deltaTime) {
 		this.pastillasSprites[pastilla2].y += 16;
 	}
 
-	if (this.pastillasSprites[pastilla1].y > 448) {
-		this.pastillasSprites[pastilla1].y = 160;
-		this.pastillasSprites[pastilla2].y = 160
-	}
-
 	// Move capsule left & right
-	if(this.capsuleTimerX <= 0)
-	{
-		if(keyboard[37]) // KEY_LEFT
+	if (this.capsuleTimerX <= 0) {
+		if (keyboard[37]) // KEY_LEFT
 		{
-			if(this.pastillasSprites[pastilla1].x >= 200){
-				this.pastillasSprites[pastilla1].x -= 16;
-				this.pastillasSprites[pastilla2].x -= 16;
-			}
+			this.pastillasSprites[pastilla1].x -= 16;
+			this.pastillasSprites[pastilla2].x -= 16;
 			this.capsuleTimerX = CAPSULE_INIT_TIMER_X;
 		}
-		else if(keyboard[39]) // KEY_RIGHT
+		else if (keyboard[39]) // KEY_RIGHT
 		{
-			if(this.pastillasSprites[pastilla2].x <= 296){
-				this.pastillasSprites[pastilla1].x += 16;
-				this.pastillasSprites[pastilla2].x += 16;
-			}
+			this.pastillasSprites[pastilla1].x += 16;
+			this.pastillasSprites[pastilla2].x += 16;
 			this.capsuleTimerX = CAPSULE_INIT_TIMER_X;
 		}
 	}
 	else {
 		this.capsuleTimerX--;
 	}
+
+	// Rotate capsule
+	if (keyboard[38]) {
+		keyboard[38] = false;
+		
+		// which capsule changes
+		let x1 = this.pastillasSprites[pastilla1].x; 
+		let y1 = this.pastillasSprites[pastilla1].y;
+		let x2 = this.pastillasSprites[pastilla2].x; 
+		let y2 = this.pastillasSprites[pastilla2].y;
+		
+		//compute new positions
+		data1 = rotate_position(pastilla1, x1, y1);
+		data2 = rotate_position(pastilla2, x2, y2);
+		
+		// new form of pastilla
+		pastilla1 = data1[0];
+		pastilla2 = data2[0];
+		
+		// new positions of pastilla
+		this.pastillasSprites[pastilla1].x = data1[1];
+		this.pastillasSprites[pastilla1].y = data1[2];
+		this.pastillasSprites[pastilla2].x = data2[1];
+		this.pastillasSprites[pastilla2].y = data2[2];
+	}
+
+	// Correctores de posición
+	if (this.pastillasSprites[pastilla1].x < 184
+		|| this.pastillasSprites[pastilla2].x < 184) {
+		this.pastillasSprites[pastilla1].x += 16;
+		this.pastillasSprites[pastilla2].x += 16;
+	}
+
+	if (this.pastillasSprites[pastilla1].x > 312
+		|| this.pastillasSprites[pastilla2].x > 312) {
+		this.pastillasSprites[pastilla1].x -= 16;
+		this.pastillasSprites[pastilla2].x -= 16;
+	}
+
+	if (this.pastillasSprites[pastilla1].y > 448
+		|| this.pastillasSprites[pastilla2].y > 448) {
+		this.pastillasSprites[pastilla1].y = 160;
+		this.pastillasSprites[pastilla2].y = 160
+}
+
 	// console.log(this.capsuleTimerY);
 	// Salir (quitar luego)
 	if (keyboard[13]) {
@@ -121,17 +164,11 @@ SceneGame.prototype.draw = function () // meter argumento
 	this.imageJuego.draw();
 
 	// Draw tilemap
-	//this.map.draw();
+	this.map.draw();
 
 	// Draw sprites (de momento 2 y 9)
 	// (232,248 pos inicial?)
-	if(first_auxiliar){ // mover a update, booleano crear pastilla
-		first_auxiliar = 0;
-		this.pastillasSprites[pastilla1].x = 232; 
-		this.pastillasSprites[pastilla1].y = 160;
-		this.pastillasSprites[pastilla2].x = 248;
-		this.pastillasSprites[pastilla2].y = 160;
-	}
+	
 	// console.log(this.pastillasSprites[pastilla2])
 	
 	this.pastillasSprites[pastilla1].draw();	
@@ -146,30 +183,60 @@ SceneGame.prototype.draw = function () // meter argumento
 }
 
 function createPastillas() {
-	let colors = ["green", "red", "blue"];
-	let p_types = ["up","down","left","right","neutral"];
-	let name = [];
+	var all_pastillas = new Texture("../tiles/tiles16.png");
+
 	let pastillasSprites = [];
-	for (const color of colors){
-		for(const p_type of p_types){
-			name = color+"_"+p_type+".png";
-			var pastilla = new Texture("../sprites/pastillas/"+name);
-			var pastiSprite = new Sprite(0,0,16,16,1,pastilla);
+	for (i = 0; i <= 32; i += 16) {
+		for (j = 0; j <= 64; j += 16) {
+			var pastiSprite = new Sprite(0,0,16,16,1,all_pastillas);
 			pastiSprite.addAnimation();
-			pastiSprite.addKeyframe(0,[0,0,16,16]);
-			pastillasSprites.push(pastiSprite)
+			pastiSprite.addKeyframe(0,[j,i,16,16]);
+			pastillasSprites.push(pastiSprite);
 		}
 	}
-	for (const color of colors){
-		name = color + "_broke.png"
-		var pastilla = new Texture("../sprites/pastillas/"+name);
-			var pastiSprite = new Sprite(0,0,16,16,1,pastilla);
-			pastiSprite.addAnimation();
-			pastiSprite.addKeyframe(0,[0,0,16,16]);
-			pastillasSprites.push(pastiSprite)
+	for (i = 0; i <= 32; i += 16) {
+		var pastiSprite = new Sprite(0,0,16,16,1,all_pastillas);
+		pastiSprite.addAnimation();
+		pastiSprite.addKeyframe(0,[i,48,16,16]);
+		pastillasSprites.push(pastiSprite);
 	}
+
 	return pastillasSprites;
 }
+
+function rotate_position(number, x, y) {
+	number_rotated = 0
+	let newx = 0;
+	let newy = 0;
+
+	switch (number % 5) {
+		case 0:
+			number_rotated = number + 3;
+			newx = x + 16;
+			newy = y + 16;
+			break;
+		case 1:
+			number_rotated = number + 1;
+			newx = x;
+			newy = y;
+			break;
+		case 2:
+			number_rotated = number - 2;
+			newx = x;
+			newy = y - 16;
+			break;
+		case 3:
+			number_rotated = number - 2;
+			newx = x - 16;
+			newy = y;
+			break;
+		default:
+	}
+
+	return [number_rotated, newx, newy];
+}
+
+
 
 
 
