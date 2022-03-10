@@ -18,10 +18,6 @@ function SceneGame() {
 	
 	this.pastillasSprites = createPastillas();
 
-
-
-	console.log(this.pastillasSprites[9])
-
 	// Create objects
 	this.imageJuego = new StaticImage(0, 0, 512, 480, fondo_juego);
 	
@@ -74,6 +70,11 @@ SceneGame.prototype.update = function (deltaTime) {
 		this.capsuleTimerY = CAPSULE_INIT_TIMER_Y;
 		this.pastillasSprites[pastilla1].y += 16;
 		this.pastillasSprites[pastilla2].y += 16;
+		if (this.map.collisionMoveDown(this.pastillasSprites[pastilla1])
+		|| this.map.collisionMoveDown(this.pastillasSprites[pastilla2])) {
+			this.pastillasSprites[pastilla1].y -= 16;
+			this.pastillasSprites[pastilla2].y -= 16;
+		}
 	}
 
 	// Move capsule left & right
@@ -82,12 +83,22 @@ SceneGame.prototype.update = function (deltaTime) {
 		{
 			this.pastillasSprites[pastilla1].x -= 16;
 			this.pastillasSprites[pastilla2].x -= 16;
+			if (this.map.collisionMoveLeft(this.pastillasSprites[pastilla1])
+				|| this.map.collisionMoveLeft(this.pastillasSprites[pastilla2])) {
+				this.pastillasSprites[pastilla1].x += 16;
+				this.pastillasSprites[pastilla2].x += 16;
+			}
 			this.capsuleTimerX = CAPSULE_INIT_TIMER_X;
 		}
 		else if (keyboard[39]) // KEY_RIGHT
 		{
 			this.pastillasSprites[pastilla1].x += 16;
 			this.pastillasSprites[pastilla2].x += 16;
+			if (this.map.collisionMoveRight(this.pastillasSprites[pastilla1])
+				|| this.map.collisionMoveRight(this.pastillasSprites[pastilla2])) {
+				this.pastillasSprites[pastilla1].x -= 16;
+				this.pastillasSprites[pastilla2].x -= 16;
+			}
 			this.capsuleTimerX = CAPSULE_INIT_TIMER_X;
 		}
 	}
@@ -96,23 +107,23 @@ SceneGame.prototype.update = function (deltaTime) {
 	}
 
 	// Rotate capsule
-	if (keyboard[38]) {
+	if (keyboard[38]) { // KEY UP
 		keyboard[38] = false;
-		
+
 		// which capsule changes
-		let x1 = this.pastillasSprites[pastilla1].x; 
+		let x1 = this.pastillasSprites[pastilla1].x;
 		let y1 = this.pastillasSprites[pastilla1].y;
-		let x2 = this.pastillasSprites[pastilla2].x; 
+		let x2 = this.pastillasSprites[pastilla2].x;
 		let y2 = this.pastillasSprites[pastilla2].y;
-		
+
 		//compute new positions
 		data1 = rotate_position(pastilla1, x1, y1);
 		data2 = rotate_position(pastilla2, x2, y2);
-		
+
 		// new form of pastilla
 		pastilla1 = data1[0];
 		pastilla2 = data2[0];
-		
+
 		// new positions of pastilla
 		this.pastillasSprites[pastilla1].x = data1[1];
 		this.pastillasSprites[pastilla1].y = data1[2];
@@ -136,16 +147,16 @@ SceneGame.prototype.update = function (deltaTime) {
 	if (this.pastillasSprites[pastilla1].y > 448
 		|| this.pastillasSprites[pastilla2].y > 448) {
 		this.pastillasSprites[pastilla1].y = 160;
-		this.pastillasSprites[pastilla2].y = 160
-}
+		this.pastillasSprites[pastilla2].y = 160;
+	}
 
-	// console.log(this.capsuleTimerY);
+	
 	// Salir (quitar luego)
 	if (keyboard[13]) {
 		keyboard[13] = false;
 		whichScene = 0;
 	}
-	//console.log(this.pastillasSprites[pastilla1].y)
+
 	// update sprites
 	this.map.update(deltaTime);
 	this.textoSalir.update(deltaTime);
@@ -174,12 +185,10 @@ SceneGame.prototype.draw = function () // meter argumento
 	this.pastillasSprites[pastilla1].draw();	
 	this.pastillasSprites[pastilla2].draw();
 
-
 	//Draw sprite salir (quitar en futuro)
 	this.textoSalir.x = 50;
 	this.textoSalir.y = 150;
 	this.textoSalir.draw();
-
 }
 
 function createPastillas() {
