@@ -2,7 +2,7 @@ const CAPSULE_INIT_TIMER_X = 5;
 const CAPSULE_INIT_TIMER_Y = 15;
 
 var pastilla1 = 2;
-var pastilla2 = 9;
+var pastilla2 = 8;
 
 var first_auxiliar = 1;
 
@@ -45,7 +45,7 @@ function SceneGame() {
 	var tilesheet = new Texture("../tiles/tiles16.png");
 
 	// Create tilemap
-	this.map = new Tilemap(tilesheet, [16, 16], [5, 5], [184, 288], tiles_yoshi_16);
+	this.map = new Tilemap(tilesheet, [16, 16], [5, 5], [184, 288], mapa_auxiliar1);
 
 	// Store current time
 	this.currentTime = 0
@@ -102,7 +102,7 @@ SceneGame.prototype.update = function (deltaTime) {
 		keyboard[13] = false;
 		whichScene = 0;
 	}
-	console.log(this.pastillasSprites[pastilla1].y)
+	//console.log(this.pastillasSprites[pastilla1].y)
 	// update sprites
 	this.map.update(deltaTime);
 	this.textoSalir.update(deltaTime);
@@ -125,7 +125,7 @@ SceneGame.prototype.draw = function () // meter argumento
 
 	// Draw sprites (de momento 2 y 9)
 	// (232,248 pos inicial?)
-	if(first_auxiliar){
+	if(first_auxiliar){ // mover a update, booleano crear pastilla
 		first_auxiliar = 0;
 		this.pastillasSprites[pastilla1].x = 232; 
 		this.pastillasSprites[pastilla1].y = 160;
@@ -147,7 +147,7 @@ SceneGame.prototype.draw = function () // meter argumento
 
 function createPastillas() {
 	let colors = ["green", "red", "blue"];
-	let p_types = ["up","down","left","right","neutral","broke"];
+	let p_types = ["up","down","left","right","neutral"];
 	let name = [];
 	let pastillasSprites = [];
 	for (const color of colors){
@@ -159,6 +159,14 @@ function createPastillas() {
 			pastiSprite.addKeyframe(0,[0,0,16,16]);
 			pastillasSprites.push(pastiSprite)
 		}
+	}
+	for (const color of colors){
+		name = color + "_broke.png"
+		var pastilla = new Texture("../sprites/pastillas/"+name);
+			var pastiSprite = new Sprite(0,0,16,16,1,pastilla);
+			pastiSprite.addAnimation();
+			pastiSprite.addKeyframe(0,[0,0,16,16]);
+			pastillasSprites.push(pastiSprite)
 	}
 	return pastillasSprites;
 }
