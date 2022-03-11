@@ -38,8 +38,6 @@ function SceneGame() {
 	this.textoJugar.addKeyframe(0, [0, 51, 125, 51]);
 	this.textoJugar.setAnimation(0);
 
-	console.log(this.textoJugar);
-
 	// Loading texture to use in a TileMap
 	var tilesheet = new Texture("../tiles/tiles16.png");
 
@@ -95,6 +93,8 @@ SceneGame.prototype.update = function (deltaTime) {
 			this.map.addCapsule(pastilla2, 
 					this.pastillasSprites[pastilla2].x, 
 					this.pastillasSprites[pastilla2].y);
+			
+			// create new capsule (debug)
 			crear_pastilla = 1;
 		}
 	}
