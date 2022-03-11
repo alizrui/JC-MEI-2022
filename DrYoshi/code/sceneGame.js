@@ -74,6 +74,15 @@ SceneGame.prototype.update = function (deltaTime) {
 		|| this.map.collisionMoveDown(this.pastillasSprites[pastilla2])) {
 			this.pastillasSprites[pastilla1].y -= 16;
 			this.pastillasSprites[pastilla2].y -= 16;
+
+			// dibujar en mapa de tiles
+			this.map.addCapsule(pastilla1, 
+				this.pastillasSprites[pastilla1].x, 
+				this.pastillasSprites[pastilla1].y);
+			this.map.addCapsule(pastilla2, 
+					this.pastillasSprites[pastilla2].x, 
+					this.pastillasSprites[pastilla2].y);
+				
 		}
 	}
 
