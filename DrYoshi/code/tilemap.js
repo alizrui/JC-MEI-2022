@@ -100,7 +100,7 @@ Tilemap.prototype.draw = function () {
 		// check columns
 		var pos_column = pos % this.map.width; // pos % 9 -> column to explore
 		var prev_color = -1, color = -1, num_same_color = 1;
-		for (var pos_cell = pos_column; pos_cell < pos_column + this.map.width * (this.map.height-1); pos_cell += this.map.width){
+		for (var pos_cell = pos_column; pos_cell <= pos_column + this.map.width * (this.map.height-1); pos_cell += this.map.width){
 			if (this.map.layers[0].data[pos_cell] == 0) {
 				 // empty cells reset counter
 				num_same_color = 1;
