@@ -1,8 +1,10 @@
 const CAPSULE_INIT_TIMER_X = 5;
 const CAPSULE_INIT_TIMER_Y = 15;
 
-var pastilla1 = 2;
-var pastilla2 = 8;
+const capsules1 = [2, 7, 12];
+const capsules2 = [3, 8, 13];
+var pastilla1 = 0;
+var pastilla2 = 0;
 
 var crear_pastilla = 1;
 
@@ -60,9 +62,11 @@ SceneGame.prototype.update = function (deltaTime) {
 	if (crear_pastilla) {
 		crear_pastilla = 0;
 
-		pastilla1 = 2;
-		pastilla2 = 8;
+		// create random capsule (will move)
+		pastilla1 = capsules1[Math.floor(Math.random()*capsules1.length)];
+		pastilla2 = capsules2[Math.floor(Math.random()*capsules2.length)];
 
+		// starting positions
 		this.pastillasSprites[pastilla1].x = 232;
 		this.pastillasSprites[pastilla1].y = 176;
 		this.pastillasSprites[pastilla2].x = 248;
