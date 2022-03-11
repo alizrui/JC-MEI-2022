@@ -56,13 +56,13 @@ SceneGame.prototype.update = function (deltaTime) {
 	this.currentTime += deltaTime;
 
 	// Game logic
-	// new capsule
+	// new capsule (232,176) is the starting position
 	if (crear_pastilla) {
 		crear_pastilla = 0;
 		this.pastillasSprites[pastilla1].x = 232;
-		this.pastillasSprites[pastilla1].y = 160;
+		this.pastillasSprites[pastilla1].y = 176;
 		this.pastillasSprites[pastilla2].x = 248;
-		this.pastillasSprites[pastilla2].y = 160;
+		this.pastillasSprites[pastilla2].y = 176;
 	}
 	// Move capsule down
 	this.capsuleTimerY--;
@@ -106,13 +106,15 @@ SceneGame.prototype.update = function (deltaTime) {
 		this.capsuleTimerX--;
 	}
 
+	// keep old capsules in case rotation is wrong (backup)
+	old_p1 = pastilla1;
+	old_p2 = pastilla2;
+	aux_rotated = false; 
+
 	// Rotate capsule
 	if (keyboard[38]) { // KEY UP
 		keyboard[38] = false;
-
-		old_p1 = pastilla1;
-		old_p2 = pastilla2;
-
+		aux_rotated = true;
 		// which capsule changes
 		//compute new positions
 		data1 = rotate_position(pastilla1, 
@@ -129,11 +131,9 @@ SceneGame.prototype.update = function (deltaTime) {
 		this.pastillasSprites[pastilla1].y = data1[2];
 		this.pastillasSprites[pastilla2].x = data2[1];
 		this.pastillasSprites[pastilla2].y = data2[2];
-
-
 	}
 
-	// Correctores de posición
+	// position correctors
 	if (this.pastillasSprites[pastilla1].x < 184
 		|| this.pastillasSprites[pastilla2].x < 184) {
 		this.pastillasSprites[pastilla1].x += 16;
@@ -146,10 +146,22 @@ SceneGame.prototype.update = function (deltaTime) {
 		this.pastillasSprites[pastilla2].x -= 16;
 	}
 
+	// backup for wrong rotations (aux_rotated = capsule has rotated)
+	if (aux_rotated
+		&& (this.map.collisionMoveRight(this.pastillasSprites[pastilla1])
+		|| this.map.collisionMoveRight(this.pastillasSprites[pastilla2])
+		|| this.map.collisionMoveLeft(this.pastillasSprites[pastilla1])
+		|| this.map.collisionMoveLeft(this.pastillasSprites[pastilla2]))) {
+
+		pastilla1 = old_p1;
+		pastilla2 = old_p2;
+	}
+
+	// Cuando esté abajo vuelve arriba (debug)
 	if (this.pastillasSprites[pastilla1].y > 448
 		|| this.pastillasSprites[pastilla2].y > 448) {
-		this.pastillasSprites[pastilla1].y = 160;
-		this.pastillasSprites[pastilla2].y = 160;
+		this.pastillasSprites[pastilla1].y -= 16 ;
+		this.pastillasSprites[pastilla2].y -= 16 ;
 	}
 
 	// Salir (quitar luego)
@@ -181,8 +193,7 @@ SceneGame.prototype.draw = function () // meter argumento
 	// Draw sprites (de momento 2 y 9)
 	// (232,248 pos inicial?)
 	
-	// console.log(this.pastillasSprites[pastilla2])
-	
+	// Draw Capsule 
 	this.pastillasSprites[pastilla1].draw();	
 	this.pastillasSprites[pastilla2].draw();
 
@@ -193,9 +204,11 @@ SceneGame.prototype.draw = function () // meter argumento
 }
 
 function createPastillas() {
+	
 	var all_pastillas = new Texture("../tiles/tiles16.png");
-
 	let pastillasSprites = [];
+
+	// iterate all types (green,red,blue) * (up,down,left,right,neutral,broke)
 	for (i = 0; i <= 32; i += 16) {
 		for (j = 0; j <= 64; j += 16) {
 			var pastiSprite = new Sprite(0,0,16,16,1,all_pastillas);
@@ -219,6 +232,7 @@ function rotate_position(number, x, y) {
 	let newx = 0;
 	let newy = 0;
 
+	// compute new positions and new capsules to draw
 	switch (number % 5) {
 		case 0:
 			number_rotated = number + 3;
