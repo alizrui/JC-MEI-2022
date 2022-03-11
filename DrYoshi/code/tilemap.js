@@ -111,7 +111,8 @@ Tilemap.prototype.draw = function () {
 				color = (this.map.layers[0].data[pos_cell] > 20)
 					? this.map.layers[0].data[pos_cell] - 21
 					: Math.floor((this.map.layers[0].data[pos_cell] - 1) / 5);
-				console.log(color);
+				
+				if(color==1){console.log(color);}
 				if (color == prev_color) {
 					num_same_color++;
 				}
@@ -139,7 +140,7 @@ Tilemap.prototype.draw = function () {
 	var d = positions_to_delete.length;
 	for (var n = 0; n < d; n++){
 		var p = positions_to_delete.pop();
-		console.log(p);
+		//console.log(p);
 		this.map.layers[0].data[p] = 0;
 	}
 

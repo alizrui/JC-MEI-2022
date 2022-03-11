@@ -1,0 +1,5 @@
+-Hay que hacer una versión de debug para poder hacer la logica de quitar pastillas
+-VERSION QUE NO LANCE CAPSULAS
+-IMPRIMIR POSICIONES DE LAS COLUMNAS DEL TILEMAP
+-NUEVO TILEMAP CON 4+ CELDAS DEL MISMO COLOR
+-
