@@ -18,6 +18,7 @@ function SceneGame() {
 	var salir = new Texture("../sprites/sprite_salir.png");
 	var jugar = new Texture("../sprites/sprite_jugar.png");
 	
+	// data estructure with all capsules
 	this.pastillasSprites = createPastillas();
 
 	// Create objects
@@ -78,6 +79,8 @@ SceneGame.prototype.update = function (deltaTime) {
 		this.capsuleTimerY = CAPSULE_INIT_TIMER_Y;
 		this.pastillasSprites[pastilla1].y += 16;
 		this.pastillasSprites[pastilla2].y += 16;
+
+		// if capsule collides
 		if (this.map.collisionMoveDown(this.pastillasSprites[pastilla1])
 		|| this.map.collisionMoveDown(this.pastillasSprites[pastilla2])
 		|| this.pastillasSprites[pastilla1].y > 448
@@ -85,7 +88,7 @@ SceneGame.prototype.update = function (deltaTime) {
 			this.pastillasSprites[pastilla1].y -= 16;
 			this.pastillasSprites[pastilla2].y -= 16;
 
-			// dibujar en mapa de tiles
+			// draw in the tilemap
 			this.map.addCapsule(pastilla1, 
 				this.pastillasSprites[pastilla1].x, 
 				this.pastillasSprites[pastilla1].y);

@@ -1,5 +1,6 @@
 
 
+positions_to_check = [];
 // Tilemap. Draws a tilemap using a texture as a tilesheet.
 
 function Tilemap(tilesheet, tileSize, blockGrid, basePos, map) {
@@ -87,6 +88,28 @@ Tilemap.prototype.draw = function () {
 					this.basePos[0] + this.tileSize[0] * i, this.basePos[1] + this.tileSize[1] * j, blockSize[0], blockSize[1]);
 			}
 		}
+
+	// this.map.layers[0].data[i];
+	// delete 4 or more consecutive capsules
+	positions_to_delete = []; 
+
+	// check the rows and columns of the positions that have changed
+	var l = positions_to_check.length;
+	for(var i = 0; i < l; i++){
+		var pos = positions_to_check.pop();
+
+		
+
+	}
+	//for (var j = 0; j < this.map.height; j++) {
+
+	//	for (var i = 0; i < this.map.width; i++){
+
+	//	}
+	//}
+
+	// delete positions marked
+	
 }
 
 // Computes if the left part of a sprite collides with the tilemap.
@@ -154,6 +177,11 @@ Tilemap.prototype.addCapsule = function(type, posx, posy){
 	aux_x = (posx - this.basePos[0]) / 16; 
 	aux_y = ((posy - this.basePos[1]) / 16) * 9;
 
+	positions_to_check.push(aux_x + aux_y);
 	this.map.layers[0].data[aux_x + aux_y] = type + 1;
 
+
+
 }
+
+
