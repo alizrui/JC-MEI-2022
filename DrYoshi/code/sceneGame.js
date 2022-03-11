@@ -59,6 +59,10 @@ SceneGame.prototype.update = function (deltaTime) {
 	// new capsule (232,176) is the starting position
 	if (crear_pastilla) {
 		crear_pastilla = 0;
+
+		pastilla1 = 2;
+		pastilla2 = 8;
+
 		this.pastillasSprites[pastilla1].x = 232;
 		this.pastillasSprites[pastilla1].y = 176;
 		this.pastillasSprites[pastilla2].x = 248;
@@ -71,7 +75,9 @@ SceneGame.prototype.update = function (deltaTime) {
 		this.pastillasSprites[pastilla1].y += 16;
 		this.pastillasSprites[pastilla2].y += 16;
 		if (this.map.collisionMoveDown(this.pastillasSprites[pastilla1])
-		|| this.map.collisionMoveDown(this.pastillasSprites[pastilla2])) {
+		|| this.map.collisionMoveDown(this.pastillasSprites[pastilla2])
+		|| this.pastillasSprites[pastilla1].y > 448
+		|| this.pastillasSprites[pastilla2].y > 448) {
 			this.pastillasSprites[pastilla1].y -= 16;
 			this.pastillasSprites[pastilla2].y -= 16;
 
@@ -82,7 +88,7 @@ SceneGame.prototype.update = function (deltaTime) {
 			this.map.addCapsule(pastilla2, 
 					this.pastillasSprites[pastilla2].x, 
 					this.pastillasSprites[pastilla2].y);
-				
+			crear_pastilla = 1;
 		}
 	}
 
@@ -167,11 +173,11 @@ SceneGame.prototype.update = function (deltaTime) {
 	}
 
 	// Cuando esté abajo vuelve arriba (debug)
-	if (this.pastillasSprites[pastilla1].y > 448
-		|| this.pastillasSprites[pastilla2].y > 448) {
-		this.pastillasSprites[pastilla1].y -= 16 ;
-		this.pastillasSprites[pastilla2].y -= 16 ;
-	}
+	// if (this.pastillasSprites[pastilla1].y > 448
+	// 	|| this.pastillasSprites[pastilla2].y > 448) {
+	// 	this.pastillasSprites[pastilla1].y -= 16 ;
+	// 	this.pastillasSprites[pastilla2].y -= 16 ;
+	// }
 
 	// Salir (quitar luego)
 	if (keyboard[13]) {

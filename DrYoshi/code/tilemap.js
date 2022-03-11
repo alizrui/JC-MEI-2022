@@ -154,6 +154,6 @@ Tilemap.prototype.addCapsule = function(type, posx, posy){
 	aux_x = (posx - this.basePos[0]) / 16; 
 	aux_y = ((posy - this.basePos[1]) / 16) * 9;
 
-	this.map.layers[0].data[aux_x + aux_y] = type;
+	this.map.layers[0].data[aux_x + aux_y] = type + 1;
 
 }
