@@ -101,11 +101,12 @@ Tilemap.prototype.draw = function () {
 		var pos_column = pos % this.map.width; // pos % 9 -> column to explore
 		var prev_color = -1, color = -1, num_same_color = 1;
 		for (var pos_cell = pos_column; pos_cell <= pos_column + this.map.width * (this.map.height-1); pos_cell += this.map.width){
+			// COMPROBAR QUE EL RECORRIDO ES CORRECTO (IMPRIMIR ARRAY CADA COLUMNA)
 			if (this.map.layers[0].data[pos_cell] == 0) {
 				// add cells to delete if >= 4
 				if (num_same_color >= 4) {
 					for (var j = num_same_color; j > 0; j--) {
-						positions_to_delete.push(pos_cell - j * pos_column);
+						positions_to_delete.push(pos_cell - j * pos_column); // PUNTO CRÍTICO
 					}
 				}
 				// empty cells reset counter
