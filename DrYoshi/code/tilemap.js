@@ -148,13 +148,19 @@ Tilemap.prototype.draw = function () {
 		}
 
 		// CHECK ROWS
-
-
+		// get the index of the column to check
+		var pos_row = 0; // pos % this.map.length; // NOT OK
 		// get max index of row
-		var aux_col_length = pos_column + this.map.width * (this.map.height - 1); // OK 
+		var aux_row_length = 0; //pos_row + this.map.length * (this.map.height - 1); // NOT OK 
 
 		// auxiliar variables
 		var prev_color = -1, num_same_color = 1, color = -1;
+		// check the column
+		for (var pos_cell = pos_row; pos_cell <= aux_row_length; pos_cell += 1) { // OK
+
+
+		 }
+
 	}
 	positions_to_check = [];
 
