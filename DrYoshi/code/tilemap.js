@@ -102,7 +102,13 @@ Tilemap.prototype.draw = function () {
 		var prev_color = -1, color = -1, num_same_color = 1;
 		for (var pos_cell = pos_column; pos_cell <= pos_column + this.map.width * (this.map.height-1); pos_cell += this.map.width){
 			if (this.map.layers[0].data[pos_cell] == 0) {
-				 // empty cells reset counter
+				// add cells to delete if >= 4
+				if (num_same_color >= 4) {
+					for (var j = num_same_color; j > 0; j--) {
+						positions_to_delete.push(pos_cell - j * pos_column);
+					}
+				}
+				// empty cells reset counter
 				num_same_color = 1;
 				prev_color = -1;
 			} else {
@@ -112,7 +118,8 @@ Tilemap.prototype.draw = function () {
 					? this.map.layers[0].data[pos_cell] - 21
 					: Math.floor((this.map.layers[0].data[pos_cell] - 1) / 5);
 				
-				if(color==1){console.log(color);}
+				if(color==1){//console.log(color);
+				}
 				if (color == prev_color) {
 					num_same_color++;
 				}
