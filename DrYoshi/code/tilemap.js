@@ -149,17 +149,49 @@ Tilemap.prototype.draw = function () {
 
 		// CHECK ROWS
 		// get the index of the column to check
-		var pos_row = 0; // pos % this.map.length; // NOT OK
+		var pos_row = pos - pos % this.map.width;
 		// get max index of row
-		var aux_row_length = 0; //pos_row + this.map.length * (this.map.height - 1); // NOT OK 
+		var aux_row_length = pos_row + (this.map.width - 1); 
 
 		// auxiliar variables
 		var prev_color = -1, num_same_color = 1, color = -1;
 		// check the column
-		for (var pos_cell = pos_row; pos_cell <= aux_row_length; pos_cell += 1) { // OK
+		for (var pos_cell = pos_row; pos_cell <= aux_row_length; pos_cell += 1) { 
+			// type of capsule/virus in tilemap
+			var pos_type = this.map.layers[0].data[pos_cell]; // OK
+			var check = false;
+			if (pos_type != 0) {
+				// determine color of the type
+				// green=0, red=1, blue=2
+				color = (pos_type > 20)
+					? this.map.layers[0].data[pos_cell] - 21
+					: Math.floor((this.map.layers[0].data[pos_cell] - 1) / 5); // OK
+				// colors_in_col.push(color);
+				if (color == prev_color) {
+					num_same_color++;
+				} else { check = true; }
 
+			} else { 
+				check = true; 
+				color = -1;
+			} // needs check ()
 
-		 }
+			if (pos_cell == aux_row_length) {
+				check = true;
+				pos_cell += 1; // truquito 
+			} // only in last cell of row
+
+			// check if there are 4 or more consecutive
+			if (check) {
+				if(num_same_color >= 4) {
+					for (var j = num_same_color; j > 0; j--) {
+						positions_to_delete.push(pos_cell - j * 1); // OK
+					}
+				}
+				num_same_color = 1;
+			} 
+			prev_color = color;
+		}
 
 	}
 	positions_to_check = [];
@@ -168,7 +200,6 @@ Tilemap.prototype.draw = function () {
 	var d = positions_to_delete.length;
 	for (var n = 0; n < d; n++){
 		var p = positions_to_delete.pop();
-		//console.log(p);
 		this.map.layers[0].data[p] = 0;
 	}	
 }
@@ -182,12 +213,11 @@ Tilemap.prototype.collisionMoveLeft = function(sprite)
 	var y0 = Math.floor((sprite.y - this.basePos[1]) / this.tileSize[1]);
 	var y1 = Math.floor((sprite.y + sprite.height - 1 - this.basePos[1]) / this.tileSize[1]);
 	
-	for(var y=y0; y<=y1; y++)
-	{
-		if(this.map.layers[0].data[y * this.map.width + x] != 0)
+	for (var y = y0; y <= y1; y++) {
+		if (this.map.layers[0].data[y * this.map.width + x] != 0)
 			return true;
 	}
-	
+
 	return false;
 }
 
