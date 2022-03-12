@@ -1,0 +1,6 @@
+-Hay que hacer una versión de debug para poder hacer la logica de quitar pastillas
+-VERSION QUE NO LANCE CAPSULAS
+-IMPRIMIR POSICIONES DE LAS COLUMNAS DEL TILEMAP
+-NUEVO TILEMAP CON 4+ CELDAS DEL MISMO COLOR
+---DEBUG ya -> pos_cell esta bien, creo que no está bien el calculo de color de las pastillas
+		meterlo en un array lo de una sola fila e imprimirlo al final

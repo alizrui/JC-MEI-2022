@@ -1,8 +1,10 @@
 const CAPSULE_INIT_TIMER_X = 5;
 const CAPSULE_INIT_TIMER_Y = 15;
 
-var pastilla1 = 2;
-var pastilla2 = 8;
+const capsules1 = [2, 7, 12];
+const capsules2 = [3, 8, 13];
+var pastilla1 = 0;
+var pastilla2 = 0;
 
 var crear_pastilla = 1;
 
@@ -16,6 +18,7 @@ function SceneGame() {
 	var salir = new Texture("../sprites/sprite_salir.png");
 	var jugar = new Texture("../sprites/sprite_jugar.png");
 	
+	// data estructure with all capsules
 	this.pastillasSprites = createPastillas();
 
 	// Create objects
@@ -34,8 +37,6 @@ function SceneGame() {
 	this.textoJugar.addKeyframe(0, [0, 0, 125, 51]);
 	this.textoJugar.addKeyframe(0, [0, 51, 125, 51]);
 	this.textoJugar.setAnimation(0);
-
-	console.log(this.textoJugar);
 
 	// Loading texture to use in a TileMap
 	var tilesheet = new Texture("../tiles/tiles16.png");
@@ -59,6 +60,12 @@ SceneGame.prototype.update = function (deltaTime) {
 	// new capsule (232,176) is the starting position
 	if (crear_pastilla) {
 		crear_pastilla = 0;
+
+		// create random capsule (will move)
+		pastilla1 = capsules1[Math.floor(Math.random()*capsules1.length)];
+		pastilla2 = capsules2[Math.floor(Math.random()*capsules2.length)];
+
+		// starting positions
 		this.pastillasSprites[pastilla1].x = 232;
 		this.pastillasSprites[pastilla1].y = 176;
 		this.pastillasSprites[pastilla2].x = 248;
@@ -70,21 +77,25 @@ SceneGame.prototype.update = function (deltaTime) {
 		this.capsuleTimerY = CAPSULE_INIT_TIMER_Y;
 		this.pastillasSprites[pastilla1].y += 16;
 		this.pastillasSprites[pastilla2].y += 16;
+
+		// if capsule collides
 		if (this.map.collisionMoveDown(this.pastillasSprites[pastilla1])
-		|| this.map.collisionMoveDown(this.pastillasSprites[pastilla2])) {
+		|| this.map.collisionMoveDown(this.pastillasSprites[pastilla2])
+		|| this.pastillasSprites[pastilla1].y > 448
+		|| this.pastillasSprites[pastilla2].y > 448) {
 			this.pastillasSprites[pastilla1].y -= 16;
 			this.pastillasSprites[pastilla2].y -= 16;
 
-			// dibujar en mapa de tiles
+			// draw in the tilemap
 			this.map.addCapsule(pastilla1, 
 				this.pastillasSprites[pastilla1].x, 
 				this.pastillasSprites[pastilla1].y);
 			this.map.addCapsule(pastilla2, 
 					this.pastillasSprites[pastilla2].x, 
 					this.pastillasSprites[pastilla2].y);
-
-			crear_pastilla = true;
-				
+			
+			// create new capsule (debug)
+			crear_pastilla = 1;
 		}
 	}
 
@@ -169,11 +180,11 @@ SceneGame.prototype.update = function (deltaTime) {
 	}
 
 	// Cuando esté abajo vuelve arriba (debug)
-	if (this.pastillasSprites[pastilla1].y > 448
-		|| this.pastillasSprites[pastilla2].y > 448) {
-		this.pastillasSprites[pastilla1].y -= 16 ;
-		this.pastillasSprites[pastilla2].y -= 16 ;
-	}
+	// if (this.pastillasSprites[pastilla1].y > 448
+	// 	|| this.pastillasSprites[pastilla2].y > 448) {
+	// 	this.pastillasSprites[pastilla1].y -= 16 ;
+	// 	this.pastillasSprites[pastilla2].y -= 16 ;
+	// }
 
 	// Salir (quitar luego)
 	if (keyboard[13]) {
