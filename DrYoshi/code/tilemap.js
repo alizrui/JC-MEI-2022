@@ -94,74 +94,77 @@ Tilemap.prototype.draw = function () {
 	positions_to_delete = []; 
 
 	// check the rows and columns of the positions that have changed
+
 	var l = positions_to_check.length;
-	for(var n = 0; n < l; n++){
+	for (var n = 0; n < l; n++) {
 		var pos = positions_to_check.pop();
-		// check columns
-		var pos_column = pos % this.map.width; // pos % 9 -> column to explore
-		var prev_color = -1, color = -1, num_same_color = 1;
-		for (var pos_cell = pos_column; pos_cell <= pos_column + this.map.width * (this.map.height-1); pos_cell += this.map.width){
-			// COMPROBAR QUE EL RECORRIDO ES CORRECTO (IMPRIMIR ARRAY CADA COLUMNA)
-			if (this.map.layers[0].data[pos_cell] == 0) {
-				// add cells to delete if >= 4
-				if (num_same_color >= 4) {
-					for (var j = num_same_color; j > 0; j--) {
-						positions_to_delete.push(pos_cell - j * pos_column); // PUNTO CRÍTICO
-					}
-				}
-				// empty cells reset counter
-				num_same_color = 1;
-				prev_color = -1;
-			} else {
-				// cell with data
-				// get color: green 0, red 1, blue 2
-				color = (this.map.layers[0].data[pos_cell] > 20)
+
+		// CHECK COLUMNS
+		// get the index of the column to check
+		var pos_column = pos % this.map.width; // OK
+
+		// get max index of column
+		var aux_col_length = pos_column + this.map.width * (this.map.height - 1); // OK 
+
+		// auxiliar variables
+		var prev_color = -1, num_same_color = 1, color = -1;
+		
+		// check the column
+		for (var pos_cell = pos_column; pos_cell <= aux_col_length; pos_cell += this.map.width) {
+			// type of capsule/virus in tilemap
+			var pos_type = this.map.layers[0].data[pos_cell]; // OK
+			var check = false;
+			if (pos_type != 0) {
+				// determine color of the type
+				// green=0, red=1, blue=2
+				color = (pos_type > 20)
 					? this.map.layers[0].data[pos_cell] - 21
-					: Math.floor((this.map.layers[0].data[pos_cell] - 1) / 5);
-				
-				if(color==1){//console.log(color);
-				}
+					: Math.floor((this.map.layers[0].data[pos_cell] - 1) / 5); // OK
+				// colors_in_col.push(color);
 				if (color == prev_color) {
 					num_same_color++;
-				}
-				else {
-					
-					// 4 or more equals -> add to list to eliminate
-					if (num_same_color >= 4) {
-						for (var j = num_same_color; j > 0; j--) {
-							positions_to_delete.push(pos_cell - j * pos_column);
-						}
-					}
-					num_same_color = 1;
-				}
-				prev_color = color;
-			}
-		}
-		// 4 or more equals -> add to list to eliminate
-		if(num_same_color >= 4){
-			for(var j = num_same_color; j > 0; j--){
-				positions_to_delete.push(pos_cell - j * pos_column);
-			}
-		}
-	}
+				} else { check = true; }
 
+			} else { 
+				check = true; 
+				color = -1;
+			} // needs check ()
+
+			if (pos_cell == aux_col_length) {
+				check = true;
+				pos_cell += this.map.width; // truquito 
+			} // only in last cell of column
+
+			// check if there are 4 or more consecutive
+			if (check) {
+				if(num_same_color >= 4) {
+					for (var j = num_same_color; j > 0; j--) {
+						positions_to_delete.push(pos_cell - j * this.map.width); // OK
+					}
+				}
+				num_same_color = 1;
+			} 
+			prev_color = color;
+		}
+
+		// CHECK ROWS
+
+
+		// get max index of row
+		var aux_col_length = pos_column + this.map.width * (this.map.height - 1); // OK 
+
+		// auxiliar variables
+		var prev_color = -1, num_same_color = 1, color = -1;
+	}
+	positions_to_check = [];
+
+	// delete positions marked
 	var d = positions_to_delete.length;
 	for (var n = 0; n < d; n++){
 		var p = positions_to_delete.pop();
 		//console.log(p);
 		this.map.layers[0].data[p] = 0;
-	}
-
-	// color = (pos > 20) ? pos - 21 : (pos - 1) // 5;
-	//for (var j = 0; j < this.map.height; j++) {
-
-	//	for (var i = 0; i < this.map.width; i++){
-
-	//	}
-	//}
-
-	// delete positions marked
-	
+	}	
 }
 
 // Computes if the left part of a sprite collides with the tilemap.

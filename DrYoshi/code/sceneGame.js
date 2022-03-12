@@ -1,5 +1,5 @@
 const CAPSULE_INIT_TIMER_X = 5;
-const CAPSULE_INIT_TIMER_Y = 15;
+const CAPSULE_INIT_TIMER_Y = 25;
 
 const capsules1 = [2, 7, 12];
 const capsules2 = [3, 8, 13];
@@ -42,7 +42,7 @@ function SceneGame() {
 	var tilesheet = new Texture("../tiles/tiles16.png");
 
 	// Create tilemap
-	this.map = new Tilemap(tilesheet, [16, 16], [5, 5], [184, 176], mapa_auxiliar1);
+	this.map = new Tilemap(tilesheet, [16, 16], [5, 5], [184, 176], mapa_auxiliar2);
 
 	// Store current time
 	this.currentTime = 0
