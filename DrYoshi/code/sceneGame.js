@@ -82,6 +82,8 @@ SceneGame.prototype.update = function (deltaTime) {
 			this.map.addCapsule(pastilla2, 
 					this.pastillasSprites[pastilla2].x, 
 					this.pastillasSprites[pastilla2].y);
+
+			crear_pastilla = true;
 				
 		}
 	}
