@@ -94,12 +94,14 @@ Tilemap.prototype.draw = function () {
 	positions_to_delete = []; 
 
 	// check the rows and columns of the positions that have changed
-
+	
+	
+	// CHECK COLUMNS
 	var l = positions_to_check.length;
+	// if(l>0) console.log(positions_to_check);
 	for (var n = 0; n < l; n++) {
 		var pos = positions_to_check.pop();
 
-		// CHECK COLUMNS
 		// get the index of the column to check
 		var pos_column = pos % this.map.width; // OK
 
@@ -130,7 +132,7 @@ Tilemap.prototype.draw = function () {
 				color = -1;
 			} // needs check ()
 
-			if (pos_cell == aux_col_length) {
+			if (!check && pos_cell == aux_col_length) {
 				check = true;
 				pos_cell += this.map.width; // truquito 
 			} // only in last cell of column
@@ -139,7 +141,7 @@ Tilemap.prototype.draw = function () {
 			if (check) {
 				if(num_same_color >= 4) {
 					for (var j = num_same_color; j > 0; j--) {
-						positions_to_delete.push(pos_cell - j * this.map.width); // OK
+						if(positions_to_delete.indexOf(pos_cell - j * this.map.width) == -1)positions_to_delete.push(pos_cell - j * this.map.width); // OK
 					}
 				}
 				num_same_color = 1;
@@ -152,12 +154,13 @@ Tilemap.prototype.draw = function () {
 		var pos_row = pos - pos % this.map.width;
 		// get max index of row
 		var aux_row_length = pos_row + (this.map.width - 1); 
-
+		//console.log(aux_row_length);
 		// auxiliar variables
 		var prev_color = -1, num_same_color = 1, color = -1;
 		// check the column
 		for (var pos_cell = pos_row; pos_cell <= aux_row_length; pos_cell += 1) { 
 			// type of capsule/virus in tilemap
+			// console.log(pos_cell);
 			var pos_type = this.map.layers[0].data[pos_cell]; // OK
 			var check = false;
 			if (pos_type != 0) {
@@ -176,7 +179,7 @@ Tilemap.prototype.draw = function () {
 				color = -1;
 			} // needs check ()
 
-			if (pos_cell == aux_row_length) {
+			if (!check && pos_cell == aux_row_length) {
 				check = true;
 				pos_cell += 1; // truquito 
 			} // only in last cell of row
@@ -185,7 +188,7 @@ Tilemap.prototype.draw = function () {
 			if (check) {
 				if(num_same_color >= 4) {
 					for (var j = num_same_color; j > 0; j--) {
-						positions_to_delete.push(pos_cell - j * 1); // OK
+						if(positions_to_delete.indexOf(pos_cell - j) == -1) positions_to_delete.push(pos_cell - j); // OK
 					}
 				}
 				num_same_color = 1;
@@ -198,6 +201,7 @@ Tilemap.prototype.draw = function () {
 
 	// delete positions marked
 	var d = positions_to_delete.length;
+	// if(d>0) console.log(positions_to_delete);
 	for (var n = 0; n < d; n++){
 		var p = positions_to_delete.pop();
 		this.map.layers[0].data[p] = 0;
@@ -268,8 +272,9 @@ Tilemap.prototype.addCapsule = function(type, posx, posy){
 	aux_x = (posx - this.basePos[0]) / 16; 
 	aux_y = ((posy - this.basePos[1]) / 16) * 9;
 
-	positions_to_check.push(aux_x + aux_y);
-	this.map.layers[0].data[aux_x + aux_y] = type + 1;
+	position_capsule = aux_x + aux_y;
+	if(positions_to_check.indexOf(position_capsule) == -1) positions_to_check.push(position_capsule);
+	this.map.layers[0].data[position_capsule] = type + 1;
 
 }
 

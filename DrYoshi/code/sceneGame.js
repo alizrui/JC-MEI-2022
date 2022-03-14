@@ -100,6 +100,12 @@ SceneGame.prototype.update = function (deltaTime) {
 		}
 	}
 
+	// Move capsule down faster 
+	if (keyboard[40]) { // KEY_DOWN
+		this.capsuleTimerY -= 4;
+	}
+		
+
 	// Move capsule left & right
 	if (this.capsuleTimerX <= 0) {
 		if (keyboard[37]) // KEY_LEFT

@@ -5,12 +5,13 @@
     - [ ] Virus bailando
     - [ ] Yoshi bailando
 - [ ] Pantalla intermedia con dificultades 
-    - [ ] Número de virus (generación aleatoria)
-    - [ ] Movimiento de las cápsulas más rápido
+    - [ ] Número de virus (generación aleatoria) (5 niveles) (DOING)
+    - [ ] Movimiento de las cápsulas más rápido (3 velocidades)
     - [ ] Tipo de música (chill, guay, off)
 - [ ] Retoques de lógica
-    - [ ] Animación destrucción capsula
-    - [ ] Cambio de cápsula cuando se suelte una doble
+    - [ ] Animación destrucción capsula (DOING)
+    - [ ] Cambio de cápsula cuando se suelte una doble (DOING)
+    - [x] Más rápido tecla down
     - [ ] Cápsula cae cuando no tiene nada abajo (virus no)
     - [ ] Siguiente cápsula se muestra antes
 - [ ] Animaciones
