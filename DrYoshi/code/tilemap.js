@@ -127,15 +127,15 @@ Tilemap.prototype.draw = function () {
 					num_same_color++;
 				} else { check = true; }
 
+				if(pos_cell == aux_col_length){
+					check = true;
+					pos_cell += this.map.width; // truquito 
+				} // only in last cell of column
+
 			} else { 
 				check = true; 
 				color = -1;
 			} // needs check ()
-
-			if (!check && pos_cell == aux_col_length) {
-				check = true;
-				pos_cell += this.map.width; // truquito 
-			} // only in last cell of column
 
 			// check if there are 4 or more consecutive
 			if (check) {
@@ -174,15 +174,15 @@ Tilemap.prototype.draw = function () {
 					num_same_color++;
 				} else { check = true; }
 
+				if(pos_cell == aux_row_length){
+					check = true;
+					pos_cell += 1; // truquito 
+				} // only in last cell of row
+
 			} else { 
 				check = true; 
 				color = -1;
 			} // needs check ()
-
-			if (!check && pos_cell == aux_row_length) {
-				check = true;
-				pos_cell += 1; // truquito 
-			} // only in last cell of row
 
 			// check if there are 4 or more consecutive
 			if (check) {
@@ -201,6 +201,7 @@ Tilemap.prototype.draw = function () {
 
 	// delete positions marked
 	var d = positions_to_delete.length;
+	
 	// if(d>0) console.log(positions_to_delete);
 	for (var n = 0; n < d; n++){
 		var p = positions_to_delete.pop();
