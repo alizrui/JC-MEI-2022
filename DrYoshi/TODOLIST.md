@@ -1,0 +1,28 @@
+# TODOLIST
+- [x] Movimiento y colisiones
+- [ ] Retoques pantalla inicial 
+    - [ ] Letras brillantes,
+    - [ ] Virus bailando
+    - [ ] Yoshi bailando
+- [ ] Pantalla intermedia con dificultades 
+    - [ ] Número de virus (generación aleatoria)
+    - [ ] Movimiento de las cápsulas más rápido
+    - [ ] Tipo de música (chill, guay, off)
+- [ ] Retoques de lógica
+    - [ ] Animación destrucción capsula
+    - [ ] Cambio de cápsula cuando se suelte una doble
+    - [ ] Cápsula cae cuando no tiene nada abajo (virus no)
+    - [ ] Siguiente cápsula se muestra antes
+- [ ] Animaciones
+    - [ ] Lupa con virus bailando
+    - [ ] Yoshi lanzando cápsula
+    - [ ] Yoshi cuando pierdes
+    - [ ] Pantallita de GAME OVER
+- [ ] Músicas
+    - [ ] Música de fondo (2 para juego, 1 para menu / otras pantallas)
+    - [ ] Pulsar botón
+    - [ ] Destrucción de cápsulas
+    - [ ] Colisión de cápsulas
+    - [ ] Nivel completado
+    - [ ] Game over
+- [ ] P

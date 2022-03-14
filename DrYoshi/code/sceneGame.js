@@ -179,13 +179,6 @@ SceneGame.prototype.update = function (deltaTime) {
 		pastilla2 = old_p2;
 	}
 
-	// Cuando esté abajo vuelve arriba (debug)
-	// if (this.pastillasSprites[pastilla1].y > 448
-	// 	|| this.pastillasSprites[pastilla2].y > 448) {
-	// 	this.pastillasSprites[pastilla1].y -= 16 ;
-	// 	this.pastillasSprites[pastilla2].y -= 16 ;
-	// }
-
 	// Salir (quitar luego)
 	if (keyboard[13]) {
 		keyboard[13] = false;
@@ -211,11 +204,8 @@ SceneGame.prototype.draw = function () // meter argumento
 
 	// Draw tilemap
 	this.map.draw();
-
-	// Draw sprites (de momento 2 y 9)
-	// (232,248 pos inicial?)
 	
-	// Draw Capsule 
+	// Draw Capsule(s) 
 	this.pastillasSprites[pastilla1].draw();	
 	this.pastillasSprites[pastilla2].draw();
 

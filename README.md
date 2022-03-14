@@ -5,8 +5,8 @@ Proyecto de la asignatura "Juegos por Computador" del MEI en la UPC.
 # TO-DO List
 - Entrega 2 (13/04)
     - [x] Hay que crear una escena para cada pantalla
-    - [ ] Para crear las pastillas hay que crear 2 sprites (~/sprites/pastillas) que se moverán conjuntamente
-    - [ ] Movimiento (sesión 4)
+    - [x] Para crear las pastillas hay que crear 2 sprites (~/sprites/pastillas) que se moverán conjuntamente
+    - [x] Movimiento (sesión 4)
     - [ ] Colisiones (sesión 5)(mirar cosa)
 
 
