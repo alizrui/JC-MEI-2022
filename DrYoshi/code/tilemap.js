@@ -198,15 +198,31 @@ Tilemap.prototype.draw = function () {
 
 	}
 	positions_to_check = [];
-
+	
 	// delete positions marked
 	var d = positions_to_delete.length;
-	
 	// if(d>0) console.log(positions_to_delete);
 	for (var n = 0; n < d; n++){
-		var p = positions_to_delete.pop();
-		this.map.layers[0].data[p] = 0;
-	}	
+		var pos = positions_to_delete.pop();
+		var pos_type = this.map.layers[0].data[pos];
+		//console.log(pos_type)
+		// change the position to neutral one
+		if(pos_type < 20){
+			var pos_to_change = whichPositionToChange(pos, pos_type, this.map.width);
+			//console.log(pos_to_change);
+			var color = Math.floor((this.map.layers[0].data[pos_to_change] - 1) / 5);
+			//console.log(color);
+			this.map.layers[0].data[pos_to_change] = (color+1) * 5;
+		}
+		// in future change this
+		this.map.layers[0].data[pos] = 0;
+
+	}
+
+	// transform capsules modified into single capsules
+
+
+
 }
 
 // Computes if the left part of a sprite collides with the tilemap.
@@ -277,6 +293,29 @@ Tilemap.prototype.addCapsule = function(type, posx, posy){
 	if(positions_to_check.indexOf(position_capsule) == -1) positions_to_check.push(position_capsule);
 	this.map.layers[0].data[position_capsule] = type + 1;
 
+}
+
+// returns the position to change given the type of capsule
+function whichPositionToChange(position, type, width){
+	var res = 0;
+	switch((type-1) % 5){
+		case 0:
+			res = width;
+			break;
+		case 1:
+			res = -width;
+			break;
+		case 2:
+			res = 1;
+			break;
+		case 3:
+			res = -1;
+			break;
+		default:
+			break;
+	}
+	return position + res;
+		
 }
 
 

@@ -10,7 +10,7 @@
     - [ ] Tipo de música (chill, guay, off)
 - [ ] Retoques de lógica
     - [ ] Animación destrucción capsula (DOING)
-    - [ ] Cambio de cápsula cuando se suelte una doble (DOING)
+    - [x] Cambio de cápsula cuando se suelte una doble (DOING)
     - [x] Más rápido tecla down
     - [ ] Cápsula cae cuando no tiene nada abajo (virus no)
     - [ ] Siguiente cápsula se muestra antes
