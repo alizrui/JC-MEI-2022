@@ -33,4 +33,4 @@
         - [ ] Movimiento de las cápsulas más rápido (3 velocidades)
         - [ ] Tipo de música (chill, guay, off)
     - [ ] Cambiar todos los sprites de cada escena a un mismo PNG
-    - [ ] Cambiar los sprites de viruses a un mismo png (EDA para 3 virus)
+    - [x] Cambiar los sprites de viruses a un mismo png (EDA para 3 virus)

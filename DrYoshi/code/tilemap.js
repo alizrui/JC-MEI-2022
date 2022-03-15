@@ -1,8 +1,8 @@
 
-
 positions_to_check = [];
 positions_to_delete = [];
-const viruses = [21, 22, 23];
+
+const pos_viruses = [21, 22, 23];
 // Tilemap. Draws a tilemap using a texture as a tilesheet.
 
 function Tilemap(tilesheet, tileSize, blockGrid, basePos, map, difficulty_level) {
@@ -14,42 +14,27 @@ function Tilemap(tilesheet, tileSize, blockGrid, basePos, map, difficulty_level)
 
 	this.tilesheet = tilesheet;
 
-	//this.difficulty_level = difficulty_level
-
 	// initialization of sprites
-	var virus1 = new Texture("../sprites/virus1_16.png");
-	var virus2 = new Texture("../sprites/virus2_16.png");
-	var virus3 = new Texture("../sprites/virus3_16.png");
+	var virus = new Texture("../sprites/virus.png");
 
-	this.virusSprite1 = new Sprite(0, 0, 16, 16, 1, virus1);
-	this.virusSprite2 = new Sprite(0, 0, 16, 16, 1, virus2);
-	this.virusSprite3 = new Sprite(0, 0, 16, 16, 1, virus3);
+	this.viruses = [0, 0, 0];
 
-	this.virusSprite1.addAnimation();
-	this.virusSprite2.addAnimation();
-	this.virusSprite3.addAnimation();
-
-	this.virusSprite1.addKeyframe(VIRUS_ANIMATION, [0, 0, 16, 16]);
-	this.virusSprite1.addKeyframe(VIRUS_ANIMATION, [0, 16, 16, 16]);
-
-	this.virusSprite2.addKeyframe(VIRUS_ANIMATION, [0, 0, 16, 16]);
-	this.virusSprite2.addKeyframe(VIRUS_ANIMATION, [0, 16, 16, 16]);
-
-	this.virusSprite3.addKeyframe(VIRUS_ANIMATION, [0, 0, 16, 16]);
-	this.virusSprite3.addKeyframe(VIRUS_ANIMATION, [0, 16, 16, 16]);
-
-	this.virusSprite1.setAnimation(VIRUS_ANIMATION);
-	this.virusSprite2.setAnimation(VIRUS_ANIMATION);
-	this.virusSprite3.setAnimation(VIRUS_ANIMATION);
+	for (var i = 0; i < 3; i++) {
+		this.viruses[i] = new Sprite(0, 0, 16, 16, 1, virus);
+		this.viruses[i].addAnimation();
+		this.viruses[i].addKeyframe(VIRUS_ANIMATION, [i * 16, 0, 16, 16]);
+		this.viruses[i].addKeyframe(VIRUS_ANIMATION, [i * 16, 16, 16, 16]);
+		this.viruses[i].setAnimation(VIRUS_ANIMATION);
+	}
 
 	this.addViruses(difficulty_level)
 
 }
 
 Tilemap.prototype.update = function (deltaTime) {
-	this.virusSprite1.update(deltaTime);
-	this.virusSprite2.update(deltaTime);
-	this.virusSprite3.update(deltaTime);
+	for (var i = 0; i < 3; i++) {
+		this.viruses[i].update(deltaTime);
+	}
 }
 
 Tilemap.prototype.draw = function () {
@@ -77,27 +62,18 @@ Tilemap.prototype.draw = function () {
 		for (var i = 0; i < this.map.width; i++, pos++) {
 			tileId = this.map.layers[0].data[pos];
 
-			if (tileId == 21) {
-				this.virusSprite1.x = this.basePos[0] + this.tileSize[0] * i
-				this.virusSprite1.y = this.basePos[1] + this.tileSize[1] * j
-				this.virusSprite1.draw();
-			} else if (tileId == 22) {
-				this.virusSprite2.x = this.basePos[0] + this.tileSize[0] * i
-				this.virusSprite2.y = this.basePos[1] + this.tileSize[1] * j
-				this.virusSprite2.draw();
-			} else if (tileId == 23) {
-				this.virusSprite3.x = this.basePos[0] + this.tileSize[0] * i
-				this.virusSprite3.y = this.basePos[1] + this.tileSize[1] * j
-				this.virusSprite3.draw();
-			}
-
-			else if (tileId != 0) {
+			// draw sprites of virus (positions 21, 22, 23)
+			if (tileId > 20) {
+				this.viruses[tileId - 21].x = this.basePos[0] + this.tileSize[0] * i;
+				this.viruses[tileId - 21].y = this.basePos[1] + this.tileSize[1] * j;
+				this.viruses[tileId - 21].draw();
+			} else if (tileId != 0) {
 				context.drawImage(this.tilesheet.img, tilePositions[tileId - 1][0], tilePositions[tileId - 1][1], blockSize[0], blockSize[1],
 					this.basePos[0] + this.tileSize[0] * i, this.basePos[1] + this.tileSize[1] * j, blockSize[0], blockSize[1]);
 			}
 		}
 
-	// this.map.layers[0].data[i];
+
 	// delete 4 or more consecutive capsules
 	positions_to_break = [];
 
@@ -155,8 +131,6 @@ Tilemap.prototype.draw = function () {
 		var pos = positions_to_delete.pop();
 		this.map.layers[0].data[pos] = 0;
 	}
-
-
 }
 
 // Computes if the left part of a sprite collides with the tilemap.
@@ -213,9 +187,9 @@ Tilemap.prototype.collisionMoveDown = function (sprite) {
 // Given the start of the line, the length and the step (map.width in columns, 1 in rows)
 // Check if there are 4 or more consecutive capsules with the same color
 
-Tilemap.prototype.checkLine = function(pos_line, aux_length, step){
+Tilemap.prototype.checkLine = function (pos_line, aux_length, step) {
 	// auxiliar variables
-	var prev_color = -1, num_same_color = 1, color = -1, check = false;
+	var prev_color = -1, num_same_color = 1, color = -1;
 	// check the line
 	for (var pos_cell = pos_line; pos_cell <= aux_length; pos_cell += step) {
 		// type of capsule/virus in tilemap
@@ -225,7 +199,7 @@ Tilemap.prototype.checkLine = function(pos_line, aux_length, step){
 			color = (pos_type > 20)
 				? this.map.layers[0].data[pos_cell] - 21
 				: Math.floor((this.map.layers[0].data[pos_cell] - 1) / 5); // OK
-			
+
 			if (color == prev_color) {
 				num_same_color++;
 				if (num_same_color >= 4) {
@@ -235,7 +209,7 @@ Tilemap.prototype.checkLine = function(pos_line, aux_length, step){
 				}
 			} else {
 				num_same_color = 1;
-			} 
+			}
 		} else {
 			color = -1;
 			num_same_color = 1;
@@ -270,20 +244,17 @@ Tilemap.prototype.addViruses = function (difficulty_level) {
 	var how_many_aux = 0;
 	var rand_num = -1;
 	var min = 13 * this.map.width - 2 * difficulty_level * this.map.width;
-	
+
 	// populates with 4*difficulty_level viruses in random positions
-	while (how_many_aux < 4*difficulty_level) {
+	while (how_many_aux < 4 * difficulty_level) {
 
 		// get a random position within the range min max
 		rand_num = Math.floor(Math.random() * (max - min) + min);
 		if (this.map.layers[0].data[rand_num] == 0) {
-			this.map.layers[0].data[rand_num] = viruses[Math.floor(Math.random()*viruses.length)];
+			this.map.layers[0].data[rand_num] = pos_viruses[Math.floor(Math.random() * pos_viruses.length)];
 			how_many_aux++;
 		}
 	}
-
-
-
 }
 
 // returns the position to change given the type of capsule
