@@ -4,37 +4,68 @@ function SceneMenu() {
 	// Load textures fondos
 	var menu_principal = new Texture("../img/menu_principal.png");
 	
-	// Load texture textos
-	var creditos = new Texture("../sprites/sprite_creditos.png");
-	var jugar = new Texture("../sprites/sprite_jugar.png");
-	var instr = new Texture("../sprites/sprite_instr.png");
+	// Load texture sprites
+	var texture_sprites = new Texture("../sprites/sprites_menu_principal.png");
+
+	//
+
+	// var creditos = new Texture("../sprites/sprite_creditos.png");
+	// var jugar = new Texture("../sprites/sprite_jugar.png");
+	// var instr = new Texture("../sprites/sprite_instr.png");
 	
 	// Create objects
 	this.imagePrincipal = new StaticImage(0, 0, 512, 480, menu_principal);
 	
-	// Create Sprites de textos
-	this.textoCreditos = new Sprite(187, 374, 160, 41, 1, creditos);
-	this.textoJugar = new Sprite(188, 253, 125, 51, 1, jugar);
-	this.textoInstr = new Sprite(189, 317, 221, 36, 1, instr);
+	// Create sprites
+	this.tituloDrYoshi = new Sprite(65, 93, 372, 86, 1, texture_sprites);
+	this.yoshi = new Sprite(99, 271, 81, 121, 1, texture_sprites);
+	this.textoCreditos = new Sprite(187, 374, 160, 41, 1, texture_sprites);
+	this.textoJugar = new Sprite(188, 253, 125, 51, 1, texture_sprites);
+	this.textoInstr = new Sprite(189, 317, 221, 36, 1, texture_sprites);
 	
+	this.tituloDrYoshi.addAnimation();
+	this.tituloDrYoshi.addKeyframe(0, [0, 0, 372, 86]);
+	this.tituloDrYoshi.addKeyframe(0, [0, 86, 372, 86]);
+	this.tituloDrYoshi.setAnimation(0);
+
+	this.yoshi.addAnimation();
+	this.yoshi.addKeyframe(0, [0, 346, 81, 121]);
+	this.yoshi.addKeyframe(0, [80, 346, 81, 121]);
+	this.yoshi.setAnimation(0);
+
 	this.textoCreditos.addAnimation();
-	this.textoCreditos.addKeyframe(0, [0, 0, 160, 41]);
-	this.textoCreditos.addKeyframe(0, [0, 41, 160, 41]);
+	this.textoCreditos.addKeyframe(0, [125, 172, 160, 41]);
+	this.textoCreditos.addKeyframe(0, [125, 213, 160, 41]);
 	this.textoCreditos.setAnimation(0);
 
 	this.textoJugar.addAnimation();
-	this.textoJugar.addKeyframe(0, [0, 0, 125, 51]);
-	this.textoJugar.addKeyframe(0, [0, 51, 125, 51]);
+	this.textoJugar.addKeyframe(0, [0, 172, 125, 51]);
+	this.textoJugar.addKeyframe(0, [0, 223, 125, 51]);
 	this.textoJugar.setAnimation(0);
 
 	this.textoInstr.addAnimation();
-	this.textoInstr.addKeyframe(0, [0, 0, 221, 36]);
-	this.textoInstr.addKeyframe(0, [0, 36, 221, 36]);
+	this.textoInstr.addKeyframe(0, [0, 274, 221, 36]);
+	this.textoInstr.addKeyframe(0, [0, 310, 221, 36]);
 	this.textoInstr.setAnimation(0);
+	
+	// this.textoCreditos = new Sprite(187, 374, 160, 41, 1, creditos);
+	// this.textoJugar = new Sprite(188, 253, 125, 51, 1, jugar);
+	// this.textoInstr = new Sprite(189, 317, 221, 36, 1, instr);
+	
+	// this.textoCreditos.addAnimation();
+	// this.textoCreditos.addKeyframe(0, [0, 0, 160, 41]);
+	// this.textoCreditos.addKeyframe(0, [0, 41, 160, 41]);
+	// this.textoCreditos.setAnimation(0);
 
-	// Loading texture to use in a TileMap
+	// this.textoJugar.addAnimation();
+	// this.textoJugar.addKeyframe(0, [0, 0, 125, 51]);
+	// this.textoJugar.addKeyframe(0, [0, 51, 125, 51]);
+	// this.textoJugar.setAnimation(0);
 
-	// Create tilemap
+	// this.textoInstr.addAnimation();
+	// this.textoInstr.addKeyframe(0, [0, 0, 221, 36]);
+	// this.textoInstr.addKeyframe(0, [0, 36, 221, 36]);
+	// this.textoInstr.setAnimation(0);
 
 	// Store current time
 	this.currentTime = 0
@@ -62,9 +93,12 @@ SceneMenu.prototype.update = function (deltaTime) {
 	}
 
 	// update sprites
+	this.tituloDrYoshi.update(deltaTime);
+	this.yoshi.update(deltaTime);
 	this.textoJugar.update(deltaTime);
 	this.textoInstr.update(deltaTime);
 	this.textoCreditos.update(deltaTime);
+	
 	}
 
 SceneMenu.prototype.draw = function () // meter argumento
@@ -85,7 +119,10 @@ SceneMenu.prototype.draw = function () // meter argumento
 	*/
 	this.imagePrincipal.draw();
 
+
 	// draw sprites
+	this.tituloDrYoshi.draw();
+	this.yoshi.draw();
 	if (whichButton == 0) {
 		this.textoJugar.draw();
 	} else if (whichButton == 1) {
