@@ -11,6 +11,7 @@
     - [x] Más rápido tecla down
     - [ ] Cápsula cae cuando no tiene nada abajo (virus no)
     - [ ] Siguiente cápsula se muestra antes
+    - [ ] Cambiar ovimiento lateral demasiado rápido
 - [ ] Animaciones
     - [ ] Lupa con virus bailando
     - [ ] Yoshi lanzando cápsula
@@ -23,9 +24,14 @@
     - [ ] Colisión de cápsulas
     - [ ] Nivel completado
     - [ ] Game over
-- [ ] MISCELANEA
+- [ ] Texto de letras y puntuaciones (carpeta 1)
+    - [ ] Mostrar puntuación
+    - [ ] Mostrar nº viruses
+    - [ ] Mostrar nivel
+- [ ] MISCELÁ   NEA
     - [ ] Pantalla intermedia con dificultades 
         - [ ] Número de virus (generación aleatoria) (5 niveles) (DOING)
         - [ ] Movimiento de las cápsulas más rápido (3 velocidades)
         - [ ] Tipo de música (chill, guay, off)
     - [ ] Cambiar todos los sprites de cada escena a un mismo PNG
+    - [ ] Cambiar los sprites de viruses a un mismo png (EDA para 3 virus)
