@@ -5,7 +5,7 @@
     - [ ] Virus bailando
     - [ ] Yoshi bailando
 - [ ] Retoques de lógica
-    - [ ] Generación aleatoria de virus (DOING)
+    - [x] Generación aleatoria de virus
     - [ ] Animación destrucción capsula (DOING) -> FALTA LO DEL TIMING QUE NO SÉ
     - [x] Cambio de cápsula cuando se suelte una doble (DOING)
     - [x] Más rápido tecla down
