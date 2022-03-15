@@ -1,9 +1,9 @@
 # TODOLIST
 - [x] Movimiento y colisiones
-- [ ] Retoques pantalla inicial 
-    - [ ] Letras brillantes,
-    - [ ] Virus bailando
-    - [ ] Yoshi bailando
+- [x] Retoques pantalla inicial 
+    - [x] Letras brillantes,
+    - [x] Virus bailando
+    - [x] Yoshi bailando
 - [ ] Retoques de lógica
     - [x] Generación aleatoria de virus
     - [ ] Animación destrucción capsula (DOING) -> FALTA LO DEL TIMING QUE NO SÉ
