@@ -48,25 +48,6 @@ function SceneMenu() {
 	this.textoInstr.addKeyframe(0, [0, 310, 221, 36]);
 	this.textoInstr.setAnimation(0);
 	
-	// this.textoCreditos = new Sprite(187, 374, 160, 41, 1, creditos);
-	// this.textoJugar = new Sprite(188, 253, 125, 51, 1, jugar);
-	// this.textoInstr = new Sprite(189, 317, 221, 36, 1, instr);
-	
-	// this.textoCreditos.addAnimation();
-	// this.textoCreditos.addKeyframe(0, [0, 0, 160, 41]);
-	// this.textoCreditos.addKeyframe(0, [0, 41, 160, 41]);
-	// this.textoCreditos.setAnimation(0);
-
-	// this.textoJugar.addAnimation();
-	// this.textoJugar.addKeyframe(0, [0, 0, 125, 51]);
-	// this.textoJugar.addKeyframe(0, [0, 51, 125, 51]);
-	// this.textoJugar.setAnimation(0);
-
-	// this.textoInstr.addAnimation();
-	// this.textoInstr.addKeyframe(0, [0, 0, 221, 36]);
-	// this.textoInstr.addKeyframe(0, [0, 36, 221, 36]);
-	// this.textoInstr.setAnimation(0);
-
 	// Store current time
 	this.currentTime = 0
 }
