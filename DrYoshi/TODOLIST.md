@@ -27,7 +27,7 @@
     - [ ] Mostrar puntuación
     - [ ] Mostrar nº viruses
     - [ ] Mostrar nivel
-- [ ] MISCELÁ   NEA
+- [ ] MISCELÁNEA
     - [ ] Pantalla intermedia con dificultades 
         - [ ] Número de virus (generación aleatoria) (5 niveles) (DOING)
         - [ ] Movimiento de las cápsulas más rápido (3 velocidades)
