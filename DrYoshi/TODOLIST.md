@@ -4,7 +4,7 @@
     - [ ] Letras brillantes,
     - [ ] Virus bailando
     - [ ] Yoshi bailando
-- [ ] Pantalla intermedia con dificultades 
+- [ ] Pantalla intermedia con dificultades (optional)
     - [ ] Número de virus (generación aleatoria)
     - [ ] Movimiento de las cápsulas más rápido
     - [ ] Tipo de música (chill, guay, off)
@@ -14,9 +14,8 @@
     - [ ] Cápsula cae cuando no tiene nada abajo (virus no)
     - [ ] Siguiente cápsula se muestra antes
 - [ ] Animaciones
-    - [ ] Lupa con virus bailando
-    - [ ] Yoshi lanzando cápsula
-    - [ ] Yoshi cuando pierdes
+    - [ ] Lupa con virus bailando -> Cuando pierdes se rien
+    - [ ] Yoshi lanzando cápsula -> Cuando pierdes se pone triste
     - [ ] Pantallita de GAME OVER
 - [ ] Músicas
     - [ ] Música de fondo (2 para juego, 1 para menu / otras pantallas)
