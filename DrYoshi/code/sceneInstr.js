@@ -24,11 +24,6 @@ function SceneInstr() {
 	this.animacionInstr.addKeyframe(0, [0, 0,  16, 64]);
 	this.animacionInstr.addKeyframe(0, [0, 64,  16, 64]);
 	this.animacionInstr.setAnimation(0);
-
-
-	// Loading texture to use in a TileMap
-	
-	// Create tilemap
 	
 	// Store current time
 	this.currentTime = 0

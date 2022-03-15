@@ -6,6 +6,8 @@ const capsules2 = [3, 8, 13];
 var pastilla1 = 0;
 var pastilla2 = 0;
 
+var difficulty_level = 1;
+
 var crear_pastilla = 1;
 
 // Scene GAME . Updates and draws a single scene of the game.
@@ -42,7 +44,8 @@ function SceneGame() {
 	var tilesheet = new Texture("../tiles/tiles16.png");
 
 	// Create tilemap
-	this.map = new Tilemap(tilesheet, [16, 16], [5, 5], [184, 176], empty_map);
+	//this.map = new Tilemap(tilesheet, [16, 16], [5, 5], [184, 176], empty_map, difficulty_level);
+	this.map = new Tilemap(tilesheet, [16, 16], [5, 5], [184, 176], mapa_auxiliar2, difficulty_level);
 
 	// Store current time
 	this.currentTime = 0
@@ -98,6 +101,12 @@ SceneGame.prototype.update = function (deltaTime) {
 			crear_pastilla = 1;
 		}
 	}
+
+	// Move capsule down faster 
+	if (keyboard[40]) { // KEY_DOWN
+		this.capsuleTimerY -= 4;
+	}
+		
 
 	// Move capsule left & right
 	if (this.capsuleTimerX <= 0) {
