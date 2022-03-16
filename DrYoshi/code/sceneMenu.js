@@ -70,9 +70,9 @@ SceneMenu.prototype.update = function (deltaTime) {
 	// update sprites
 	this.tituloDrYoshi.update(deltaTime+15);
 	this.yoshi.update(deltaTime+5);
-	this.textoJugar.update(deltaTime+3);
-	this.textoInstr.update(deltaTime+3);
-	this.textoCreditos.update(deltaTime+3);
+	this.textoJugar.update(deltaTime+8);
+	this.textoInstr.update(deltaTime+8);
+	this.textoCreditos.update(deltaTime+8);
 
 }
 

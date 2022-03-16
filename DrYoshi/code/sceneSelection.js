@@ -1,4 +1,9 @@
 
+var whichOption = 0;
+var whichDifficulty = 1;
+var whichSpeed = 0;
+var whichMusic = 0;
+
 // Scene SELECTION. Updates and draws a single scene of the game.
 
 function SceneSelection() {
@@ -94,11 +99,6 @@ function SceneSelection() {
 	this.chill.setAnimation(0); 		
 	this.off.setAnimation(0); 
 
-	// this.textoSalir.addAnimation();
-	// this.textoSalir.addKeyframe(0, [0, 0, 73, 21]);
-	// this.textoSalir.addKeyframe(0, [0, 21, 73, 21]);
-	// this.textoSalir.setAnimation(0);
-
 	// Store current time
 	this.currentTime = 0
 }
@@ -109,27 +109,88 @@ SceneSelection.prototype.update = function (deltaTime) {
 	this.currentTime += deltaTime;
 
 	// Game logic
+	// Select diferent scenes
+	if (keyboard[40]) { // KEY DOWN
+		keyboard[40] = false;
+		whichOption++;
+		if (whichOption > 3) whichOption = 0;
+
+	} else if (keyboard[38]) { // KEY UP
+		keyboard[38] = false;
+		whichOption--;
+		if (whichOption < 0) whichOption = 3;
+
+	}
+	if (keyboard[37]){ // KEY LEFT
+		keyboard[37] = false;
+		switch (whichOption) {
+			case 0: // virus level
+				if (whichDifficulty == 1) { whichDifficulty = 5; }
+				else { whichDifficulty--; }
+				break;
+			case 1: // velocidad
+				if (whichSpeed == 0) { whichSpeed = 2; }
+				else { whichSpeed--; }
+				break;
+			case 2: // música
+				if (whichMusic == 0) { whichMusic = 2; }
+				else { whichMusic--; }
+				break;
+			default: // salir
+				break;
+		}
+	} 
+	if (keyboard[39]){ // KEY RIGHT
+		keyboard[39] = false;
+		switch (whichOption) {
+			case 0: // virus level
+				if (whichDifficulty == 5) { whichDifficulty = 1; }
+				else { whichDifficulty++; }
+				break;
+			case 1: // velocidad
+				if (whichSpeed == 2) { whichSpeed = 0; }
+				else { whichSpeed++; }
+				break;
+			case 2: // música
+				if (whichMusic == 2) { whichMusic = 0; }
+				else { whichMusic++; }
+				break;
+			default: // salir
+				break;
+		}
+	} 
+	
+	if (keyboard[13]) { // ENTER
+		keyboard[13] = false;
+		if(whichOption == 3){
+			whichScene = 0;
+		} else {
+			whichScene = whichButton + 4;
+		}
+	}
+	
+
 	if (keyboard[13]){
 		keyboard[13] = false;
 		whichScene = 4;
-	}	
+	}
 
 	// Update sprites
-	this.virusLevel.update(deltaTime);
-	this.velocidad.update(deltaTime);
-	this.musica.update(deltaTime);
-	this.salir.update(deltaTime);
-	this.sprite1.update(deltaTime);
-	this.sprite2.update(deltaTime);
-	this.sprite3.update(deltaTime);
-	this.sprite4.update(deltaTime);
-	this.sprite5.update(deltaTime);
-	this.low.update(deltaTime);
-	this.med.update(deltaTime);
-	this.hi.update(deltaTime);
-	this.cool.update(deltaTime);
-	this.chill.update(deltaTime);
-	this.off.update(deltaTime);
+	this.virusLevel.update(deltaTime+8);
+	this.velocidad.update(deltaTime+8);
+	this.musica.update(deltaTime+8);
+	this.salir.update(deltaTime+8);
+	this.sprite1.update(deltaTime+15);
+	this.sprite2.update(deltaTime+15);
+	this.sprite3.update(deltaTime+15);
+	this.sprite4.update(deltaTime+15);
+	this.sprite5.update(deltaTime+15);
+	this.low.update(deltaTime+15);
+	this.med.update(deltaTime+15);
+	this.hi.update(deltaTime+15);
+	this.cool.update(deltaTime+15);
+	this.chill.update(deltaTime+15);
+	this.off.update(deltaTime+15);
 }
 
 SceneSelection.prototype.draw = function () // meter argumento
@@ -145,21 +206,35 @@ SceneSelection.prototype.draw = function () // meter argumento
 	this.imageCreditos.draw();
 
 	// Draw sprite salir (FALTA LOGICA)
-	this.virusLevel.draw();
-	this.velocidad.draw();
-	this.musica.draw();
-	this.salir.draw();
-	this.sprite1.draw();
-	this.sprite2.draw();
-	this.sprite3.draw();
-	this.sprite4.draw();
-	this.sprite5.draw();
-	this.low.draw();
-	this.med.draw();
-	this.hi.draw();
-	this.cool.draw();
-	this.chill.draw();
-	this.off.draw();
+	switch (whichOption) {
+		case 0: this.virusLevel.draw(); break;
+		case 1: this.velocidad.draw(); break;
+		case 2: this.musica.draw(); break;
+		default: this.salir.draw(); break;
+	}
+
+	// virus level = 0, velocidad = 1, música = 2, salir = 3
+	switch (whichDifficulty) { 
+		case 1: this.sprite1.draw(); break;
+		case 2: this.sprite2.draw(); break;
+		case 3: this.sprite3.draw(); break;
+		case 4: this.sprite4.draw(); break;
+		default: this.sprite5.draw(); break;
+	}
+	
+	// low = 0, med = 1, hi = 2
+	switch (whichSpeed) {
+		case 0: this.low.draw(); break;
+		case 1: this.med.draw(); break;
+		default: this.hi.draw(); break;
+	}
+
+	// cool = 0, chill = 1, off = 2
+	switch (whichMusic) {
+		case 0: this.cool.draw(); break;
+		case 1: this.chill.draw(); break;
+		default: this.off.draw(); break;
+	}
 }
 
 
