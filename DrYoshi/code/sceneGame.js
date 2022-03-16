@@ -1,8 +1,11 @@
-const CAPSULE_INIT_TIMER_X = 5;
+const CAPSULE_INIT_TIMER_X = 8;
 const CAPSULE_INIT_TIMER_Y = 25;
 
 const capsules1 = [2, 7, 12];
 const capsules2 = [3, 8, 13];
+
+var controller_left = 0, controller_right = 0;
+
 var pastilla1 = 0;
 var pastilla2 = 0;
 
@@ -18,7 +21,6 @@ function SceneGame() {
 	
 	// Load texture textos
 	var salir = new Texture("../sprites/sprite_salir.png");
-	var jugar = new Texture("../sprites/sprite_jugar.png");
 	
 	// data estructure with all capsules
 	this.pastillasSprites = createPastillas();
@@ -28,17 +30,11 @@ function SceneGame() {
 	
 	// Create Sprites de textos
 	this.textoSalir = new Sprite(100, 355, 73, 21, 1, salir);
-	this.textoJugar = new Sprite(188, 253, 125, 51, 1, jugar);
 	
 	this.textoSalir.addAnimation();
 	this.textoSalir.addKeyframe(0, [0, 0, 73, 21]);
 	this.textoSalir.addKeyframe(0, [0, 21, 73, 21]);
 	this.textoSalir.setAnimation(0);
-
-	this.textoJugar.addAnimation();
-	this.textoJugar.addKeyframe(0, [0, 0, 125, 51]);
-	this.textoJugar.addKeyframe(0, [0, 51, 125, 51]);
-	this.textoJugar.setAnimation(0);
 
 	// Loading texture to use in a TileMap
 	var tilesheet = new Texture("../tiles/tiles16.png");
@@ -65,8 +61,8 @@ SceneGame.prototype.update = function (deltaTime) {
 		crear_pastilla = 0;
 
 		// create random capsule (will move)
-		pastilla1 = capsules1[Math.floor(Math.random()*capsules1.length)];
-		pastilla2 = capsules2[Math.floor(Math.random()*capsules2.length)];
+		pastilla1 = capsules1[Math.floor(Math.random() * capsules1.length)];
+		pastilla2 = capsules2[Math.floor(Math.random() * capsules2.length)];
 
 		// starting positions
 		this.pastillasSprites[pastilla1].x = 232;
@@ -121,7 +117,8 @@ SceneGame.prototype.update = function (deltaTime) {
 			}
 			this.capsuleTimerX = CAPSULE_INIT_TIMER_X;
 		}
-		else if (keyboard[39]) // KEY_RIGHT
+		
+		if (keyboard[39]) // KEY_RIGHT
 		{
 			this.pastillasSprites[pastilla1].x += 16;
 			this.pastillasSprites[pastilla2].x += 16;

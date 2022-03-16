@@ -8,6 +8,7 @@ var sceneMenu = new SceneMenu();
 var sceneGame = new SceneGame();
 var sceneInstr = new SceneInstr();
 var sceneCreditos = new SceneCreditos();
+var sceneSelection = new SceneSelection();
 var previousTimestamp;
 var keyboard = [];
 var interacted;
@@ -52,17 +53,21 @@ function frameUpdate(timestamp) {
 			previousTimestamp += TIME_PER_FRAME
 			sceneMenu.draw();
 		} else if(whichScene == 1){
-			sceneGame.update(TIME_PER_FRAME);
+			sceneSelection.update(TIME_PER_FRAME);
 			previousTimestamp += TIME_PER_FRAME
-			sceneGame.draw();	
+			sceneSelection.draw();	
 		} else if(whichScene == 2){
 			sceneInstr.update(TIME_PER_FRAME);
 			previousTimestamp += TIME_PER_FRAME
 			sceneInstr.draw();
-		} else {
+		} else if (whichScene == 3) {
 			sceneCreditos.update(TIME_PER_FRAME);
 			previousTimestamp += TIME_PER_FRAME
 			sceneCreditos.draw();
+		} else {
+			sceneGame.update(TIME_PER_FRAME);
+			previousTimestamp += TIME_PER_FRAME
+			sceneGame.draw();		
 		}
 	}
 	window.requestAnimationFrame(frameUpdate)

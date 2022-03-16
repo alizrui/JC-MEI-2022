@@ -7,12 +7,6 @@ function SceneMenu() {
 	// Load texture sprites
 	var texture_sprites = new Texture("../sprites/sprites_menu_principal.png");
 
-	//
-
-	// var creditos = new Texture("../sprites/sprite_creditos.png");
-	// var jugar = new Texture("../sprites/sprite_jugar.png");
-	// var instr = new Texture("../sprites/sprite_instr.png");
-
 	// Create objects
 	this.imagePrincipal = new StaticImage(0, 0, 512, 480, menu_principal);
 
@@ -99,7 +93,6 @@ SceneMenu.prototype.draw = function () // meter argumento
 		3: créditos
 	*/
 	this.imagePrincipal.draw();
-
 
 	// draw sprites
 	this.tituloDrYoshi.draw();

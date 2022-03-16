@@ -15,7 +15,7 @@ Proyecto de la asignatura "Juegos por Computador" del MEI en la UPC.
     - [x] Más rápido tecla down
     - [ ] Cápsula cae cuando no tiene nada abajo (virus no)
     - [ ] Siguiente cápsula se muestra antes
-    - [ ] Cambiar ovimiento lateral demasiado rápido
+    - [x] Cambiar ovimiento lateral demasiado rápido (VARIABLE capsuleTimerX)
 - [ ] Animaciones
     - [ ] Lupa con virus bailando -> Cuando pierdes se rien
     - [ ] Yoshi lanzando cápsula -> Cuando pierdes se pone triste

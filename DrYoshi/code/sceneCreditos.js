@@ -19,10 +19,6 @@ function SceneCreditos() {
 	this.textoSalir.addKeyframe(0, [0, 21, 73, 21]);
 	this.textoSalir.setAnimation(0);
 
-	// Loading texture to use in a TileMap
-
-	// Create tilemap
-
 	// Store current time
 	this.currentTime = 0
 }
