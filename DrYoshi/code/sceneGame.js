@@ -1,15 +1,11 @@
 const CAPSULE_INIT_TIMER_X = 8;
-const CAPSULE_INIT_TIMER_Y = 25;
+var CAPSULE_INIT_TIMER_Y = 40;
 
 const capsules1 = [2, 7, 12];
 const capsules2 = [3, 8, 13];
 
-var controller_left = 0, controller_right = 0;
-
 var pastilla1 = 0;
 var pastilla2 = 0;
-
-var difficulty_level = 1;
 
 var crear_pastilla = 1;
 
@@ -41,7 +37,7 @@ function SceneGame() {
 
 	// Create tilemap
 	//this.map = new Tilemap(tilesheet, [16, 16], [5, 5], [184, 176], empty_map, difficulty_level);
-	this.map = new Tilemap(tilesheet, [16, 16], [5, 5], [184, 176], mapa_auxiliar2, difficulty_level);
+	this.map = new Tilemap(tilesheet, [16, 16], [5, 5], [184, 176], mapa_auxiliar2);
 
 	// Store current time
 	this.currentTime = 0
@@ -198,6 +194,10 @@ SceneGame.prototype.update = function (deltaTime) {
 
 SceneGame.prototype.draw = function () // meter argumento
 {
+	if (aux_updateParameters){
+		aux_updateParameters = false;
+		this.updateParameters();
+	}
 	// Get canvas object, then its context
 	var canvas = document.getElementById("game-layer");
 	var context = canvas.getContext("2d");
@@ -221,8 +221,16 @@ SceneGame.prototype.draw = function () // meter argumento
 	this.textoSalir.draw();
 }
 
+SceneGame.prototype.updateParameters = function () {
+	crear_pastilla = 1;
+	this.capsuleTimerY = 100;
+	this.capsuleTimerX = 100;
+	this.map.addViruses(whichDifficulty);
+	//whichSpeed // do something with this two
+	//whichMusic
+}
+
 function createPastillas() {
-	
 	var all_pastillas = new Texture("../tiles/tiles16.png");
 	let pastillasSprites = [];
 

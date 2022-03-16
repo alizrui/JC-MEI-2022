@@ -5,7 +5,7 @@ positions_to_delete = [];
 const pos_viruses = [21, 22, 23];
 // Tilemap. Draws a tilemap using a texture as a tilesheet.
 
-function Tilemap(tilesheet, tileSize, blockGrid, basePos, map, difficulty_level) {
+function Tilemap(tilesheet, tileSize, blockGrid, basePos, map) {
 	this.tileSize = tileSize;
 	this.basePos = basePos;
 	this.blockGrid = blockGrid;
@@ -27,7 +27,7 @@ function Tilemap(tilesheet, tileSize, blockGrid, basePos, map, difficulty_level)
 		this.viruses[i].setAnimation(VIRUS_ANIMATION);
 	}
 
-	this.addViruses(difficulty_level)
+	// this.addViruses(difficulty_level)
 
 }
 
@@ -67,7 +67,8 @@ Tilemap.prototype.draw = function () {
 				this.viruses[tileId - 21].x = this.basePos[0] + this.tileSize[0] * i;
 				this.viruses[tileId - 21].y = this.basePos[1] + this.tileSize[1] * j;
 				this.viruses[tileId - 21].draw();
-			} else if (tileId != 0) {
+			} 
+			if (tileId != 0) {
 				context.drawImage(this.tilesheet.img, tilePositions[tileId - 1][0], tilePositions[tileId - 1][1], blockSize[0], blockSize[1],
 					this.basePos[0] + this.tileSize[0] * i, this.basePos[1] + this.tileSize[1] * j, blockSize[0], blockSize[1]);
 			}

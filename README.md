@@ -9,6 +9,7 @@ Proyecto de la asignatura "Juegos por Computador" del MEI en la UPC.
     - [x] Virus bailando
     - [x] Yoshi bailando
 - [ ] Retoques de lógica
+    - [x] Reset cápsula cada vez que se empieza
     - [x] Generación aleatoria de virus
     - [ ] Animación destrucción capsula (DOING) -> FALTA LO DEL TIMING QUE NO SÉ
     - [x] Cambio de cápsula cuando se suelte una doble (DOING)
@@ -32,10 +33,10 @@ Proyecto de la asignatura "Juegos por Computador" del MEI en la UPC.
     - [ ] Mostrar nº viruses
     - [ ] Mostrar nivel
 - [ ] MISCELÁNEA
-    - [ ] Pantalla intermedia con dificultades 
-        - [ ] Navegación por la pantalla
-        - [ ] Número de virus (generación aleatoria) (5 niveles) (DOING)
-        - [ ] Movimiento de las cápsulas más rápido (3 velocidades)
+    - [x] Pantalla intermedia con dificultades 
+        - [x] Navegación por la pantalla
+        - [x] Número de virus (generación aleatoria) (5 niveles) (DOING)
+        - [x] Movimiento de las cápsulas más rápido (3 velocidades)
         - [ ] Tipo de música (chill, guay, off)
-    - [ ] Cambiar todos los sprites de cada escena a un mismo PNG
+    - [x] Cambiar todos los sprites de cada escena a un mismo PNG
     - [x] Cambiar los sprites de viruses a un mismo png (EDA para 3 virus)

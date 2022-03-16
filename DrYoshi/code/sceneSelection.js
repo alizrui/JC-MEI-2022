@@ -4,6 +4,8 @@ var whichDifficulty = 1;
 var whichSpeed = 0;
 var whichMusic = 0;
 
+var aux_updateParameters = false;
+
 // Scene SELECTION. Updates and draws a single scene of the game.
 
 function SceneSelection() {
@@ -166,6 +168,8 @@ SceneSelection.prototype.update = function (deltaTime) {
 			whichScene = 0;
 		} else {
 			whichScene = whichButton + 4;
+			aux_updateParameters = true;
+			CAPSULE_INIT_TIMER_Y = 40 - whichSpeed * 10;
 		}
 	}
 	

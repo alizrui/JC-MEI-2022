@@ -9,9 +9,11 @@ var sceneGame = new SceneGame();
 var sceneInstr = new SceneInstr();
 var sceneCreditos = new SceneCreditos();
 var sceneSelection = new SceneSelection();
+
 var previousTimestamp;
 var keyboard = [];
 var interacted;
+
 var whichScene = 0;
 var whichButton = 0;
 
