@@ -68,11 +68,11 @@ SceneMenu.prototype.update = function (deltaTime) {
 	}
 
 	// update sprites
-	this.tituloDrYoshi.update(deltaTime);
-	this.yoshi.update(deltaTime);
-	this.textoJugar.update(deltaTime);
-	this.textoInstr.update(deltaTime);
-	this.textoCreditos.update(deltaTime);
+	this.tituloDrYoshi.update(deltaTime+15);
+	this.yoshi.update(deltaTime+5);
+	this.textoJugar.update(deltaTime+3);
+	this.textoInstr.update(deltaTime+3);
+	this.textoCreditos.update(deltaTime+3);
 
 }
 

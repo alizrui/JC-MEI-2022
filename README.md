@@ -18,7 +18,7 @@ Proyecto de la asignatura "Juegos por Computador" del MEI en la UPC.
     - [x] Cambiar ovimiento lateral demasiado rápido (VARIABLE capsuleTimerX)
 - [ ] Animaciones
     - [ ] Lupa con virus bailando -> Cuando pierdes se rien
-    - [ ] Yoshi lanzando cápsula -> Cuando pierdes se pone triste
+    - [ ] Yoshi lanzando cápsula -> Cuando pierdes se pone triste <- DEBERïA PRIORIZARSE
     - [ ] Pantallita de GAME OVER
 - [ ] Músicas
     - [ ] Música de fondo (2 para juego, 1 para menu / otras pantallas)
@@ -33,6 +33,7 @@ Proyecto de la asignatura "Juegos por Computador" del MEI en la UPC.
     - [ ] Mostrar nivel
 - [ ] MISCELÁNEA
     - [ ] Pantalla intermedia con dificultades 
+        - [ ] Navegación por la pantalla
         - [ ] Número de virus (generación aleatoria) (5 niveles) (DOING)
         - [ ] Movimiento de las cápsulas más rápido (3 velocidades)
         - [ ] Tipo de música (chill, guay, off)
