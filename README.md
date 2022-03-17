@@ -8,18 +8,25 @@ Proyecto de la asignatura "Juegos por Computador" del MEI en la UPC.
     - [x] Letras brillantes,
     - [x] Virus bailando
     - [x] Yoshi bailando
-- [ ] Retoques de lógica
+- [ ] Animaciones y retoques de lógica
     - [x] Reset cápsula cada vez que se empieza
     - [x] Generación aleatoria de virus
-    - [ ] Animación destrucción capsula (DOING) -> FALTA LO DEL TIMING QUE NO SÉ
+    - [ ] Animación destrucción capsula (DOING) -> FALTA LO DEL TIMER, Ha dicho que cuando hay una eliminación una capsula debería empezar un timer
     - [x] Cambio de cápsula cuando se suelte una doble (DOING)
     - [x] Más rápido tecla down
-    - [ ] Cápsula cae cuando no tiene nada abajo (virus no)
+    - [ ] Cápsula AISLADA cae cuando no tiene nada abajo (virus no)
+    - [ ] Elementos AISLADOS deben caer no sujetos y actualizarse (dividir en funciones dice)
+        - [ ] Lo que no esté sujeto que caiga (CHECKEAR FILAS DESDE ABAJO, PASADA POR TODO EL MAPA Y REPETIR HASTA QUE DEJE DE CAER)
+        - [ ] Animar eso (Conexiones son importantes)
+        - [ ] Que no caigan los que esten conectados y sujetos
+        - [ ] Volver a mirar si hay destrucción y volver a entrar al bucle
+        
     - [ ] Siguiente cápsula se muestra antes
     - [x] Cambiar ovimiento lateral demasiado rápido (VARIABLE capsuleTimerX)
-- [ ] Animaciones
+    - [ ] Animación impacto cápsula -> Se ve que cuando llega una capsula está un poco más abajo de lo que debería y cuando se coloca en el tilemap se pone bien
     - [ ] Lupa con virus bailando -> Cuando pierdes se rien
-    - [ ] Yoshi lanzando cápsula -> Cuando pierdes se pone triste <- DEBERïA PRIORIZARSE
+    - [ ] Yoshi lanzando cápsula <- DEBERÍA PRIORIZARSE
+    - [ ] Cuando pierdes se pone triste 
     - [ ] Pantallita de GAME OVER
 - [ ] Músicas
     - [ ] Música de fondo (2 para juego, 1 para menu / otras pantallas)
