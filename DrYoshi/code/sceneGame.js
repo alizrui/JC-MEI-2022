@@ -62,9 +62,9 @@ SceneGame.prototype.update = function (deltaTime) {
 
 		// starting positions
 		this.pastillasSprites[pastilla1].x = 232;
-		this.pastillasSprites[pastilla1].y = 176+2;
+		this.pastillasSprites[pastilla1].y = 176 + 2;
 		this.pastillasSprites[pastilla2].x = 248;
-		this.pastillasSprites[pastilla2].y = 176+2;
+		this.pastillasSprites[pastilla2].y = 176 + 2;
 	}
 	// Move capsule down
 	this.capsuleTimerY--;
@@ -76,8 +76,8 @@ SceneGame.prototype.update = function (deltaTime) {
 		// if capsule collides
 		if (this.map.collisionMoveDown(this.pastillasSprites[pastilla1])
 		|| this.map.collisionMoveDown(this.pastillasSprites[pastilla2])
-		|| this.pastillasSprites[pastilla1].y > 448+2
-		|| this.pastillasSprites[pastilla2].y > 448+2) {
+		|| this.pastillasSprites[pastilla1].y > 448
+		|| this.pastillasSprites[pastilla2].y > 448) {
 			this.pastillasSprites[pastilla1].y -= 16;
 			this.pastillasSprites[pastilla2].y -= 16;
 

@@ -23,18 +23,21 @@ Proyecto de la asignatura "Juegos por Computador" del MEI en la UPC.
         
     - [ ] Siguiente cápsula se muestra antes
     - [x] Cambiar ovimiento lateral demasiado rápido (VARIABLE capsuleTimerX)
-    - [ ] Animación impacto cápsula -> Se ve que cuando llega una capsula está un poco más abajo de lo que debería y cuando se coloca en el tilemap se pone bien
+    - [x] Animación impacto cápsula -> Se ve que cuando llega una capsula está un poco más abajo de lo que debería y cuando se coloca en el tilemap se pone bien
     - [ ] Lupa con virus bailando -> Cuando pierdes se rien
     - [ ] Yoshi lanzando cápsula <- DEBERÍA PRIORIZARSE
     - [ ] Cuando pierdes se pone triste 
     - [ ] Pantallita de GAME OVER
 - [ ] Músicas
     - [ ] Música de fondo (2 para juego, 1 para menu / otras pantallas)
+    - [ ] Sonido tirar cápsula
+    - [ ] Sonido mover izq/dcha
+    - [ ] Sonido bajar capsula rápidp
     - [ ] Pulsar botón
     - [ ] Destrucción de cápsulas
     - [ ] Colisión de cápsulas
     - [ ] Nivel completado
-    - [ ] Game over
+    - [ ] Game over 
 - [ ] Texto de letras y puntuaciones (carpeta 1)
     - [ ] Mostrar puntuación
     - [ ] Mostrar nº viruses

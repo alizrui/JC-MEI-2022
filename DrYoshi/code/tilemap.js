@@ -139,8 +139,8 @@ Tilemap.prototype.draw = function () {
 
 Tilemap.prototype.collisionMoveLeft = function (sprite) {
 	var x = Math.floor((sprite.x - this.basePos[0]) / this.tileSize[0]);
-	var y0 = Math.floor((sprite.y - this.basePos[1]) / this.tileSize[1]);
-	var y1 = Math.floor((sprite.y + sprite.height - 1 - this.basePos[1]) / this.tileSize[1]);
+	var y0 = Math.floor(((sprite.y-2) - this.basePos[1]) / this.tileSize[1]);
+	var y1 = Math.floor(((sprite.y-2) + sprite.height - 1 - this.basePos[1]) / this.tileSize[1]);
 
 	for (var y = y0; y <= y1; y++) {
 		if (this.map.layers[0].data[y * this.map.width + x] != 0)
@@ -155,8 +155,8 @@ Tilemap.prototype.collisionMoveLeft = function (sprite) {
 
 Tilemap.prototype.collisionMoveRight = function (sprite) {
 	var x = Math.floor((sprite.x + sprite.width - 1 - this.basePos[0]) / this.tileSize[0]);
-	var y0 = Math.floor((sprite.y - this.basePos[1]) / this.tileSize[1]);
-	var y1 = Math.floor((sprite.y + sprite.height - 1 - this.basePos[1]) / this.tileSize[1]);
+	var y0 = Math.floor(((sprite.y-2) - this.basePos[1]) / this.tileSize[1]);
+	var y1 = Math.floor(((sprite.y-2) + sprite.height - 1 - this.basePos[1]) / this.tileSize[1]);
 
 	for (var y = y0; y <= y1; y++) {
 		if (this.map.layers[0].data[y * this.map.width + x] != 0)
@@ -170,8 +170,8 @@ Tilemap.prototype.collisionMoveRight = function (sprite) {
 // Returns a boolean with the result.
 
 Tilemap.prototype.collisionMoveDown = function (sprite) {
-	var y = Math.floor((sprite.y + 2 + sprite.height - 1 - this.basePos[1]) / this.tileSize[1]);
-	var x0 = Math.floor((sprite.x - this.basePos[0]) / this.tileSize[0]); // restar el valor de 
+	var y = Math.floor(((sprite.y-2) + sprite.height - 1 - this.basePos[1]) / this.tileSize[1]);
+	var x0 = Math.floor((sprite.x - this.basePos[0]) / this.tileSize[0]); 
 	var x1 = Math.floor((sprite.x + sprite.width - 1 - this.basePos[0]) / this.tileSize[0]);
 
 	if ((y < 0) || (y >= this.map.height))
@@ -225,7 +225,7 @@ Tilemap.prototype.addCapsule = function (type, posx, posy) {
 
 	// calculates position in the tilemap
 	aux_x = (posx - this.basePos[0]) / 16;
-	aux_y = ((posy - 2 - this.basePos[1]) / 16) * this.map.width ; // mirar que es esto
+	aux_y = (((posy-2) - this.basePos[1]) / 16) * this.map.width ;
 
 	position_capsule = aux_x + aux_y;
 	if (positions_to_check.indexOf(position_capsule) == -1) positions_to_check.push(position_capsule);
