@@ -50,3 +50,4 @@ Proyecto de la asignatura "Juegos por Computador" del MEI en la UPC.
         - [ ] Tipo de música (chill, guay, off)
     - [x] Cambiar todos los sprites de cada escena a un mismo PNG
     - [x] Cambiar los sprites de viruses a un mismo png (EDA para 3 virus)
+    - [ ] Cambiar lógica a sceneGame

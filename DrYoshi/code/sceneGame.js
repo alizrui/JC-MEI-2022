@@ -39,7 +39,7 @@ function SceneGame() {
 	// Create tilemap
 	//this.map = new Tilemap(tilesheet, [16, 16], [5, 5], [184, 176], empty_map, difficulty_level);
 	this.map = new Tilemap(tilesheet, [16, 16], [5, 5], [184, 176], mapa_auxiliar2);
-
+	
 	// Store current time
 	this.currentTime = 0
 
@@ -92,10 +92,6 @@ SceneGame.prototype.update = function (deltaTime) {
 				this.pastillasSprites[pastilla2].x, 
 				this.pastillasSprites[pastilla2].y);
 			
-			// if(broken){
-			// 	this.capsuleTimerY = 100; // De momento 100, iremos cambiando paraaaa ver como queda mejor
-			// 	stopped = true;
-			// }
 			// create new capsule (debug)
 			crear_pastilla = 1;
 		}
