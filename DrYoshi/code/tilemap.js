@@ -1,6 +1,7 @@
 
 positions_to_delete = [];
 positions_to_break = [];
+stoppedTilemap = false;
 
 const pos_viruses = [21, 22, 23];
 // Tilemap. Draws a tilemap using a texture as a tilesheet.
@@ -35,6 +36,38 @@ Tilemap.prototype.update = function (deltaTime) {
 	for (var i = 0; i < 3; i++) {
 		this.viruses[i].update(deltaTime);
 	}
+	
+
+	// delete positions marked 
+	var b = positions_to_break.length;
+
+	// if(d>0) console.log(positions_to_break);
+	for (var n = 0; n < b; n++) {
+		var pos = positions_to_break.pop();
+		var pos_type = (this.map.layers[0].data[pos] - 1);
+
+		// change the capsules to neutral form
+		if (pos_type < 20 && pos_type % 5 != 4) {
+			var pos_to_change = whichPositionToChange(pos, pos_type % 5, this.map.width);
+			var color_to_change = Math.floor((this.map.layers[0].data[pos_to_change] - 1) / 5);
+			this.map.layers[0].data[pos_to_change] = (color_to_change + 1) * 5;
+		}
+
+		// change to capsule broke in each color
+		var color = (pos_type > 20)
+			? 18 // virus to sprite explode 
+			: Math.floor((this.map.layers[0].data[pos] - 1) / 5); // g=0,r=1,b=2 :: 16,17,18 are broke sprites
+		this.map.layers[0].data[pos] = color;
+		if (positions_to_delete.indexOf(pos) == -1) positions_to_delete.push(pos);
+	}
+
+	// delete all broken capsules
+	var d = positions_to_delete.length;
+	if (d) { console.log(positions_to_delete); } // DEBUG
+	for (var n = 0; n < d; n++) {
+		var pos = positions_to_delete.pop();
+		this.map.layers[0].data[pos] = 0;
+	}
 }
 
 Tilemap.prototype.draw = function () {
@@ -68,7 +101,7 @@ Tilemap.prototype.draw = function () {
 				this.viruses[tileId - 21].y = this.basePos[1] + this.tileSize[1] * j;
 				this.viruses[tileId - 21].draw();
 			} 
-			if (tileId != 0 && tileId != 20 && tileId != 24 && tileId != 25) { // DEBUGGING, FAKE SOLUTION
+			if (tileId > 0 && tileId != 20 && tileId != 24 && tileId != 25) { // DEBUGGING, FAKE SOLUTION
 				context.drawImage(this.tilesheet.img, tilePositions[tileId - 1][0], tilePositions[tileId - 1][1], blockSize[0], blockSize[1],
 					this.basePos[0] + this.tileSize[0] * i, this.basePos[1] + this.tileSize[1] * j, blockSize[0], blockSize[1]);
 			}
@@ -129,7 +162,9 @@ Tilemap.prototype.collisionMoveDown = function (sprite) {
 
 // add new capsules to the tilemap
 Tilemap.prototype.addCapsule = function (type1, posx1, posy1, type2, posx2, posy2) {	
-	
+	stopped = true;
+	stoppedTilemap = true;
+
 	// calculates positions in the tilemap
 	aux_x1 = (posx1 - this.basePos[0]) / 16;
 	aux_y1 = (((posy1-2) - this.basePos[1]) / 16) * this.map.width ;
@@ -155,40 +190,7 @@ Tilemap.prototype.addCapsule = function (type1, posx1, posy1, type2, posx2, posy
 		this.checkLine(i, i + (this.map.width - 1), 1);
 	}
 
-	// delete positions marked (FALTA LO DEL TIMER)
-	var b = positions_to_break.length;
-
-	if (!b) { return false; }
-	// if(d>0) console.log(positions_to_break);
-	for (var n = 0; n < b; n++) {
-		var pos = positions_to_break.pop();
-		var pos_type = (this.map.layers[0].data[pos] - 1) % 5;
-
-		// change the capsules to neutral form
-		if (pos_type < 20 && pos_type != 4) {
-			var pos_to_change = whichPositionToChange(pos, pos_type, this.map.width);
-			var color_to_change = Math.floor((this.map.layers[0].data[pos_to_change] - 1) / 5);
-			this.map.layers[0].data[pos_to_change] = (color_to_change + 1) * 5;
-		}
-
-		// change to capsule broke in each color
-		var color = (pos > 20)
-			? 18 // virus to sprite explode 
-			: Math.floor((this.map.layers[0].data[pos] - 1) / 5); // g=0,r=1,b=2 :: 16,17,18 are broke sprites
-		this.map.layers[0].data[pos] = color;
-		if (positions_to_delete.indexOf(pos) == -1) positions_to_delete.push(pos);
-	}
-
-	console.log(positions_to_delete)
-
-	// delete all broken capsules
-	var d = positions_to_delete.length;
-	for (var n = 0; n < d; n++) {
-		var pos = positions_to_delete.pop();
-		this.map.layers[0].data[pos] = 0;
-	}
-
-	return true;
+	//stopped = false;
 }
 
 
@@ -250,7 +252,8 @@ Tilemap.prototype.addViruses = function (difficulty_level) {
 		}
 	}
 
-	this.addCapsule(-1,-1,-1,-1,-1,-1) // DEBUG
+	this.addCapsule(-1,-1,-1,-1,-1,-1); // DEBUG
+	stopped = false;
 }
 
 // returns the position to change given the type of capsule

@@ -68,9 +68,9 @@ SceneGame.prototype.update = function (deltaTime) {
 		this.pastillasSprites[pastilla2].y = 176 + 2;
 	}
 	// Move capsule down
-	this.capsuleTimerY--;
+	if(!stopped) { this.capsuleTimerY--; }
+
 	if (this.capsuleTimerY <= 0) {
-		if (stopped) { stopped = false; }
 		this.capsuleTimerY = CAPSULE_INIT_TIMER_Y;
 		this.pastillasSprites[pastilla1].y += 16;
 		this.pastillasSprites[pastilla2].y += 16;
@@ -83,19 +83,19 @@ SceneGame.prototype.update = function (deltaTime) {
 			this.pastillasSprites[pastilla1].y -= 16;
 			this.pastillasSprites[pastilla2].y -= 16;
 
-			var broken = false;
+			// var broken = false;
 			// draw in the tilemap
-			broken = this.map.addCapsule(pastilla1, 
+			this.map.addCapsule(pastilla1, 
 				this.pastillasSprites[pastilla1].x, 
 				this.pastillasSprites[pastilla1].y,
 				pastilla2, 
 				this.pastillasSprites[pastilla2].x, 
 				this.pastillasSprites[pastilla2].y);
 			
-			if(broken){
-				this.capsuleTimerY = 100; // De momento 100, iremos cambiando paraaaa ver como queda mejor
-				stopped = true;
-			}
+			// if(broken){
+			// 	this.capsuleTimerY = 100; // De momento 100, iremos cambiando paraaaa ver como queda mejor
+			// 	stopped = true;
+			// }
 			// create new capsule (debug)
 			crear_pastilla = 1;
 		}
@@ -108,7 +108,7 @@ SceneGame.prototype.update = function (deltaTime) {
 		
 
 	// Move capsule left & right
-	if (this.capsuleTimerX <= 0 && !stopped) {
+	if (this.capsuleTimerX <= 0) {
 		if (keyboard[37]) // KEY_LEFT
 		{
 			this.pastillasSprites[pastilla1].x -= 16;
@@ -134,7 +134,7 @@ SceneGame.prototype.update = function (deltaTime) {
 		}
 	}
 	else {
-		this.capsuleTimerX--;
+		if(!stopped) { this.capsuleTimerX--; }
 	}
 
 	// keep old capsules in case rotation is wrong (backup)
@@ -230,7 +230,7 @@ SceneGame.prototype.draw = function () // meter argumento
 
 SceneGame.prototype.updateParameters = function () {
 	crear_pastilla = 1;
-	this.capsuleTimerY = 100; stopped = true;
+	this.capsuleTimerY = 100; stopped = false;
 	this.capsuleTimerX = 100;
 	this.map.addViruses(whichDifficulty);
 	//whichSpeed // do something with this two
