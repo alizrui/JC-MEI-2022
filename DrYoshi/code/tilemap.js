@@ -1,6 +1,6 @@
 
-positions_to_check = [];
-positions_to_delete = [];
+// positions_to_check = [];
+// positions_to_delete = [];
 
 const pos_viruses = [21, 22, 23];
 // Tilemap. Draws a tilemap using a texture as a tilesheet.
@@ -63,7 +63,7 @@ Tilemap.prototype.draw = function () {
 			tileId = this.map.layers[0].data[pos];
 
 			// draw sprites of virus (positions 21, 22, 23)
-			if (tileId > 20) {
+			if (tileId > 20 && tileId < 24) {
 				this.viruses[tileId - 21].x = this.basePos[0] + this.tileSize[0] * i;
 				this.viruses[tileId - 21].y = this.basePos[1] + this.tileSize[1] * j;
 				this.viruses[tileId - 21].draw();
@@ -73,65 +73,6 @@ Tilemap.prototype.draw = function () {
 					this.basePos[0] + this.tileSize[0] * i, this.basePos[1] + this.tileSize[1] * j, blockSize[0], blockSize[1]);
 			}
 		}
-
-
-	// delete 4 or more consecutive capsules
-	positions_to_break = [];
-
-	// check the rows and columns of the positions that have changed
-	// CHECK COLUMNS
-	var c = positions_to_check.length;
-	// if(l>0) console.log(positions_to_check);
-	for (var n = 0; n < c; n++) {
-		var pos = positions_to_check.pop();
-
-		// get the index of the column to check
-		var pos_column = pos % this.map.width; // OK
-
-		// get max index of column
-		var aux_col_length = pos_column + this.map.width * (this.map.height - 1); // OK 
-
-		// CHECK COLUMNS
-		this.checkLine(pos_column, aux_col_length, this.map.width);
-
-		// get the index of the column to check
-		var pos_row = pos - pos % this.map.width;
-		// get max index of row
-		var aux_row_length = pos_row + (this.map.width - 1);
-
-		// CHECK ROWS
-		this.checkLine(pos_row, aux_row_length, 1);
-	}
-	positions_to_check = [];
-
-	// delete positions marked (FALTA LO DEL TIMER)
-	var b = positions_to_break.length;
-	// if(d>0) console.log(positions_to_break);
-	for (var n = 0; n < b; n++) {
-		var pos = positions_to_break.pop();
-		var pos_type = (this.map.layers[0].data[pos] - 1) % 5;
-
-		// change the capsules to neutral form
-		if (pos_type < 20 && pos_type != 4) {
-			var pos_to_change = whichPositionToChange(pos, pos_type, this.map.width);
-			var color_to_change = Math.floor((this.map.layers[0].data[pos_to_change] - 1) / 5);
-			this.map.layers[0].data[pos_to_change] = (color_to_change + 1) * 5;
-		}
-
-		// change to capsule broke in each color
-		var color = (pos > 20)
-			? 18 // virus to sprite explode 
-			: Math.floor((this.map.layers[0].data[pos] - 1) / 5); // g=0,r=1,b=2 :: 16,17,18 are broke sprites
-		this.map.layers[0].data[pos] = color;
-		if (positions_to_delete.indexOf(pos) == -1) positions_to_delete.push(pos);
-	}
-
-	// delete all broken capsules
-	var d = positions_to_delete.length;
-	for (var n = 0; n < d; n++) {
-		var pos = positions_to_delete.pop();
-		this.map.layers[0].data[pos] = 0;
-	}
 }
 
 // Computes if the left part of a sprite collides with the tilemap.
@@ -185,6 +126,92 @@ Tilemap.prototype.collisionMoveDown = function (sprite) {
 	return false;
 }
 
+
+// add new capsules to the tilemap
+Tilemap.prototype.addCapsule = function (type1, posx1, posy1, type2, posx2, posy2) {	
+	positions_to_check = [];
+	
+	// calculates positions in the tilemap
+	aux_x1 = (posx1 - this.basePos[0]) / 16;
+	aux_y1 = (((posy1-2) - this.basePos[1]) / 16) * this.map.width ;
+
+	aux_x2 = (posx2 - this.basePos[0]) / 16;
+	aux_y2 = (((posy2-2) - this.basePos[1]) / 16) * this.map.width ;
+
+	position_capsule1 = aux_x1 + aux_y1;
+	position_capsule2 = aux_x2 + aux_y2;
+
+	if (positions_to_check.indexOf(position_capsule1) == -1) positions_to_check.push(position_capsule1);
+	if (positions_to_check.indexOf(position_capsule2) == -1) positions_to_check.push(position_capsule2);
+	this.map.layers[0].data[position_capsule1] = type1 + 1;
+	this.map.layers[0].data[position_capsule2] = type2 + 1;
+
+	positions_to_delete = [];
+	// delete 4 or more consecutive capsules
+	positions_to_break = [];
+
+	// check the rows and columns of the positions that have changed
+	// CHECK COLUMNS
+	var c = positions_to_check.length;
+	// if(l>0) console.log(positions_to_check);
+	for (var n = 0; n < c; n++) {
+		var pos = positions_to_check.pop();
+
+		// get the index of the column to check
+		var pos_column = pos % this.map.width; // OK
+
+		// get max index of column
+		var aux_col_length = pos_column + this.map.width * (this.map.height - 1); // OK 
+
+		// CHECK COLUMNS
+		this.checkLine(pos_column, aux_col_length, this.map.width);
+
+		// get the index of the column to check
+		var pos_row = pos - pos % this.map.width;
+		// get max index of row
+		var aux_row_length = pos_row + (this.map.width - 1);
+
+		// CHECK ROWS
+		this.checkLine(pos_row, aux_row_length, 1);
+	}
+	positions_to_check = [];
+
+	// delete positions marked (FALTA LO DEL TIMER)
+	var b = positions_to_break.length;
+
+	if (!b) { return false; }
+	// if(d>0) console.log(positions_to_break);
+	for (var n = 0; n < b; n++) {
+		var pos = positions_to_break.pop();
+		var pos_type = (this.map.layers[0].data[pos] - 1) % 5;
+
+		// change the capsules to neutral form
+		if (pos_type < 20 && pos_type != 4) {
+			var pos_to_change = whichPositionToChange(pos, pos_type, this.map.width);
+			var color_to_change = Math.floor((this.map.layers[0].data[pos_to_change] - 1) / 5);
+			this.map.layers[0].data[pos_to_change] = (color_to_change + 1) * 5;
+		}
+
+		// change to capsule broke in each color
+		var color = (pos > 20)
+			? 18 // virus to sprite explode 
+			: Math.floor((this.map.layers[0].data[pos] - 1) / 5); // g=0,r=1,b=2 :: 16,17,18 are broke sprites
+		this.map.layers[0].data[pos] = color;
+		if (positions_to_delete.indexOf(pos) == -1) positions_to_delete.push(pos);
+	}
+
+	// delete all broken capsules
+	var d = positions_to_delete.length;
+	for (var n = 0; n < d; n++) {
+		var pos = positions_to_delete.pop();
+		this.map.layers[0].data[pos] = 0;
+	}
+
+	return true;
+
+}
+
+
 // Given the start of the line, the length and the step (map.width in columns, 1 in rows)
 // Check if there are 4 or more consecutive capsules with the same color
 
@@ -217,20 +244,6 @@ Tilemap.prototype.checkLine = function (pos_line, aux_length, step) {
 		}
 		prev_color = color;
 	}
-}
-
-
-// add new capsules to the tilemap
-Tilemap.prototype.addCapsule = function (type, posx, posy) {
-
-	// calculates position in the tilemap
-	aux_x = (posx - this.basePos[0]) / 16;
-	aux_y = (((posy-2) - this.basePos[1]) / 16) * this.map.width ;
-
-	position_capsule = aux_x + aux_y;
-	if (positions_to_check.indexOf(position_capsule) == -1) positions_to_check.push(position_capsule);
-	this.map.layers[0].data[position_capsule] = type + 1;
-
 }
 
 // generate the viruses on the tilemap

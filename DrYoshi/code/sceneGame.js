@@ -76,19 +76,23 @@ SceneGame.prototype.update = function (deltaTime) {
 		// if capsule collides
 		if (this.map.collisionMoveDown(this.pastillasSprites[pastilla1])
 		|| this.map.collisionMoveDown(this.pastillasSprites[pastilla2])
-		|| this.pastillasSprites[pastilla1].y > 448
-		|| this.pastillasSprites[pastilla2].y > 448) {
+			|| this.pastillasSprites[pastilla1].y > 448 + 2
+			|| this.pastillasSprites[pastilla2].y > 448 + 2) {
 			this.pastillasSprites[pastilla1].y -= 16;
 			this.pastillasSprites[pastilla2].y -= 16;
 
+			var broken = false;
 			// draw in the tilemap
-			this.map.addCapsule(pastilla1, 
+			broken = this.map.addCapsule(pastilla1, 
 				this.pastillasSprites[pastilla1].x, 
-				this.pastillasSprites[pastilla1].y);
-			this.map.addCapsule(pastilla2, 
-					this.pastillasSprites[pastilla2].x, 
-					this.pastillasSprites[pastilla2].y);
+				this.pastillasSprites[pastilla1].y,
+				pastilla2, 
+				this.pastillasSprites[pastilla2].x, 
+				this.pastillasSprites[pastilla2].y);
 			
+			if(broken){
+				this.capsuleTimerY = 100; // De momento 100, iremos cambiando paraaaa ver como queda mejor
+			}
 			// create new capsule (debug)
 			crear_pastilla = 1;
 		}
