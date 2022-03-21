@@ -8,6 +8,7 @@ var pastilla1 = 0;
 var pastilla2 = 0;
 
 var crear_pastilla = 1;
+var stopped = true;
 
 // Scene GAME . Updates and draws a single scene of the game.
 
@@ -69,6 +70,7 @@ SceneGame.prototype.update = function (deltaTime) {
 	// Move capsule down
 	this.capsuleTimerY--;
 	if (this.capsuleTimerY <= 0) {
+		if (stopped) { stopped = false; }
 		this.capsuleTimerY = CAPSULE_INIT_TIMER_Y;
 		this.pastillasSprites[pastilla1].y += 16;
 		this.pastillasSprites[pastilla2].y += 16;
@@ -92,6 +94,7 @@ SceneGame.prototype.update = function (deltaTime) {
 			
 			if(broken){
 				this.capsuleTimerY = 100; // De momento 100, iremos cambiando paraaaa ver como queda mejor
+				stopped = true;
 			}
 			// create new capsule (debug)
 			crear_pastilla = 1;
@@ -99,13 +102,13 @@ SceneGame.prototype.update = function (deltaTime) {
 	}
 
 	// Move capsule down faster 
-	if (keyboard[40]) { // KEY_DOWN
+	if (keyboard[40] && !stopped) { // KEY_DOWN
 		this.capsuleTimerY -= 4;
 	}
 		
 
 	// Move capsule left & right
-	if (this.capsuleTimerX <= 0) {
+	if (this.capsuleTimerX <= 0 && !stopped) {
 		if (keyboard[37]) // KEY_LEFT
 		{
 			this.pastillasSprites[pastilla1].x -= 16;
@@ -227,7 +230,7 @@ SceneGame.prototype.draw = function () // meter argumento
 
 SceneGame.prototype.updateParameters = function () {
 	crear_pastilla = 1;
-	this.capsuleTimerY = 100;
+	this.capsuleTimerY = 100; stopped = true;
 	this.capsuleTimerX = 100;
 	this.map.addViruses(whichDifficulty);
 	//whichSpeed // do something with this two

@@ -1,4 +1,5 @@
 
+positions_to_check = [];
 positions_to_delete = [];
 positions_to_break = [];
 
@@ -140,20 +141,40 @@ Tilemap.prototype.addCapsule = function (type1, posx1, posy1, type2, posx2, posy
 	position_capsule1 = aux_x1 + aux_y1;
 	position_capsule2 = aux_x2 + aux_y2;
 
+	// if (positions_to_check.indexOf(position_capsule1) == -1) positions_to_check.push(position_capsule1);
+	// if (positions_to_check.indexOf(position_capsule2) == -1) positions_to_check.push(position_capsule2);
 	this.map.layers[0].data[position_capsule1] = type1 + 1;
 	this.map.layers[0].data[position_capsule2] = type2 + 1;
 
 	// delete 4 or more consecutive capsules
+	
+
+	// check the rows and columns of the positions that have changed
 	// check ALL THE ROWS AND COLUMNS
-	// check THE COLUMNS
-	for (var i = 0; i < this.map.width; i++){ // 0, 1, .. 7, 8
-		this.checkLine(i, i + this.map.width * (this.map.height - 1), this.map.width);
+	// CHECK COLUMNS
+	var c = positions_to_check.length;
+	// if(l>0) console.log(positions_to_check);
+	for (var n = 0; n < c; n++) {
+		var pos = positions_to_check.pop();
+
+		// get the index of the column to check
+		var pos_column = pos % this.map.width; // OK
+
+		// get max index of column
+		var aux_col_length = pos_column + this.map.width * (this.map.height - 1); // OK 
+
+		// CHECK COLUMNS
+		this.checkLine(pos_column, aux_col_length, this.map.width);
+
+		// get the index of the column to check
+		var pos_row = pos - pos % this.map.width;
+		// get max index of row
+		var aux_row_length = pos_row + (this.map.width - 1);
+
+		// CHECK ROWS
+		this.checkLine(pos_row, aux_row_length, 1);
 	}
-		
-	// CHECK THE ROWS 
-	for (var i = 0; i < this.map.height * this.map.width; i += this.map.width) { // 0, 9, ..., 152
-		this.checkLine(i, i + (this.map.width - 1), 1);
-	}
+	
 
 	// delete positions marked (FALTA LO DEL TIMER)
 	var b = positions_to_break.length;
@@ -189,6 +210,7 @@ Tilemap.prototype.addCapsule = function (type1, posx1, posy1, type2, posx2, posy
 	}
 
 	return true;
+
 }
 
 
@@ -205,8 +227,8 @@ Tilemap.prototype.checkLine = function (pos_line, aux_length, step) {
 		if (pos_type != 0) {
 			// determine color of the type: green=0, red=1, blue=2
 			color = (pos_type > 20)
-				? pos_type - 21
-				: Math.floor((pos_type - 1) / 5); // OK
+				? this.map.layers[0].data[pos_cell] - 21
+				: Math.floor((this.map.layers[0].data[pos_cell] - 1) / 5); // OK
 
 			if (color == prev_color) {
 				num_same_color++;
@@ -249,8 +271,6 @@ Tilemap.prototype.addViruses = function (difficulty_level) {
 			how_many_aux++;
 		}
 	}
-
-	this.addCapsule(-1,-1,-1,-1,-1,-1) // DEBUG
 }
 
 // returns the position to change given the type of capsule
