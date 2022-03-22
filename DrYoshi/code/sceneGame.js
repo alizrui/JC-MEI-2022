@@ -272,6 +272,12 @@ SceneGame.prototype.update = function (deltaTime) {
 		} else {
 			// LOSE
 		}
+
+		if (keyboard[13]) { // ENTER
+			keyboard[13] = false;
+			whichScene = 1;
+
+		}
 	}
 
 	// update sprites
