@@ -1,7 +1,10 @@
 const CAPSULE_INIT_TIMER_X = 8;
 var CAPSULE_INIT_TIMER_Y = 40;
-const ANIMATION_TIMER = 20;
-const NUM_ROTATIONS = 5;
+
+const NEXT_LEVEL_TIMER = 100;
+
+const ANIMATION_TIMER = 2;
+const NUM_ROTATIONS = 9;
 
 const SPEED_INCREASE = 2;
 const NUM_CAPSULES_INCREASE = 10; // NUM CAPSULES TILL SPEED INCREASES
@@ -15,8 +18,10 @@ var init_pastilla2 = 0;
 var pastilla1 = 0;
 var pastilla2 = 0;
 
-var state_new_capsule = 1;
-var stopped = true;
+var state_new_capsule = true;
+var state_stopped = true;
+var state_end = false;
+
 
 // text variables
 var top_score = 1000;
@@ -33,7 +38,6 @@ function SceneGame() {
 
 	// Load texture yoshi
 
-
 	// data estructures with all capsules
 	this.pastillasSprites = createPastillas();
 	this.cellPastillasSprites = createPastillas();
@@ -49,7 +53,7 @@ function SceneGame() {
 
 	// Create tilemap
 	//this.map = new Tilemap(tilesheet, [16, 16], [5, 5], [184, 176], empty_map, difficulty_level);
-	this.map = new Tilemap(tilesheet, [16, 16], [5, 5], [184, 176], mapa_auxiliar2);
+	this.map = new Tilemap(tilesheet, [16, 16], [5, 5], [184, 176], empty_map);
 
 	// Store current time
 	this.currentTime = 0
@@ -63,6 +67,9 @@ function SceneGame() {
 
 	// controls number of rotations in capsule throwing to map
 	this.numRotations = NUM_ROTATIONS;
+
+	// controls time between levels
+	this.nextLevelTimer = NEXT_LEVEL_TIMER;
 }
 
 
@@ -72,7 +79,7 @@ SceneGame.prototype.update = function (deltaTime) {
 
 	// Game logic
 	// new capsule (232,176) is the starting position
-	if (state_new_capsule && !stopped) {
+	if (!state_end && state_new_capsule && !state_stopped) {
 		this.animationTimer--;
 		if(this.animationTimer <= 0){
 			this.numRotations--;
@@ -87,12 +94,14 @@ SceneGame.prototype.update = function (deltaTime) {
 				// new form of pastilla
 				init_pastilla1 = init_data1[0];
 				init_pastilla2 = init_data2[0];
+
+				var despl = computeAnimationPositions(this.numRotations);
 	
 				// new positions of pastilla
-				this.cellPastillasSprites[init_pastilla1].x = init_data1[1];
-				this.cellPastillasSprites[init_pastilla1].y = init_data1[2];
-				this.cellPastillasSprites[init_pastilla2].x = init_data2[1];
-				this.cellPastillasSprites[init_pastilla2].y = init_data2[2];
+				this.cellPastillasSprites[init_pastilla1].x = init_data1[1] + despl[0];
+				this.cellPastillasSprites[init_pastilla1].y = init_data1[2] + despl[1];
+				this.cellPastillasSprites[init_pastilla2].x = init_data2[1] + despl[0];
+				this.cellPastillasSprites[init_pastilla2].y = init_data2[2] + despl[1];
 
 			} else { 
 				// LAST THING TO DO
@@ -115,7 +124,7 @@ SceneGame.prototype.update = function (deltaTime) {
 	}
 
 	// Move capsule down
-	if (!stopped && !state_new_capsule) {
+	if (!state_end && !state_stopped && !state_new_capsule) {
 		this.capsuleTimerY--;
 		if (this.capsuleTimerY <= 0) {
 			this.capsuleTimerY = CAPSULE_INIT_TIMER_Y;
@@ -249,8 +258,24 @@ SceneGame.prototype.update = function (deltaTime) {
 		top_score = num_score;
 	}
 
+	// new level
+	if (!state_stopped && num_virus <= 0){
+		// SPRITE NEXT LEVEL
+		whichDifficulty++;
+		this.updateParameters();
+	}
+
+	if (state_end){
+		// SPRITE GAME OVER
+		if(num_virus==0){
+			// WIN
+		} else {
+			// LOSE
+		}
+	}
+
 	// update sprites
-	this.map.update(deltaTime);
+	this.map.update(deltaTime+16);
 
 }
 
@@ -282,6 +307,7 @@ SceneGame.prototype.draw = function () // meter argumento
 		this.pastillasSprites[pastilla2].draw();
 	}
 	
+	// draw texts
 	var texts = ["TOP", "SCORE", "LEVEL", "SPEED", "VIRUS"];
 	context.font = "bold 20px FreeMono";
 	context.fillStyle = "Black"
@@ -300,26 +326,33 @@ SceneGame.prototype.draw = function () // meter argumento
 }
 
 SceneGame.prototype.updateParameters = function () {
-	state_new_capsule = 1;
-	this.capsuleTimerY = 100; stopped = false;
-	this.capsuleTimerX = 100;
-	this.map.addViruses(whichDifficulty);
-	//whichSpeed // do something with this two
-	//whichMusic
+	if(whichDifficulty >= 6){
+		// END GAME
+		// SPRITE WELL DONE Y FIN DEL JUEGO
+		state_end = true;
+	} else {
+		state_new_capsule = 1;
+		state_stopped = false;
+		this.capsuleTimerY = CAPSULE_INIT_TIMER_Y; 
+		this.capsuleTimerX = CAPSULE_INIT_TIMER_X;
+		this.map.addViruses(whichDifficulty);
+		//whichSpeed // do something with this two
+		//whichMusic
 
-	// texts things
-	switch (whichSpeed) {
-		case 0: text_speed = "LOW"; break;
-		case 1: text_speed = "MID"; break;
-		default: text_speed = "HI"; break;
+		// texts things
+		switch (whichSpeed) {
+			case 0: text_speed = "LOW"; break;
+			case 1: text_speed = "MID"; break;
+			default: text_speed = "HI"; break;
+		}
+		num_level = whichDifficulty;
+		this.create_random_pill();
+
 	}
-	num_level = whichDifficulty;
-	this.create_random_pill();
 }
 
 // create random capsule (in yoshi's square)
 SceneGame.prototype.create_random_pill = function () {
-	console.log("RANDOM PILL")
 	init_pastilla1 = capsules1[Math.floor(Math.random() * capsules1.length)];
 	init_pastilla2 = capsules2[Math.floor(Math.random() * capsules2.length)];
 
@@ -350,6 +383,24 @@ function createPastillas() {
 	}
 
 	return pastillasSprites;
+}
+
+function computeAnimationPositions(state){
+	res = [0,0];
+
+	switch (state) {
+		case 8: res = [-16, -24]; break;
+		case 7: res = [-24, -32]; break;
+		case 6: res = [-16, -16]; break;
+		case 5: res = [-16, -8]; break;
+		case 4: res = [-16, 8]; break;
+		case 3: res = [-16, 16]; break;
+		case 2: res = [-16, 32]; break;
+		case 1: res = [-24, 40]; break;
+		default: break;
+	}
+
+	return res;
 }
 
 function rotate_position(number, x, y) {

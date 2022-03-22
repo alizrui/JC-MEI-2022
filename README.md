@@ -22,10 +22,10 @@ Proyecto de la asignatura "Juegos por Computador" del MEI en la UPC.
         - [x] Volver a mirar si hay destrucción y volver a entrar al bucle
     - [x] Cambiar ovimiento lateral demasiado rápido (VARIABLE capsuleTimerX)
     - [x] Animación impacto cápsula -> Se ve que cuando llega una capsula está un poco más abajo de lo que debería y cuando se coloca en el tilemap se pone bien
-    - [ ] Siguiente cápsula se muestra antes
+    - [x] Siguiente cápsula se muestra antes
     - [ ] Pantallita de GAME OVER + logica de game over
-    - [ ] Pasar de nivel cuando te quedas sin viruses (nivel + 1, si + nivel 6 te pasaste el juego?)
-    - [ ] Subir velocidad progresivamente (+1 cada 10 capsulas?)
+    - [x] Pasar de nivel cuando te quedas sin viruses (nivel + 1, si + nivel 6 te pasaste el juego?)
+    - [x] Subir velocidad progresivamente (+1 cada 10 capsulas?)
     - [ ] Lupa con virus bailando -> Cuando pierdes se rien
     - [ ] Yoshi lanzando cápsula <- DEBERÍA PRIORIZARSE
     - [ ] Cuando pierdes se pone triste 

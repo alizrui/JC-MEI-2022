@@ -1,7 +1,7 @@
 
 var whichOption = 0;
 var whichDifficulty = 1;
-var whichSpeed = 0;
+var whichSpeed = 1;
 var whichMusic = 0;
 
 var aux_updateParameters = false;

@@ -82,14 +82,13 @@ Tilemap.prototype.update = function (deltaTime) {
 					this.map.layers[0].data[pos + this.map.width] = this.map.layers[0].data[pos];
 					this.map.layers[0].data[pos] = 0;
 				}
-				//console.log(this.positions_to_fall);
 				this.positions_to_fall = [];
 
 			}
 			this.fallingTimer = FALLING_TIMER;
 		}
 	} else {
-		stopped = false;
+		state_stopped = false;
 	}
 	
 }
@@ -197,6 +196,12 @@ Tilemap.prototype.addCapsule = function (type1, posx1, posy1, type2, posx2, posy
 	position_capsule1 = aux_x1 + aux_y1;
 	position_capsule2 = aux_x2 + aux_y2;
 
+	// if there was something, end game
+	if(this.map.layers[0].data[position_capsule1] || 
+		this.map.layers[0].data[position_capsule2]){
+		state_end = true;
+	}
+
 	this.map.layers[0].data[position_capsule1] = type1 + 1;
 	this.map.layers[0].data[position_capsule2] = type2 + 1;
 
@@ -259,7 +264,7 @@ Tilemap.prototype.checkPositions = function () {
 	// delete positions marked 
 	var b = this.positions_to_break.length;
 	if (b > 0) {
-		stopped = true;
+		state_stopped = true;
 		this.breakingState = true;
 	}
 
@@ -374,5 +379,5 @@ Tilemap.prototype.addViruses = function (difficulty_level) {
 	num_virus = how_many_aux;
 
 	this.addCapsule(-1,-1,-1,-1,-1,-1); // DEBUG
-	stopped = false;
+	state_stopped = false;
 }
