@@ -253,6 +253,7 @@ SceneGame.prototype.update = function (deltaTime) {
 	// EXIT (WITH Q) (DEBUG)
 	if (keyboard[81]) {
 		keyboard[81] = false;
+		state_end = true;
 		whichScene = 0;
 	}
 
@@ -267,7 +268,7 @@ SceneGame.prototype.update = function (deltaTime) {
 	}
 
 	// new level
-	if (!state_stopped && num_virus <= 0){
+	if (!state_end && !state_stopped && num_virus <= 0){
 		// SPRITE NEXT LEVEL
 		whichDifficulty++;
 		this.updateParameters();
@@ -283,8 +284,8 @@ SceneGame.prototype.update = function (deltaTime) {
 
 		if (keyboard[13]) { // ENTER
 			keyboard[13] = false;
+				
 			whichScene = 1;
-
 		}
 	}
 
@@ -356,6 +357,7 @@ SceneGame.prototype.updateParameters = function () {
 		// SPRITE WELL DONE Y FIN DEL JUEGO
 		state_end = true;
 	} else {
+		state_end = false;
 		state_new_capsule = 1;
 		state_stopped = false;
 		this.capsuleTimerY = CAPSULE_INIT_TIMER_Y; 

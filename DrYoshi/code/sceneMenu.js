@@ -64,6 +64,10 @@ SceneMenu.prototype.update = function (deltaTime) {
 
 	} else if (keyboard[13]) {
 		keyboard[13] = false;
+		whichOption = 0;
+		whichDifficulty = 1;
+		whichSpeed = 1;
+		whichMusic = 0;
 		whichScene = whichButton + 1;
 	}
 

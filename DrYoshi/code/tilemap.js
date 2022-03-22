@@ -297,7 +297,6 @@ Tilemap.prototype.checkPositions = function () {
 				points += 100;
 				virus_in_glass = [false,false,false];
 			}
-
 		}
 	}
 

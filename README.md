@@ -23,12 +23,16 @@ Proyecto de la asignatura "Juegos por Computador" del MEI en la UPC.
     - [x] Cambiar ovimiento lateral demasiado rápido (VARIABLE capsuleTimerX)
     - [x] Animación impacto cápsula -> Se ve que cuando llega una capsula está un poco más abajo de lo que debería y cuando se coloca en el tilemap se pone bien
     - [x] Siguiente cápsula se muestra antes
-    - [ ] Pantallita de GAME OVER + logica de game over
     - [x] Pasar de nivel cuando te quedas sin viruses (nivel + 1, si + nivel 6 te pasaste el juego?)
     - [x] Subir velocidad progresivamente (+1 cada 10 capsulas?)
+    - [ ] Fin de juego
+        - [x] Lógica parar juego
+        - [ ] Sprite cartel ( siguiente nivel, perdiste, ganaste, pausa?)
     - [ ] Lupa con virus bailando -> Cuando pierdes se rien
-    - [ ] Yoshi lanzando cápsula <- DEBERÍA PRIORIZARSE
-    - [ ] Cuando pierdes se pone triste 
+        - [ ] Sprites virus grandes (3 para normal, 1 para explotar, 2 para cuando pierdes (se rien))
+    - [ ] Yoshi lanzando cápsula 
+        - [x] Lógica lanzamiento capsula
+        - [ ] Sprite yoshi lanzando (2 para estado normal, X para lanzar capsula, 2 para cuando ganas (feliz), 2 para cuando pierdes (triste))
 - [x] Texto de letras y puntuaciones (carpeta 1)
     - [x] Mostrar puntuación
     - [x] Mostrar nº viruses
@@ -52,3 +56,5 @@ Proyecto de la asignatura "Juegos por Computador" del MEI en la UPC.
         - [ ] Tipo de música (chill, guay, off)
     - [x] Cambiar todos los sprites de cada escena a un mismo PNG
     - [x] Cambiar los sprites de viruses a un mismo png (EDA para 3 virus)
+- [ ] BUGS:
+    - [x] Cuando finaliza el juego no se puede reiniciar, solucionar eso LOL
