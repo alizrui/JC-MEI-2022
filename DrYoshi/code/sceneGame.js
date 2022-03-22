@@ -3,8 +3,8 @@ var CAPSULE_INIT_TIMER_Y = 40;
 
 const NEXT_LEVEL_TIMER = 100;
 
-const ANIMATION_TIMER = 2;
-const NUM_ROTATIONS = 9;
+const ANIMATION_TIMER = 1;
+const NUM_ROTATIONS = 17;
 
 const SPEED_INCREASE = 2;
 const NUM_CAPSULES_INCREASE = 10; // NUM CAPSULES TILL SPEED INCREASES
@@ -284,7 +284,7 @@ SceneGame.prototype.update = function (deltaTime) {
 
 		if (keyboard[13]) { // ENTER
 			keyboard[13] = false;
-				
+
 			whichScene = 1;
 		}
 	}
@@ -416,14 +416,29 @@ function computeAnimationPositions(state){
 	res = [0,0];
 
 	switch (state) {
-		case 8: res = [-16, -24]; break;
-		case 7: res = [-24, -32]; break;
-		case 6: res = [-16, -16]; break;
-		case 5: res = [-16, -8]; break;
-		case 4: res = [-16, 8]; break;
-		case 3: res = [-16, 16]; break;
-		case 2: res = [-16, 32]; break;
-		case 1: res = [-24, 40]; break;
+		case 16: res = [-8, -12]; break;
+		case 15: res = [-8, -12]; break;
+
+		case 14: res = [-12, -16]; break;
+		case 13: res = [-12, -16]; break;
+		
+		case 12: res = [-8, -8]; break;
+		case 11: res = [-8, -8]; break;
+		
+		case 10: res = [-8, -4]; break;
+		case 9: res = [-8, -4]; break;
+
+		case 8: res = [-8, 4]; break;
+		case 7: res = [-8, 4]; break;
+
+		case 6: res = [-8, 8]; break;
+		case 5: res = [-8, 8]; break;
+		
+		case 4: res = [-8, 16]; break;
+		case 3: res = [-8, 16]; break;
+		
+		case 2: res = [-12, 20]; break;
+		case 1: res = [-12, 20]; break;
 		default: break;
 	}
 
