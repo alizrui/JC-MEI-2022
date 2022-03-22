@@ -27,6 +27,11 @@ Proyecto de la asignatura "Juegos por Computador" del MEI en la UPC.
     - [ ] Yoshi lanzando cápsula <- DEBERÍA PRIORIZARSE
     - [ ] Cuando pierdes se pone triste 
     - [ ] Pantallita de GAME OVER
+    - [ ] Pasar de nivel cuando te quedas sin viruses (nivel + 1, si + nivel 6 te pasaste el juego?)
+- [ ] Texto de letras y puntuaciones (carpeta 1)
+    - [ ] Mostrar puntuación
+    - [ ] Mostrar nº viruses
+    - [ ] Mostrar nivel
 - [ ] Músicas
     - [ ] Música de fondo (2 para juego, 1 para menu / otras pantallas)
     - [ ] Sonido tirar cápsula
@@ -37,10 +42,7 @@ Proyecto de la asignatura "Juegos por Computador" del MEI en la UPC.
     - [ ] Colisión de cápsulas
     - [ ] Nivel completado
     - [ ] Game over 
-- [ ] Texto de letras y puntuaciones (carpeta 1)
-    - [ ] Mostrar puntuación
-    - [ ] Mostrar nº viruses
-    - [ ] Mostrar nivel
+
 - [ ] MISCELÁNEA
     - [x] Pantalla intermedia con dificultades 
         - [x] Navegación por la pantalla
