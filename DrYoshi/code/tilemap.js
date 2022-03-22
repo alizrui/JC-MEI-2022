@@ -238,33 +238,7 @@ Tilemap.prototype.checkLine = function (pos_line, aux_length, step) {
 	}
 }
 
-// generate the viruses on the tilemap
-Tilemap.prototype.addViruses = function (difficulty_level) {
-	var max = this.map.height * this.map.width;
 
-	// empty the map
-	for (var i = 0; i < max; i++) {
-		this.map.layers[0].data[i] = 0;
-	}
-
-	var how_many_aux = 0;
-	var rand_num = -1;
-	var min = 13 * this.map.width - 2 * difficulty_level * this.map.width;
-
-	// populates with 4*difficulty_level viruses in random positions
-	while (how_many_aux < 4 * difficulty_level) {
-
-		// get a random position within the range min max
-		rand_num = Math.floor(Math.random() * (max - min) + min);
-		if (this.map.layers[0].data[rand_num] == 0) {
-			this.map.layers[0].data[rand_num] = pos_viruses[Math.floor(Math.random() * pos_viruses.length)];
-			how_many_aux++;
-		}
-	}
-
-	this.addCapsule(-1,-1,-1,-1,-1,-1); // DEBUG
-	stopped = false;
-}
 
 // Checks all the positions on the tilemap
 // and breaks the positions that have 4 or more consecutive colors
@@ -284,7 +258,6 @@ Tilemap.prototype.checkPositions = function () {
 
 	// delete positions marked 
 	var b = this.positions_to_break.length;
-
 	if (b > 0) {
 		stopped = true;
 		this.breakingState = true;
@@ -306,7 +279,15 @@ Tilemap.prototype.checkPositions = function () {
 			? 19 // virus to sprite explode 
 			: Math.floor((this.map.layers[0].data[pos] - 1) / 5) + 16; // g=0,r=1,b=2 :: 16,17,18 are broke sprites
 		this.map.layers[0].data[pos] = color;
-		if (this.positions_to_delete.indexOf(pos) == -1) this.positions_to_delete.push(pos);
+		if (this.positions_to_delete.indexOf(pos) == -1) { 
+			this.positions_to_delete.push(pos); 
+			
+			// SCORE AND VIRUS COUNTER
+			if(color == 19){ 
+				num_virus--;
+			}
+
+		}
 	}
 }
 
@@ -321,8 +302,8 @@ Tilemap.prototype.checkFallingCapsules = function () {
 
 			// check if its a virus or empty cell  
 			if(type != 0 && type < 20 && 
-				// check if has nothing below or cell below has to fall
-				(this.map.layers[0].data[pos + this.map.width] == 0 || false)) {
+				// check if has nothing below (or cell below has to fall (not implemented))
+				(this.map.layers[0].data[pos + this.map.width] == 0)) {
 
 				switch ((type - 1) % 5) {
 					case 4: // neutral capsule
@@ -359,4 +340,34 @@ function whichPositionToChange(position, type, width) {
 		default: break;
 	}
 	return position + res;
+}
+
+// generate the viruses on the tilemap
+Tilemap.prototype.addViruses = function (difficulty_level) {
+	var max = this.map.height * this.map.width;
+
+	// empty the map
+	for (var i = 0; i < max; i++) {
+		this.map.layers[0].data[i] = 0;
+	}
+
+	var how_many_aux = 0;
+	var rand_num = -1;
+	var min = 13 * this.map.width - 2 * difficulty_level * this.map.width;
+
+	// populates with 4*difficulty_level viruses in random positions
+	while (how_many_aux < 4 * difficulty_level) {
+
+		// get a random position within the range min max
+		rand_num = Math.floor(Math.random() * (max - min) + min);
+		if (this.map.layers[0].data[rand_num] == 0) {
+			this.map.layers[0].data[rand_num] = pos_viruses[Math.floor(Math.random() * pos_viruses.length)];
+			how_many_aux++;
+		}
+	}
+
+	num_virus = how_many_aux;
+
+	this.addCapsule(-1,-1,-1,-1,-1,-1); // DEBUG
+	stopped = false;
 }

@@ -10,6 +10,13 @@ var pastilla2 = 0;
 var crear_pastilla = 1;
 var stopped = true;
 
+// text variables
+var top_score = 0;
+var num_score = 0;
+var num_virus = 0;
+var num_level = 0;
+var text_speed = "LOW"
+
 // Scene GAME . Updates and draws a single scene of the game.
 
 function SceneGame() {
@@ -17,7 +24,7 @@ function SceneGame() {
 	var fondo_juego = new Texture("../img/fondo_juego_v1.png");
 	
 	// Load texture textos
-	var salir = new Texture("../sprites/sprite_salir.png");
+
 	
 	// data estructure with all capsules
 	this.pastillasSprites = createPastillas();
@@ -26,12 +33,7 @@ function SceneGame() {
 	this.imageJuego = new StaticImage(0, 0, 512, 480, fondo_juego);
 	
 	// Create Sprites de textos
-	this.textoSalir = new Sprite(100, 355, 73, 21, 1, salir);
-	
-	this.textoSalir.addAnimation();
-	this.textoSalir.addKeyframe(0, [0, 0, 73, 21]);
-	this.textoSalir.addKeyframe(0, [0, 21, 73, 21]);
-	this.textoSalir.setAnimation(0);
+
 
 	// Loading texture to use in a TileMap
 	var tilesheet = new Texture("../tiles/tiles16.png");
@@ -185,15 +187,15 @@ SceneGame.prototype.update = function (deltaTime) {
 		pastilla2 = old_p2;
 	}
 
-	// Salir (quitar luego)
-	if (keyboard[13]) {
-		keyboard[13] = false;
+	// EXIT (WITH Q) (DEBUG)
+	if (keyboard[81]) {
+		keyboard[81] = false;
 		whichScene = 0;
 	}
 
 	// update sprites
 	this.map.update(deltaTime);
-	this.textoSalir.update(deltaTime);
+
 }
 
 SceneGame.prototype.draw = function () // meter argumento
@@ -207,7 +209,7 @@ SceneGame.prototype.draw = function () // meter argumento
 	var context = canvas.getContext("2d");
 
 	// Clear background
-	context.fillStyle = "rgb(224, 224, 240)";
+	// context.fillStyle = "rgb(224, 224, 240)";
 	context.fillRect(0, 0, canvas.width, canvas.height);
 
 	this.imageJuego.draw();
@@ -219,10 +221,21 @@ SceneGame.prototype.draw = function () // meter argumento
 	this.pastillasSprites[pastilla1].draw();	
 	this.pastillasSprites[pastilla2].draw();
 
-	//Draw sprite salir (quitar en futuro)
-	this.textoSalir.x = 50;
-	this.textoSalir.y = 150;
-	this.textoSalir.draw();
+	var texts = ["TOP", "SCORE", "LEVEL", "SPEED", "VIRUS"];
+	context.font = "bold 20px FreeMono";
+	context.fillStyle = "Black"
+
+	context.fillText(texts[0], 36, 136); // TOP TEXT
+	context.fillText(top_score, 36, 156); // TOP NUM
+	context.fillText(texts[1], 36, 186); // SCORE TEXT
+	context.fillText(num_score, 36, 206); // SCORE NUM
+	
+	context.fillText(texts[2], 370, 290); // LEVEL TEXT
+	context.fillText(num_level, 370, 310); // LEVEL NUM
+	context.fillText(texts[3], 370, 340); // SPEED TEXT
+	context.fillText(text_speed, 370, 360); // SPEED (NUM)
+	context.fillText(texts[4], 370, 390); // VIRUS TEXT
+	context.fillText(num_virus, 370, 410); // VIRUS COUNT
 }
 
 SceneGame.prototype.updateParameters = function () {
@@ -232,6 +245,15 @@ SceneGame.prototype.updateParameters = function () {
 	this.map.addViruses(whichDifficulty);
 	//whichSpeed // do something with this two
 	//whichMusic
+
+	// texts things
+	switch (whichSpeed) {
+		case 0: text_speed = "LOW"; break;
+		case 1: text_speed = "MID"; break;
+		default: text_speed = "HI"; break;
+	}
+	num_level = whichDifficulty;
+
 }
 
 function createPastillas() {
