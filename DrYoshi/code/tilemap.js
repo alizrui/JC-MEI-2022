@@ -1,7 +1,7 @@
 const pos_viruses = [21, 22, 23];
 
 const BREAKING_TIMER = 20;
-const FALLING_TIMER = 10;
+const FALLING_TIMER = 6;
 // Tilemap. Draws a tilemap using a texture as a tilesheet.
 
 function Tilemap(tilesheet, tileSize, blockGrid, basePos, map) {
