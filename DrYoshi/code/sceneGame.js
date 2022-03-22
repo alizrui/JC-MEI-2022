@@ -104,33 +104,34 @@ SceneGame.prototype.update = function (deltaTime) {
 		
 
 	// Move capsule left & right
-	if (this.capsuleTimerX <= 0) {
-		if (keyboard[37]) // KEY_LEFT
-		{
-			this.pastillasSprites[pastilla1].x -= 16;
-			this.pastillasSprites[pastilla2].x -= 16;
-			if (this.map.collisionMoveLeft(this.pastillasSprites[pastilla1])
-				|| this.map.collisionMoveLeft(this.pastillasSprites[pastilla2])) {
-				this.pastillasSprites[pastilla1].x += 16;
-				this.pastillasSprites[pastilla2].x += 16;
-			}
-			this.capsuleTimerX = CAPSULE_INIT_TIMER_X;
-		}
-		
-		if (keyboard[39]) // KEY_RIGHT
-		{
-			this.pastillasSprites[pastilla1].x += 16;
-			this.pastillasSprites[pastilla2].x += 16;
-			if (this.map.collisionMoveRight(this.pastillasSprites[pastilla1])
-				|| this.map.collisionMoveRight(this.pastillasSprites[pastilla2])) {
+	if (!stopped) {
+		if (this.capsuleTimerX <= 0) {
+			if (keyboard[37]) // KEY_LEFT
+			{
 				this.pastillasSprites[pastilla1].x -= 16;
 				this.pastillasSprites[pastilla2].x -= 16;
+				if (this.map.collisionMoveLeft(this.pastillasSprites[pastilla1])
+					|| this.map.collisionMoveLeft(this.pastillasSprites[pastilla2])) {
+					this.pastillasSprites[pastilla1].x += 16;
+					this.pastillasSprites[pastilla2].x += 16;
+				}
+				this.capsuleTimerX = CAPSULE_INIT_TIMER_X;
 			}
-			this.capsuleTimerX = CAPSULE_INIT_TIMER_X;
+
+			if (keyboard[39]) // KEY_RIGHT
+			{
+				this.pastillasSprites[pastilla1].x += 16;
+				this.pastillasSprites[pastilla2].x += 16;
+				if (this.map.collisionMoveRight(this.pastillasSprites[pastilla1])
+					|| this.map.collisionMoveRight(this.pastillasSprites[pastilla2])) {
+					this.pastillasSprites[pastilla1].x -= 16;
+					this.pastillasSprites[pastilla2].x -= 16;
+				}
+				this.capsuleTimerX = CAPSULE_INIT_TIMER_X;
+			}
 		}
-	}
-	else {
-		if(!stopped) { this.capsuleTimerX--; }
+		else { this.capsuleTimerX--; }
+
 	}
 
 	// keep old capsules in case rotation is wrong (backup)

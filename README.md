@@ -11,19 +11,18 @@ Proyecto de la asignatura "Juegos por Computador" del MEI en la UPC.
 - [ ] Animaciones y retoques de lógica
     - [x] Reset cápsula cada vez que se empieza
     - [x] Generación aleatoria de virus
-    - [ ] Animación destrucción capsula (DOING) -> FALTA LO DEL TIMER, Ha dicho que cuando hay una eliminación una capsula debería empezar un timer
+    - [x] Animación destrucción capsula (DOING) -> FALTA LO DEL TIMER, Ha dicho que cuando hay una eliminación una capsula debería empezar un timer
     - [x] Cambio de cápsula cuando se suelte una doble (DOING)
     - [x] Más rápido tecla down
-    - [ ] Cápsula AISLADA cae cuando no tiene nada abajo (virus no)
-    - [ ] Elementos AISLADOS deben caer no sujetos y actualizarse (dividir en funciones dice)
-        - [ ] Lo que no esté sujeto que caiga (CHECKEAR FILAS DESDE ABAJO, PASADA POR TODO EL MAPA Y REPETIR HASTA QUE DEJE DE CAER)
-        - [ ] Animar eso (Conexiones son importantes)
-        - [ ] Que no caigan los que esten conectados y sujetos
-        - [ ] Volver a mirar si hay destrucción y volver a entrar al bucle
-        
-    - [ ] Siguiente cápsula se muestra antes
+    - [x] Cápsula AISLADA cae cuando no tiene nada abajo (virus no)
+    - [x] Elementos AISLADOS deben caer no sujetos y actualizarse (dividir en funciones dice)
+        - [x] Lo que no esté sujeto que caiga (CHECKEAR FILAS DESDE ABAJO, PASADA POR TODO EL MAPA Y REPETIR HASTA QUE DEJE DE CAER)
+        - [x] Animar eso (Conexiones son importantes)
+        - [x] Que no caigan los que esten conectados y sujetos
+        - [x] Volver a mirar si hay destrucción y volver a entrar al bucle
     - [x] Cambiar ovimiento lateral demasiado rápido (VARIABLE capsuleTimerX)
     - [x] Animación impacto cápsula -> Se ve que cuando llega una capsula está un poco más abajo de lo que debería y cuando se coloca en el tilemap se pone bien
+    - [ ] Siguiente cápsula se muestra antes
     - [ ] Lupa con virus bailando -> Cuando pierdes se rien
     - [ ] Yoshi lanzando cápsula <- DEBERÍA PRIORIZARSE
     - [ ] Cuando pierdes se pone triste 
@@ -50,4 +49,3 @@ Proyecto de la asignatura "Juegos por Computador" del MEI en la UPC.
         - [ ] Tipo de música (chill, guay, off)
     - [x] Cambiar todos los sprites de cada escena a un mismo PNG
     - [x] Cambiar los sprites de viruses a un mismo png (EDA para 3 virus)
-    - [ ] Cambiar lógica a sceneGame

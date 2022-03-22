@@ -1,6 +1,7 @@
 const pos_viruses = [21, 22, 23];
 
 const BREAKING_TIMER = 20;
+const FALLING_TIMER = 10;
 // Tilemap. Draws a tilemap using a texture as a tilesheet.
 
 function Tilemap(tilesheet, tileSize, blockGrid, basePos, map) {
@@ -27,10 +28,11 @@ function Tilemap(tilesheet, tileSize, blockGrid, basePos, map) {
 
 	this.positions_to_delete = [];
 	this.positions_to_break = [];
-	this.stoppedTilemap = false;
+	this.positions_to_fall = [];
+	this.breakingState = false;
+	this.fallingState = false;
 	this.breakingTimer = BREAKING_TIMER;
-
-	// this.addViruses(difficulty_level)
+	this.fallingTimer = FALLING_TIMER;
 
 }
 
@@ -39,23 +41,55 @@ Tilemap.prototype.update = function (deltaTime) {
 		this.viruses[i].update(deltaTime);
 	}
 
-	if (this.stoppedTilemap) {
+	if (this.breakingState) {
+		// delete all broken capsules
 		this.breakingTimer--;
 
 		if (this.breakingTimer <= 0) {
 			// delete all broken capsules
 			var d = this.positions_to_delete.length;
-			if (d) { console.log(this.positions_to_delete); } // DEBUG
+			//if (d) { console.log(this.positions_to_delete); } // DEBUG
 			for (var n = 0; n < d; n++) {
 				var pos = this.positions_to_delete.pop();
 				this.map.layers[0].data[pos] = 0;
 			}
 			this.breakingTimer = BREAKING_TIMER;
-			this.stoppedTilemap = false;
-			stopped = false;
+			
+			// enter in falling state, exit breaking state
+			this.breakingState = false;
+			this.fallingState = true;
 		}
-		
+	} else if (this.fallingState){
+		// move down capsules alone
+		this.fallingTimer--;
 
+		if (this.fallingTimer <= 0) {
+
+			// CHECK MAP FOR FALLING CAPSULES
+			this.checkFallingCapsules();
+
+			var l = this.positions_to_fall.length;
+			
+			if (!l) {
+				// exit falling state
+				this.fallingState = false;
+				// check new combinations
+				this.checkPositions();
+			} else {
+				// move down all positions checked
+				for (i = 0; i < l; i++){
+					var pos = this.positions_to_fall[i]; 
+					this.map.layers[0].data[pos + this.map.width] = this.map.layers[0].data[pos];
+					this.map.layers[0].data[pos] = 0;
+				}
+				//console.log(this.positions_to_fall);
+				this.positions_to_fall = [];
+
+			}
+			this.fallingTimer = FALLING_TIMER;
+		}
+	} else {
+		stopped = false;
 	}
 	
 }
@@ -166,46 +200,7 @@ Tilemap.prototype.addCapsule = function (type1, posx1, posy1, type2, posx2, posy
 	this.map.layers[0].data[position_capsule1] = type1 + 1;
 	this.map.layers[0].data[position_capsule2] = type2 + 1;
 
-	// delete 4 or more consecutive capsules
-	// check ALL THE ROWS AND COLUMNS
-	// check THE COLUMNS
-	for (var i = 0; i < this.map.width; i++){ // 0, 1, .. 7, 8
-		this.checkLine(i, i + this.map.width * (this.map.height - 1), this.map.width);
-	}
-		
-	// CHECK THE ROWS 
-	for (var i = 0; i < this.map.height * this.map.width; i += this.map.width) { // 0, 9, ..., 152
-		this.checkLine(i, i + (this.map.width - 1), 1);
-	}
-
-	// delete positions marked 
-	var b = this.positions_to_break.length;
-
-	if (b > 0) {
-		stopped = true;
-		this.stoppedTilemap = true;
-	}
-
-	// if(d>0) console.log(this.positions_to_break);
-	for (var n = 0; n < b; n++) {
-		var pos = this.positions_to_break.pop();
-		var pos_type = (this.map.layers[0].data[pos] - 1);
-
-		// change the capsules to neutral form
-		if (pos_type < 20 && pos_type % 5 != 4) {
-			var pos_to_change = whichPositionToChange(pos, pos_type % 5, this.map.width);
-			var color_to_change = Math.floor((this.map.layers[0].data[pos_to_change] - 1) / 5);
-			this.map.layers[0].data[pos_to_change] = (color_to_change + 1) * 5;
-		}
-
-		// change to capsule broke in each color
-		var color = (pos_type >= 20)
-			? 19 // virus to sprite explode 
-			: Math.floor((this.map.layers[0].data[pos] - 1) / 5) + 16; // g=0,r=1,b=2 :: 16,17,18 are broke sprites
-		this.map.layers[0].data[pos] = color;
-		if (this.positions_to_delete.indexOf(pos) == -1) this.positions_to_delete.push(pos);
-	}
-
+	this.checkPositions();
 }
 
 
@@ -271,6 +266,88 @@ Tilemap.prototype.addViruses = function (difficulty_level) {
 	stopped = false;
 }
 
+// Checks all the positions on the tilemap
+// and breaks the positions that have 4 or more consecutive colors
+
+Tilemap.prototype.checkPositions = function () {
+
+	// check ALL THE ROWS AND COLUMNS
+	// check THE COLUMNS
+	for (var i = 0; i < this.map.width; i++) { // 0, 1, .. 7, 8
+		this.checkLine(i, i + this.map.width * (this.map.height - 1), this.map.width);
+	}
+
+	// CHECK THE ROWS 
+	for (var i = 0; i < this.map.height * this.map.width; i += this.map.width) { // 0, 9, ..., 152
+		this.checkLine(i, i + (this.map.width - 1), 1);
+	}
+
+	// delete positions marked 
+	var b = this.positions_to_break.length;
+
+	if (b > 0) {
+		stopped = true;
+		this.breakingState = true;
+	}
+
+	for (var n = 0; n < b; n++) {
+		var pos = this.positions_to_break.pop();
+		var pos_type = (this.map.layers[0].data[pos] - 1);
+
+		// change the capsules to neutral form
+		if (pos_type < 20 && pos_type % 5 != 4) {
+			var pos_to_change = whichPositionToChange(pos, pos_type % 5, this.map.width);
+			var color_to_change = Math.floor((this.map.layers[0].data[pos_to_change] - 1) / 5);
+			this.map.layers[0].data[pos_to_change] = (color_to_change + 1) * 5;
+		}
+
+		// change to capsule broke in each color
+		var color = (pos_type >= 20)
+			? 19 // virus to sprite explode 
+			: Math.floor((this.map.layers[0].data[pos] - 1) / 5) + 16; // g=0,r=1,b=2 :: 16,17,18 are broke sprites
+		this.map.layers[0].data[pos] = color;
+		if (this.positions_to_delete.indexOf(pos) == -1) this.positions_to_delete.push(pos);
+	}
+}
+
+
+Tilemap.prototype.checkFallingCapsules = function () {
+
+	// check all tilemap backwards
+	for (var i = this.map.height - 1; i >= 0; i--) {
+		for (var j = 0; j < this.map.width; j++){
+			var pos = i * this.map.width - j - 1;
+			var type = this.map.layers[0].data[pos];
+
+			// check if its a virus or empty cell  
+			if(type != 0 && type < 20 && 
+				// check if has nothing below or cell below has to fall
+				(this.map.layers[0].data[pos + this.map.width] == 0 || false)) {
+
+				switch ((type - 1) % 5) {
+					case 4: // neutral capsule
+					case 0: // upper capsule (has to fall)
+					case 1: // down capsule (has to fall)
+						if (this.positions_to_fall.indexOf(pos) == -1) this.positions_to_fall.push(pos);
+						break;
+					case 2: // left capsule, check if right capsule has to fall
+						if (this.map.layers[0].data[(pos + 1) + this.map.width] == 0){
+							if (this.positions_to_fall.indexOf(pos) == -1) this.positions_to_fall.push(pos);
+						}
+						break;
+					case 3: // right capsule, check if left capsule has to fall
+						if (this.map.layers[0].data[(pos - 1) + this.map.width] == 0) {
+							if (this.positions_to_fall.indexOf(pos) == -1) this.positions_to_fall.push(pos);
+						}
+						break;
+					default:
+						break;
+				}
+			}
+		}
+	}
+}
+
 // returns the position to change given the type of capsule
 function whichPositionToChange(position, type, width) {
 	var res = 0;
@@ -283,5 +360,3 @@ function whichPositionToChange(position, type, width) {
 	}
 	return position + res;
 }
-
-
