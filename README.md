@@ -30,9 +30,9 @@ Proyecto de la asignatura "Juegos por Computador" del MEI en la UPC.
         - [ ] Sprite cartel ( siguiente nivel, perdiste, ganaste, pausa?)
     - [ ] Lupa con virus bailando -> Cuando pierdes se rien
         - [ ] Sprites virus grandes (3 para normal, 1 para explotar, 2 para cuando pierdes (se rien))
-    - [ ] Yoshi lanzando cápsula 
+    - [x] Yoshi lanzando cápsula 
         - [x] Lógica lanzamiento capsula
-        - [ ] Sprite yoshi lanzando (2 para estado normal, X para lanzar capsula, 2 para cuando ganas (feliz), 2 para cuando pierdes (triste))
+        - [x] Sprite yoshi lanzando (2 para estado normal, X para lanzar capsula, 2 para cuando ganas (feliz), 2 para cuando pierdes (triste))
 - [x] Texto de letras y puntuaciones (carpeta 1)
     - [x] Mostrar puntuación
     - [x] Mostrar nº viruses
@@ -58,5 +58,6 @@ Proyecto de la asignatura "Juegos por Computador" del MEI en la UPC.
     - [x] Cambiar los sprites de viruses a un mismo png (EDA para 3 virus)
     - [ ] PAUSA?
     - [ ] Oscurecer huevos de fondo GAME
+    - [ ] Hacer que la maquina de estados funcione con una sola comprobación de estado?
 - [ ] BUGS:
     - [x] Cuando finaliza el juego no se puede reiniciar, solucionar eso LOL

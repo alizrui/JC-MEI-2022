@@ -21,6 +21,7 @@ var pastilla2 = 0;
 var state_new_capsule = true;
 var state_stopped = true;
 var state_end = false;
+var state_nextlevel = false;
 
 
 // text variables
@@ -51,27 +52,30 @@ function SceneGame() {
 	this.imageJuego = new StaticImage(0, 0, 512, 480, fondo_juego);
 
 	// Create Sprites de yoshi
-	this.yoshiNeutral = new Sprite(100, 100, 115, 110, 1, texture_yoshi);
-	this.yoshiTongue = new Sprite(100, 100, 115, 110, 1, texture_yoshi);
-	this.yoshiHappy = new Sprite(100, 100, 115, 110, 1, texture_yoshi);
-	this.yoshiSad = new Sprite(100, 100, 115, 110, 1, texture_yoshi);
+	this.yoshiNeutral = new Sprite(370, 90, 115, 110, 1, texture_yoshi);
+	this.yoshiTongue1  = new Sprite(370, 90, 115, 110, 1, texture_yoshi);
+	this.yoshiTongue2  = new Sprite(370, 90, 115, 110, 1, texture_yoshi);
+	this.yoshiHappy   = new Sprite(370, 90, 115, 110, 1, texture_yoshi);
+	this.yoshiSad     = new Sprite(370, 90, 115, 110, 1, texture_yoshi);
 
 	this.yoshiNeutral.addAnimation();
-	this.yoshiTongue.addAnimation();
+	this.yoshiTongue1.addAnimation();
+	this.yoshiTongue2.addAnimation();	
 	this.yoshiHappy.addAnimation();
 	this.yoshiSad.addAnimation();
 
 	this.yoshiNeutral.addKeyframe(0, [0, 0, 115, 110]);
 	this.yoshiNeutral.addKeyframe(0, [0, 110, 115, 110]);
-	this.yoshiTongue.addKeyframe(0, [115, 0, 115, 110]);
-	this.yoshiTongue.addKeyframe(0, [115, 110, 115, 110]);
+	this.yoshiTongue1.addKeyframe(0, [115, 0, 115, 110]);
+	this.yoshiTongue2.addKeyframe(0, [115, 110, 115, 110]);
 	this.yoshiHappy.addKeyframe(0, [230, 0, 115, 110]);
 	this.yoshiHappy.addKeyframe(0, [230, 110, 115, 110]);
 	this.yoshiSad.addKeyframe(0, [345, 0, 115, 110]);
 	this.yoshiSad.addKeyframe(0, [345, 110, 115, 110]);
 
 	this.yoshiNeutral.setAnimation(0);
-	this.yoshiTongue.setAnimation(0);
+	this.yoshiTongue1.setAnimation(0);
+	this.yoshiTongue2.setAnimation(0);
 	this.yoshiHappy.setAnimation(0);
 	this.yoshiSad.setAnimation(0);
 	
@@ -84,18 +88,18 @@ function SceneGame() {
 	// Store current time
 	this.currentTime = 0
 
+	// initialize TIMERS
 	this.capsuleTimerY = CAPSULE_INIT_TIMER_Y;
 	this.capsuleTimerX = 0;
 	this.animationTimer = ANIMATION_TIMER;
+	this.numRotations = NUM_ROTATIONS; // controls number of rotations in capsule throwing to map
+	this.nextLevelTimer = NEXT_LEVEL_TIMER; // controls time between levels
 
 	// aux for speed increase
 	this.counterCapsules = 0;
 
-	// controls number of rotations in capsule throwing to map
-	this.numRotations = NUM_ROTATIONS;
-
-	// controls time between levels
-	this.nextLevelTimer = NEXT_LEVEL_TIMER;
+	// aux for which yoshi to draw (0:neutral, 1:tongue, 2:happy, 3:sad)
+	this.whichYoshi = 0;
 }
 
 
@@ -105,7 +109,7 @@ SceneGame.prototype.update = function (deltaTime) {
 
 	// Game logic
 	// new capsule (232,176) is the starting position
-	if (!state_end && state_new_capsule && !state_stopped) {
+	if (!state_end && !state_stopped && state_new_capsule && !state_nextlevel) {
 		this.animationTimer--;
 		if(this.animationTimer <= 0){
 			this.numRotations--;
@@ -129,8 +133,14 @@ SceneGame.prototype.update = function (deltaTime) {
 				this.cellPastillasSprites[init_pastilla2].x = init_data2[1] + despl[0];
 				this.cellPastillasSprites[init_pastilla2].y = init_data2[2] + despl[1];
 
+				// which yoshi to draw
+				if (this.numRotations > 12 || this.numRotations < 6) {
+					this.whichYoshi = 3;
+				} else {
+					this.whichYoshi = 4;
+				}
+
 			} else { 
-				// LAST THING TO DO
 				// capsule in tilemap
 				pastilla1 = init_pastilla1;
 				pastilla2 = init_pastilla2;
@@ -145,12 +155,15 @@ SceneGame.prototype.update = function (deltaTime) {
 				state_new_capsule = 0;
 
 				this.numRotations = NUM_ROTATIONS;
+
+				// return to draw original yoshi
+				this.whichYoshi = 0;
 			}
 		}
 	}
 
 	// Move capsule down
-	if (!state_end && !state_stopped && !state_new_capsule) {
+	if (!state_end && !state_stopped && !state_new_capsule && !state_nextlevel) {
 		this.capsuleTimerY--;
 		if (this.capsuleTimerY <= 0) {
 			this.capsuleTimerY = CAPSULE_INIT_TIMER_Y;
@@ -286,28 +299,38 @@ SceneGame.prototype.update = function (deltaTime) {
 	}
 
 	// points things
-	if (top_score < num_score) {
-		top_score = num_score;
+	if (top_score < num_score) top_score = num_score;
+	
+
+	if(num_virus <= 0){
+		state_nextlevel = true;
+		this.whichYoshi = 1;
 	}
 
 	// new level
-	if (!state_end && !state_stopped && num_virus <= 0){
+	if (state_nextlevel){
 		// SPRITE NEXT LEVEL
-		whichDifficulty++;
-		this.updateParameters();
+
+		this.nextLevelTimer--;
+		if(this.nextLevelTimer <= 0){
+			whichDifficulty++;
+			this.updateParameters();	
+		}
 	}
 
 	if (state_end){
 		// SPRITE GAME OVER
 		if(num_virus==0){
 			// WIN
+			this.whichYoshi = 1;
 		} else {
+			
 			// LOSE
+			this.whichYoshi = 2;
 		}
 
 		if (keyboard[13]) { // ENTER
 			keyboard[13] = false;
-
 			whichScene = 1;
 		}
 	}
@@ -318,6 +341,11 @@ SceneGame.prototype.update = function (deltaTime) {
 	// update glass
 	// update virus in glass
 	// update yoshi
+	this.yoshiNeutral.update(deltaTime+20);
+	this.yoshiHappy.update(deltaTime);
+	this.yoshiTongue1.update(deltaTime);
+	this.yoshiTongue2.update(deltaTime);
+	this.yoshiSad.update(deltaTime);
 
 }
 
@@ -354,8 +382,14 @@ SceneGame.prototype.draw = function () // meter argumento
 	// draw glass
 	// draw virus in glass
 	// draw yoshi
+	switch(this.whichYoshi){
+		case 1: this.yoshiHappy.draw(); break;
+		case 2: this.yoshiSad.draw(); break;
+		case 3: this.yoshiTongue1.draw(); break;
+		case 4: this.yoshiTongue2.draw(); break;
+		default: this.yoshiNeutral.draw();; break;
+	}
 
-	
 	// draw texts
 	var texts = ["TOP", "SCORE", "LEVEL", "SPEED", "VIRUS"];
 	context.font = "bold 20px FreeMono";
@@ -380,13 +414,19 @@ SceneGame.prototype.updateParameters = function () {
 		// SPRITE WELL DONE Y FIN DEL JUEGO
 		state_end = true;
 	} else {
+		// fix states
 		state_end = false;
-		state_new_capsule = 1;
+		state_new_capsule = true;
 		state_stopped = false;
+		state_nextlevel = false;
+
+		// reset timers
 		this.capsuleTimerY = CAPSULE_INIT_TIMER_Y; 
 		this.capsuleTimerX = CAPSULE_INIT_TIMER_X;
 		this.animationTimer = ANIMATION_TIMER;
 		this.numRotations = NUM_ROTATIONS;
+		this.nextLevelTimer = NEXT_LEVEL_TIMER;
+
 		this.map.addViruses(whichDifficulty);
 		//whichSpeed // do something with this two
 		//whichMusic
@@ -398,8 +438,10 @@ SceneGame.prototype.updateParameters = function () {
 			default: text_speed = "HI"; break;
 		}
 		num_level = whichDifficulty;
-		this.create_random_pill();
 
+		this.whichYoshi = 0;
+
+		this.create_random_pill();
 	}
 }
 
