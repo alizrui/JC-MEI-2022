@@ -30,6 +30,9 @@ var num_virus = 0;
 var num_level = 0;
 var text_speed = "LOW"
 
+// sprite lupa variables
+var virus_in_glass = [false, false, false];
+
 // Scene GAME . Updates and draws a single scene of the game.
 
 function SceneGame() {
@@ -253,6 +256,11 @@ SceneGame.prototype.update = function (deltaTime) {
 		whichScene = 0;
 	}
 
+	if (keyboard[65]) { // PRINT WITH A (DEBUG)
+		keyboard[65] = false;
+		console.log(virus_in_glass);
+	}
+
 	// points things
 	if (top_score < num_score) {
 		top_score = num_score;
@@ -283,6 +291,10 @@ SceneGame.prototype.update = function (deltaTime) {
 	// update sprites
 	this.map.update(deltaTime+16);
 
+	// update glass
+	// update virus in glass
+	// update yoshi
+
 }
 
 SceneGame.prototype.draw = function () // meter argumento
@@ -312,6 +324,13 @@ SceneGame.prototype.draw = function () // meter argumento
 		this.pastillasSprites[pastilla1].draw();
 		this.pastillasSprites[pastilla2].draw();
 	}
+
+	// draw sprites
+
+	// draw glass
+	// draw virus in glass
+	// draw yoshi
+
 	
 	// draw texts
 	var texts = ["TOP", "SCORE", "LEVEL", "SPEED", "VIRUS"];

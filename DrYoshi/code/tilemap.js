@@ -123,6 +123,9 @@ Tilemap.prototype.draw = function () {
 				this.viruses[tileId - 21].x = this.basePos[0] + this.tileSize[0] * i;
 				this.viruses[tileId - 21].y = this.basePos[1] + this.tileSize[1] * j;
 				this.viruses[tileId - 21].draw();
+
+				// has to drawed in glass
+				virus_in_glass[tileId - 21] = true;
 			} 
 			if (tileId > 0 && tileId != 20 && tileId != 24 && tileId != 25) { // DEBUGGING, FAKE SOLUTION
 				context.drawImage(this.tilesheet.img, tilePositions[tileId - 1][0], tilePositions[tileId - 1][1], blockSize[0], blockSize[1],
@@ -292,6 +295,7 @@ Tilemap.prototype.checkPositions = function () {
 			if(color == 19){ 
 				num_virus--;
 				points += 100;
+				virus_in_glass = [false,false,false];
 			}
 
 		}
