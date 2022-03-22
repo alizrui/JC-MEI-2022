@@ -38,8 +38,10 @@ var virus_in_glass = [false, false, false];
 function SceneGame() {
 	// Load textures fondos
 	var fondo_juego = new Texture("../img/fondo_juego_v1.png");
-
+	
 	// Load texture yoshi
+	var texture_yoshi = new Texture("../sprites/sprites_yoshi.png");
+
 
 	// data estructures with all capsules
 	this.pastillasSprites = createPastillas();
@@ -49,13 +51,34 @@ function SceneGame() {
 	this.imageJuego = new StaticImage(0, 0, 512, 480, fondo_juego);
 
 	// Create Sprites de yoshi
+	this.yoshiNeutral = new Sprite(100, 100, 115, 110, 1, texture_yoshi);
+	this.yoshiTongue = new Sprite(100, 100, 115, 110, 1, texture_yoshi);
+	this.yoshiHappy = new Sprite(100, 100, 115, 110, 1, texture_yoshi);
+	this.yoshiSad = new Sprite(100, 100, 115, 110, 1, texture_yoshi);
 
+	this.yoshiNeutral.addAnimation();
+	this.yoshiTongue.addAnimation();
+	this.yoshiHappy.addAnimation();
+	this.yoshiSad.addAnimation();
 
+	this.yoshiNeutral.addKeyframe(0, [0, 0, 115, 110]);
+	this.yoshiNeutral.addKeyframe(0, [0, 110, 115, 110]);
+	this.yoshiTongue.addKeyframe(0, [115, 0, 115, 110]);
+	this.yoshiTongue.addKeyframe(0, [115, 110, 115, 110]);
+	this.yoshiHappy.addKeyframe(0, [230, 0, 115, 110]);
+	this.yoshiHappy.addKeyframe(0, [230, 110, 115, 110]);
+	this.yoshiSad.addKeyframe(0, [345, 0, 115, 110]);
+	this.yoshiSad.addKeyframe(0, [345, 110, 115, 110]);
+
+	this.yoshiNeutral.setAnimation(0);
+	this.yoshiTongue.setAnimation(0);
+	this.yoshiHappy.setAnimation(0);
+	this.yoshiSad.setAnimation(0);
+	
 	// Loading texture to use in a TileMap
 	var tilesheet = new Texture("../tiles/tiles16.png");
 
 	// Create tilemap
-	//this.map = new Tilemap(tilesheet, [16, 16], [5, 5], [184, 176], empty_map, difficulty_level);
 	this.map = new Tilemap(tilesheet, [16, 16], [5, 5], [184, 176], empty_map);
 
 	// Store current time
