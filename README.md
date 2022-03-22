@@ -26,8 +26,9 @@ Proyecto de la asignatura "Juegos por Computador" del MEI en la UPC.
     - [ ] Lupa con virus bailando -> Cuando pierdes se rien
     - [ ] Yoshi lanzando cápsula <- DEBERÍA PRIORIZARSE
     - [ ] Cuando pierdes se pone triste 
-    - [ ] Pantallita de GAME OVER
+    - [ ] Pantallita de GAME OVER + logica de game over
     - [ ] Pasar de nivel cuando te quedas sin viruses (nivel + 1, si + nivel 6 te pasaste el juego?)
+    - [ ] Subir velocidad progresivamente (+1 cada 10 capsulas?)
 - [ ] Texto de letras y puntuaciones (carpeta 1)
     - [ ] Mostrar puntuación
     - [ ] Mostrar nº viruses
