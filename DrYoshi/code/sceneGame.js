@@ -313,7 +313,7 @@ SceneGame.prototype.update = function (deltaTime) {
 	}
 
 	// update sprites
-	this.map.update(deltaTime+16);
+	this.map.update(deltaTime + 16);
 
 	// update glass
 	// update virus in glass
@@ -385,6 +385,8 @@ SceneGame.prototype.updateParameters = function () {
 		state_stopped = false;
 		this.capsuleTimerY = CAPSULE_INIT_TIMER_Y; 
 		this.capsuleTimerX = CAPSULE_INIT_TIMER_X;
+		this.animationTimer = ANIMATION_TIMER;
+		this.numRotations = NUM_ROTATIONS;
 		this.map.addViruses(whichDifficulty);
 		//whichSpeed // do something with this two
 		//whichMusic

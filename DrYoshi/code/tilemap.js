@@ -203,6 +203,7 @@ Tilemap.prototype.addCapsule = function (type1, posx1, posy1, type2, posx2, posy
 	if(this.map.layers[0].data[position_capsule1] || 
 		this.map.layers[0].data[position_capsule2]){
 		state_end = true;
+		return;
 	}
 
 	this.map.layers[0].data[position_capsule1] = type1 + 1;
