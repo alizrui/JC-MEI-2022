@@ -11,7 +11,7 @@ var crear_pastilla = 1;
 var stopped = true;
 
 // text variables
-var top_score = 0;
+var top_score = 1000;
 var num_score = 0;
 var num_virus = 0;
 var num_level = 0;
@@ -191,6 +191,11 @@ SceneGame.prototype.update = function (deltaTime) {
 	if (keyboard[81]) {
 		keyboard[81] = false;
 		whichScene = 0;
+	}
+
+	// points things
+	if(top_score < num_score){
+		top_score = num_score; 
 	}
 
 	// update sprites

@@ -263,6 +263,7 @@ Tilemap.prototype.checkPositions = function () {
 		this.breakingState = true;
 	}
 
+	var points = 0;
 	for (var n = 0; n < b; n++) {
 		var pos = this.positions_to_break.pop();
 		var pos_type = (this.map.layers[0].data[pos] - 1);
@@ -285,10 +286,14 @@ Tilemap.prototype.checkPositions = function () {
 			// SCORE AND VIRUS COUNTER
 			if(color == 19){ 
 				num_virus--;
+				points += 100;
 			}
 
 		}
 	}
+
+	// more points if more than one virus popped
+	if(points) num_score += points + (points - 100) * 2
 }
 
 

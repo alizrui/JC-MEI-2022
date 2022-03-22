@@ -164,6 +164,8 @@ SceneSelection.prototype.update = function (deltaTime) {
 	
 	if (keyboard[13]) { // ENTER
 		keyboard[13] = false;
+		num_score = 0;
+		num_virus = 0;
 		if(whichOption == 3){
 			whichScene = 0;
 		} else {

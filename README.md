@@ -29,10 +29,10 @@ Proyecto de la asignatura "Juegos por Computador" del MEI en la UPC.
     - [ ] Pantallita de GAME OVER + logica de game over
     - [ ] Pasar de nivel cuando te quedas sin viruses (nivel + 1, si + nivel 6 te pasaste el juego?)
     - [ ] Subir velocidad progresivamente (+1 cada 10 capsulas?)
-- [ ] Texto de letras y puntuaciones (carpeta 1)
-    - [ ] Mostrar puntuación
-    - [ ] Mostrar nº viruses
-    - [ ] Mostrar nivel
+- [x] Texto de letras y puntuaciones (carpeta 1)
+    - [x] Mostrar puntuación
+    - [x] Mostrar nº viruses
+    - [x] Mostrar nivel
 - [ ] Músicas
     - [ ] Música de fondo (2 para juego, 1 para menu / otras pantallas)
     - [ ] Sonido tirar cápsula
