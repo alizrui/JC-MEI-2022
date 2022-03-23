@@ -51,18 +51,32 @@ function SceneGame() {
 	// Create objects
 	this.imageJuego = new StaticImage(0, 0, 512, 480, fondo_juego);
 
-	// Create Sprites de yoshi
+	// Create sceneGame sprites
 	this.yoshiNeutral = new Sprite(370, 90, 115, 110, 1, texture_yoshi);
-	this.yoshiTongue1  = new Sprite(370, 90, 115, 110, 1, texture_yoshi);
-	this.yoshiTongue2  = new Sprite(370, 90, 115, 110, 1, texture_yoshi);
+	this.yoshiTongue1 = new Sprite(370, 90, 115, 110, 1, texture_yoshi);
+	this.yoshiTongue2 = new Sprite(370, 90, 115, 110, 1, texture_yoshi);
 	this.yoshiHappy   = new Sprite(370, 90, 115, 110, 1, texture_yoshi);
 	this.yoshiSad     = new Sprite(370, 90, 115, 110, 1, texture_yoshi);
+	this.glass        = new Sprite(10, 300, 150, 159, 1, texture_yoshi);
+	this.virusGlassGreen = new Sprite(50, 380, 32, 32, 1, texture_yoshi);
+	this.virusGlassRed   = new Sprite(70, 320, 32, 32, 1, texture_yoshi);
+	this.virusGlassBlue  = new Sprite(100, 370, 32, 32, 1, texture_yoshi);
+	this.virusGlassGreenHappy = new Sprite(50, 380, 32, 32, 1, texture_yoshi);
+	this.virusGlassRedHappy = new Sprite(70, 320, 32, 32, 1, texture_yoshi);
+	this.virusGlassBlueHappy = new Sprite(100, 370, 32, 32, 1, texture_yoshi);
 
 	this.yoshiNeutral.addAnimation();
 	this.yoshiTongue1.addAnimation();
 	this.yoshiTongue2.addAnimation();	
 	this.yoshiHappy.addAnimation();
 	this.yoshiSad.addAnimation();
+	this.glass.addAnimation();
+	this.virusGlassBlue.addAnimation();
+	this.virusGlassGreen.addAnimation();
+	this.virusGlassRed.addAnimation();
+	this.virusGlassBlueHappy.addAnimation();
+	this.virusGlassGreenHappy.addAnimation();
+	this.virusGlassRedHappy.addAnimation();
 
 	this.yoshiNeutral.addKeyframe(0, [0, 0, 115, 110]);
 	this.yoshiNeutral.addKeyframe(0, [0, 110, 115, 110]);
@@ -72,12 +86,40 @@ function SceneGame() {
 	this.yoshiHappy.addKeyframe(0, [230, 110, 115, 110]);
 	this.yoshiSad.addKeyframe(0, [345, 0, 115, 110]);
 	this.yoshiSad.addKeyframe(0, [345, 110, 115, 110]);
+	this.glass.addKeyframe(0, [0, 220, 150, 159]);
+	this.glass.addKeyframe(0, [150, 220, 150, 159]);
+	
+	this.virusGlassGreen.addKeyframe(0, [300, 220, 32, 32]);
+	this.virusGlassRed.addKeyframe(0,   [332, 220, 32, 32]);
+	this.virusGlassBlue.addKeyframe(0,  [364, 220, 32, 32]);
+	this.virusGlassGreen.addKeyframe(0, [300, 252, 32, 32]);
+	this.virusGlassRed.addKeyframe(0,   [332, 252, 32, 32]);
+	this.virusGlassBlue.addKeyframe(0,  [364, 252, 32, 32]);
+	this.virusGlassGreen.addKeyframe(0, [300, 284, 32, 32]);
+	this.virusGlassRed.addKeyframe(0,   [332, 284, 32, 32]);
+	this.virusGlassBlue.addKeyframe(0,  [364, 284, 32, 32]);
+	this.virusGlassGreen.addKeyframe(0, [300, 316, 32, 32]);
+	this.virusGlassRed.addKeyframe(0,   [332, 316, 32, 32]);
+	this.virusGlassBlue.addKeyframe(0,  [364, 316, 32, 32]);
+	this.virusGlassGreenHappy.addKeyframe(0, [396, 220, 32, 32]);
+	this.virusGlassRedHappy.addKeyframe(0,   [428, 220, 32, 32]);
+	this.virusGlassBlueHappy.addKeyframe(0,  [460, 220, 32, 32]);
+	this.virusGlassGreenHappy.addKeyframe(0, [396, 252, 32, 32]);
+	this.virusGlassRedHappy.addKeyframe(0,   [428, 252, 32, 32]);
+	this.virusGlassBlueHappy.addKeyframe(0,  [460, 252, 32, 32]);
 
 	this.yoshiNeutral.setAnimation(0);
 	this.yoshiTongue1.setAnimation(0);
 	this.yoshiTongue2.setAnimation(0);
 	this.yoshiHappy.setAnimation(0);
 	this.yoshiSad.setAnimation(0);
+	this.glass.setAnimation(0);
+	this.virusGlassBlue.setAnimation(0);
+	this.virusGlassGreen.setAnimation(0);
+	this.virusGlassRed.setAnimation(0);
+	this.virusGlassBlueHappy.setAnimation(0);
+	this.virusGlassGreenHappy.setAnimation(0);
+	this.virusGlassRedHappy.setAnimation(0);
 	
 	// Loading texture to use in a TileMap
 	var tilesheet = new Texture("../tiles/tiles16.png");
@@ -338,15 +380,19 @@ SceneGame.prototype.update = function (deltaTime) {
 	// update sprites
 	this.map.update(deltaTime + 16);
 
-	// update glass
-	// update virus in glass
-	// update yoshi
-	this.yoshiNeutral.update(deltaTime+20);
+	this.yoshiNeutral.update(deltaTime + 20);
 	this.yoshiHappy.update(deltaTime);
 	this.yoshiTongue1.update(deltaTime);
 	this.yoshiTongue2.update(deltaTime);
 	this.yoshiSad.update(deltaTime);
 
+	this.glass.update(deltaTime - 5);
+	this.virusGlassBlue.update(deltaTime + 26);
+	this.virusGlassGreen.update(deltaTime + 26);
+	this.virusGlassRed.update(deltaTime + 26);
+	this.virusGlassBlueHappy.update(deltaTime + 26);
+	this.virusGlassGreenHappy.update(deltaTime + 26);
+	this.virusGlassRedHappy.update(deltaTime + 26);
 }
 
 SceneGame.prototype.draw = function () // meter argumento
@@ -378,11 +424,19 @@ SceneGame.prototype.draw = function () // meter argumento
 	}
 
 	// draw sprites
-
-	// draw glass
-	// draw virus in glass
+	// draw glass and virus in glass
+	if (!state_end && num_virus > 0) {
+		if (virus_in_glass[0]) this.virusGlassGreen.draw();
+		if (virus_in_glass[1]) this.virusGlassRed.draw();
+		if (virus_in_glass[2]) this.virusGlassBlue.draw();
+	} else {
+		if (virus_in_glass[0]) this.virusGlassGreenHappy.draw();
+		if (virus_in_glass[1]) this.virusGlassRedHappy.draw();
+		if (virus_in_glass[2]) this.virusGlassBlueHappy.draw();
+	}
+	this.glass.draw();
 	// draw yoshi
-	switch(this.whichYoshi){
+	switch (this.whichYoshi) {
 		case 1: this.yoshiHappy.draw(); break;
 		case 2: this.yoshiSad.draw(); break;
 		case 3: this.yoshiTongue1.draw(); break;
