@@ -2,6 +2,7 @@ const CAPSULE_INIT_TIMER_X = 8;
 var CAPSULE_INIT_TIMER_Y = 40;
 
 const NEXT_LEVEL_TIMER = 100;
+const GLASS_DESTRUCTION_TIMER = 40;
 
 const ANIMATION_TIMER = 1;
 const NUM_ROTATIONS = 17;
@@ -58,12 +59,16 @@ function SceneGame() {
 	this.yoshiHappy   = new Sprite(370, 90, 115, 110, 1, texture_yoshi);
 	this.yoshiSad     = new Sprite(370, 90, 115, 110, 1, texture_yoshi);
 	this.glass        = new Sprite(10, 300, 150, 159, 1, texture_yoshi);
-	this.virusGlassGreen = new Sprite(50, 380, 32, 32, 1, texture_yoshi);
-	this.virusGlassRed   = new Sprite(70, 320, 32, 32, 1, texture_yoshi);
-	this.virusGlassBlue  = new Sprite(100, 370, 32, 32, 1, texture_yoshi);
+	this.virusGlassGreen = new Sprite(50, 380, 32, 32, 1, texture_yoshi); // (50,380)
+	this.virusGlassRed   = new Sprite(70, 320, 32, 32, 1, texture_yoshi); // (70,320)
+	this.virusGlassBlue  = new Sprite(100, 370, 32, 32, 1, texture_yoshi); // (100,370)
 	this.virusGlassGreenHappy = new Sprite(50, 380, 32, 32, 1, texture_yoshi);
 	this.virusGlassRedHappy = new Sprite(70, 320, 32, 32, 1, texture_yoshi);
 	this.virusGlassBlueHappy = new Sprite(100, 370, 32, 32, 1, texture_yoshi);
+	this.virusDestruction = new Sprite(0, 0, 32, 32, 1, texture_yoshi);
+	// this.virusDestruction = new Sprite(0, 0, 32, 32, 1, texture_yoshi);
+	// this.virusDestruction = new Sprite(0, 0, 32, 32, 1, texture_yoshi);
+	// this.virusDestruction = new Sprite(0, 0, 32, 32, 1, texture_yoshi);
 
 	this.yoshiNeutral.addAnimation();
 	this.yoshiTongue1.addAnimation();
@@ -77,6 +82,11 @@ function SceneGame() {
 	this.virusGlassBlueHappy.addAnimation();
 	this.virusGlassGreenHappy.addAnimation();
 	this.virusGlassRedHappy.addAnimation();
+	this.virusDestruction.addAnimation();
+	// this.virusDestruction2.addAnimation();
+	// this.virusDestruction3.addAnimation();
+	// this.virusDestruction4.addAnimation();
+
 
 	this.yoshiNeutral.addKeyframe(0, [0, 0, 115, 110]);
 	this.yoshiNeutral.addKeyframe(0, [0, 110, 115, 110]);
@@ -88,6 +98,7 @@ function SceneGame() {
 	this.yoshiSad.addKeyframe(0, [345, 110, 115, 110]);
 	this.glass.addKeyframe(0, [0, 220, 150, 159]);
 	this.glass.addKeyframe(0, [150, 220, 150, 159]);
+	
 	
 	this.virusGlassGreen.addKeyframe(0, [300, 220, 32, 32]);
 	this.virusGlassRed.addKeyframe(0,   [332, 220, 32, 32]);
@@ -107,6 +118,10 @@ function SceneGame() {
 	this.virusGlassGreenHappy.addKeyframe(0, [396, 252, 32, 32]);
 	this.virusGlassRedHappy.addKeyframe(0,   [428, 252, 32, 32]);
 	this.virusGlassBlueHappy.addKeyframe(0,  [460, 252, 32, 32]);
+	this.virusDestruction.addKeyframe(0,  [396, 284, 32, 32]);
+	this.virusDestruction.addKeyframe(0, [428, 284, 32, 32]);
+	this.virusDestruction.addKeyframe(0, [396, 316, 32, 32]);
+	this.virusDestruction.addKeyframe(0, [428, 316, 32, 32]);
 
 	this.yoshiNeutral.setAnimation(0);
 	this.yoshiTongue1.setAnimation(0);
@@ -120,6 +135,7 @@ function SceneGame() {
 	this.virusGlassBlueHappy.setAnimation(0);
 	this.virusGlassGreenHappy.setAnimation(0);
 	this.virusGlassRedHappy.setAnimation(0);
+	this.virusDestruction.setAnimation(0);
 	
 	// Loading texture to use in a TileMap
 	var tilesheet = new Texture("../tiles/tiles16.png");
@@ -136,12 +152,17 @@ function SceneGame() {
 	this.animationTimer = ANIMATION_TIMER;
 	this.numRotations = NUM_ROTATIONS; // controls number of rotations in capsule throwing to map
 	this.nextLevelTimer = NEXT_LEVEL_TIMER; // controls time between levels
+	this.destructionGlassTimer = GLASS_DESTRUCTION_TIMER; // controls animation of destruction virus in glass
 
 	// aux for speed increase
 	this.counterCapsules = 0;
 
 	// aux for which yoshi to draw (0:neutral, 1:tongue, 2:happy, 3:sad)
 	this.whichYoshi = 0;
+
+	// aux for animation destruction glass
+	this.destructionGlass = [false, 1];
+	this.virus_draw = [true, true, true];
 }
 
 
@@ -377,6 +398,43 @@ SceneGame.prototype.update = function (deltaTime) {
 		}
 	}
 
+	this.destructionGlass[0] = false;
+
+	// destroying glass virus
+	if (!virus_in_glass[0] && this.virus_draw[0]) { // green destroyed
+		this.destructionGlass[0] = true;
+		this.virusDestruction.x = 50;
+		this.virusDestruction.y = 380;
+		this.destructionGlassTimer--;
+		if(this.destructionGlassTimer <= 0) {
+			this.virus_draw[0] = false;
+			this.destructionGlassTimer = GLASS_DESTRUCTION_TIMER;
+			this.destructionGlass[0] = false;
+		}
+	} 
+	if (!virus_in_glass[1] && this.virus_draw[1]) { // red destroyed
+		this.destructionGlass[0] = true;
+		this.virusDestruction.x = 70;
+		this.virusDestruction.y = 320;
+		this.destructionGlassTimer--;
+		if(this.destructionGlassTimer <= 0) {
+			this.virus_draw[1] = false;
+			this.destructionGlassTimer = GLASS_DESTRUCTION_TIMER;
+			this.destructionGlass[0] = false;
+		}
+	} 
+	if (!virus_in_glass[2] && this.virus_draw[2]) { // blue destroyed
+		this.destructionGlass[0] = true;
+		this.virusDestruction.x = 100;
+		this.virusDestruction.y = 370;	
+		this.destructionGlassTimer--;
+		if(this.destructionGlassTimer <= 0) {
+			this.virus_draw[2] = false;
+			this.destructionGlassTimer = GLASS_DESTRUCTION_TIMER;
+			this.destructionGlass[0] = false;
+		}
+	}
+
 	// update sprites
 	this.map.update(deltaTime + 16);
 
@@ -393,6 +451,9 @@ SceneGame.prototype.update = function (deltaTime) {
 	this.virusGlassBlueHappy.update(deltaTime + 26);
 	this.virusGlassGreenHappy.update(deltaTime + 26);
 	this.virusGlassRedHappy.update(deltaTime + 26);
+
+	this.virusDestruction.update(deltaTime + 40);
+
 }
 
 SceneGame.prototype.draw = function () // meter argumento
@@ -434,6 +495,11 @@ SceneGame.prototype.draw = function () // meter argumento
 		if (virus_in_glass[1]) this.virusGlassRedHappy.draw();
 		if (virus_in_glass[2]) this.virusGlassBlueHappy.draw();
 	}
+
+	if (this.destructionGlass[0]) {
+		this.virusDestruction.draw();
+	}
+
 	this.glass.draw();
 	// draw yoshi
 	switch (this.whichYoshi) {
@@ -481,9 +547,15 @@ SceneGame.prototype.updateParameters = function () {
 		this.numRotations = NUM_ROTATIONS;
 		this.nextLevelTimer = NEXT_LEVEL_TIMER;
 
+		// auxiliar for animations
+		this.destructionGlass = [false, 1];
+		virus_in_glass = [false, false, false];
+
 		this.map.addViruses(whichDifficulty);
 		//whichSpeed // do something with this two
 		//whichMusic
+		this.virus_draw = [true, true, true];
+
 
 		// texts things
 		switch (whichSpeed) {
