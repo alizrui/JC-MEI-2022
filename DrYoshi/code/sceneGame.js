@@ -2,7 +2,7 @@ const CAPSULE_INIT_TIMER_X = 8;
 var CAPSULE_INIT_TIMER_Y = 40;
 
 const NEXT_LEVEL_TIMER = 100;
-const GLASS_DESTRUCTION_TIMER = 40;
+const GLASS_DESTRUCTION_TIMER = 60;
 
 const ANIMATION_TIMER = 1;
 const NUM_ROTATIONS = 17;
@@ -374,8 +374,10 @@ SceneGame.prototype.update = function (deltaTime) {
 	if (state_nextlevel){
 		// SPRITE NEXT LEVEL
 
-		this.nextLevelTimer--;
-		if(this.nextLevelTimer <= 0){
+		//this.nextLevelTimer--;
+		//if(this.nextLevelTimer <= 0){
+		if (keyboard[13]) { // ENTER
+			keyboard[13] = false;
 			whichDifficulty++;
 			this.updateParameters();	
 		}
@@ -387,7 +389,6 @@ SceneGame.prototype.update = function (deltaTime) {
 			// WIN
 			this.whichYoshi = 1;
 		} else {
-			
 			// LOSE
 			this.whichYoshi = 2;
 		}
