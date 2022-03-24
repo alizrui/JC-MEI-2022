@@ -27,7 +27,7 @@ Proyecto de la asignatura "Juegos por Computador" del MEI en la UPC.
     - [x] Subir velocidad progresivamente (+1 cada 10 capsulas?)
     - [ ] Fin de juego
         - [x] Lógica parar juego
-        - [ ] Sprite cartel ( siguiente nivel, perdiste, ganaste, pausa?)
+        - [x] Sprite cartel ( siguiente nivel, perdiste, ganaste, pausa?)
     - [x] Lupa con virus bailando -> Cuando pierdes se rien
         - [x] Sprites virus grandes (3 para normal, 1 para explotar, 2 para cuando pierdes (se rien))
     - [x] Yoshi lanzando cápsula 
