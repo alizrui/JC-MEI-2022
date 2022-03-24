@@ -67,12 +67,12 @@ function SceneGame() {
 	this.virusGlassBlueHappy = new Sprite(100, 370, 32, 32, 1, texture_yoshi);
 	this.virusDestruction = new Sprite(0, 0, 32, 32, 1, texture_yoshi);
 	
-	this.signSprite = new Sprite(200, 200, 133, 102, texture_yoshi); // faltan coordenadas buenas
-	this.spriteSalir = new Sprite(0, 0, 45, 19, texture_yoshi);
-	this.spriteGanaste = new Sprite(0, 0, 81, 19, texture_yoshi);
-	this.spritePerdiste = new Sprite(0, 0, 90, 19, texture_yoshi);
-	this.spriteSNivel = new Sprite(0, 0, 81, 38, texture_yoshi);
-	this.spriteBien = new Sprite(0, 0, 108, 19, texture_yoshi);
+	this.signSprite =     new Sprite(190, 190, 133, 102, 1, texture_yoshi); // faltan coordenadas buenas
+	this.spriteSalir =    new Sprite(230, 250, 45, 19, 1, texture_yoshi);
+	this.spriteGanaste =  new Sprite(215, 210, 81, 19, 1, texture_yoshi);
+	this.spritePerdiste = new Sprite(210, 210, 90, 19, 1, texture_yoshi);
+	this.spriteSNivel =   new Sprite(215, 240, 81, 38, 1, texture_yoshi);
+	this.spriteBien =     new Sprite(203, 210, 108, 19, 1, texture_yoshi);
 
 
 	this.yoshiNeutral.addAnimation();
@@ -134,13 +134,13 @@ function SceneGame() {
 	this.signSprite.addKeyframe(0, [133, 379, 133, 102]);
 	this.spriteSalir.addKeyframe(0, [300, 348, 45, 19]);
 	this.spriteSalir.addKeyframe(0, [345, 348, 45, 19]);
-	this.spriteGanaste.addKeyframe(0, [266, 417, 81, 19]);
+	// this.spriteGanaste.addKeyframe(0, [266, 417, 81, 19]);
 	this.spriteGanaste.addKeyframe(0, [266, 436, 81, 19]);
-	this.spritePerdiste.addKeyframe(0, [266, 455, 90, 19]);
+	// this.spritePerdiste.addKeyframe(0, [266, 455, 90, 19]);
 	this.spritePerdiste.addKeyframe(0, [356, 455, 90, 19]);
 	this.spriteSNivel.addKeyframe(0, [374, 379, 81, 38]);
 	this.spriteSNivel.addKeyframe(0, [374, 417, 81, 38]);
-	this.spriteBien.addKeyframe(0, [266, 379, 108,19]);
+	// this.spriteBien.addKeyframe(0, [266, 379, 108,19]);
 	this.spriteBien.addKeyframe(0, [266, 398, 108,19]);
 
 	this.yoshiNeutral.setAnimation(0);
@@ -481,12 +481,12 @@ SceneGame.prototype.update = function (deltaTime) {
 
 	this.virusDestruction.update(deltaTime + 40);
 
-	this.signSprite.update(deltaTime);
-	this.spriteSalir.update(deltaTime);
-	this.spriteGanaste.update(deltaTime);
-	this.spritePerdiste.update(deltaTime);
-	this.spriteSNivel.update(deltaTime);
-	this.spriteBien.update(deltaTime);
+	this.signSprite.update(deltaTime + 20);
+	this.spriteSalir.update(deltaTime + 20);
+	//this.spriteGanaste.update(deltaTime);
+	//this.spritePerdiste.update(deltaTime);
+	this.spriteSNivel.update(deltaTime + 20);
+	//this.spriteBien.update(deltaTime);
 }
 
 SceneGame.prototype.draw = function () // meter argumento
@@ -526,10 +526,12 @@ SceneGame.prototype.draw = function () // meter argumento
 	} else if (state_end && num_virus > 0) {
 		if (virus_in_glass[0]) this.virusGlassGreenHappy.draw();
 		if (virus_in_glass[1]) this.virusGlassRedHappy.draw();
-		if (virus_in_glass[2]) this.virusGlassBlueHappy.draw();
-		//this.signSprite.draw();
+		if (virus_in_glass[2]) { this.virusGlassBlueHappy.draw(); }
+		
+		this.signSprite.draw();
 		this.spritePerdiste.draw();
 		this.spriteSalir.draw();
+
 	} else {
 		this.signSprite.draw();
 		this.spriteGanaste.draw();
