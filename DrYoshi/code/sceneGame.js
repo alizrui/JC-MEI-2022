@@ -577,7 +577,7 @@ SceneGame.prototype.draw = function () // meter argumento
 }
 
 SceneGame.prototype.updateParameters = function () {
-	if (whichDifficulty >= 2) {
+	if (whichDifficulty >= 6) {
 		// END GAME
 		// SPRITE WELL DONE Y FIN DEL JUEGO
 		state_end = true;
