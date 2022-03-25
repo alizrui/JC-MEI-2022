@@ -37,16 +37,16 @@ Proyecto de la asignatura "Juegos por Computador" del MEI en la UPC.
     - [x] Mostrar puntuación
     - [x] Mostrar nº viruses
     - [x] Mostrar nivel
-- [ ] Músicas
-    - [ ] Música de fondo (2 para juego, 1 para menu / otras pantallas)
-    - [ ] Sonido tirar cápsula
+- [ ] Asignar Músicas
+    - [ ] Música de fondo (2 para juego, 1 para menu / otras pantallas) [ENCONTRADA]
+    - [ ] Sonido tirar cápsula [ENCONTRADA]
     - [ ] Sonido mover izq/dcha
     - [ ] Sonido bajar capsula rápidp
     - [ ] Pulsar botón
     - [ ] Destrucción de cápsulas
     - [ ] Colisión de cápsulas
-    - [ ] Nivel completado
-    - [ ] Game over 
+    - [ ] Nivel completado [ENCONTRADA]
+    - [ ] Game over [ENCONTRADA]
 
 - [ ] MISCELÁNEA
     - [x] Pantalla intermedia con dificultades 
