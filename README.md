@@ -25,7 +25,7 @@ Proyecto de la asignatura "Juegos por Computador" del MEI en la UPC.
     - [x] Siguiente cápsula se muestra antes
     - [x] Pasar de nivel cuando te quedas sin viruses (nivel + 1, si + nivel 6 te pasaste el juego?)
     - [x] Subir velocidad progresivamente (+1 cada 10 capsulas?)
-    - [ ] Fin de juego
+    - [x] Fin de juego
         - [x] Lógica parar juego
         - [x] Sprite cartel ( siguiente nivel, perdiste, ganaste, pausa?)
     - [x] Lupa con virus bailando -> Cuando pierdes se rien
