@@ -397,7 +397,7 @@ SceneGame.prototype.update = function (deltaTime) {
 	}
 
 	// new level
-	if (state_nextlevel){
+	if (state_nextlevel && !state_end){
 		// SPRITE NEXT LEVEL
 
 		//this.nextLevelTimer--;
@@ -532,13 +532,13 @@ SceneGame.prototype.draw = function () // meter argumento
 		this.spritePerdiste.draw();
 		this.spriteSalir.draw();
 
-	} else {
+	} else { // state end == true
 		this.signSprite.draw();
 		this.spriteGanaste.draw();
 		this.spriteSalir.draw();
 	}	
 
-	if(state_nextlevel){
+	if(state_nextlevel && !state_end){
 		this.signSprite.draw();
 		this.spriteBien.draw();
 		this.spriteSNivel.draw();
@@ -577,7 +577,7 @@ SceneGame.prototype.draw = function () // meter argumento
 }
 
 SceneGame.prototype.updateParameters = function () {
-	if(whichDifficulty >= 6){
+	if (whichDifficulty >= 2) {
 		// END GAME
 		// SPRITE WELL DONE Y FIN DEL JUEGO
 		state_end = true;
