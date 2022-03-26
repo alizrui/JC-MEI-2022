@@ -240,6 +240,14 @@ SceneGame.prototype.update = function (deltaTime) {
 				this.pastillasSprites[pastilla2].x = 248;
 				this.pastillasSprites[pastilla2].y = 176 + 2;
 
+				// check if can be drawn
+				if(this.map.checkNewCapsule(this.pastillasSprites[pastilla1].x,
+					this.pastillasSprites[pastilla1].y,
+					this.pastillasSprites[pastilla2].x,
+					this.pastillasSprites[pastilla2].y)){
+						state_end = true;
+					};
+
 				this.create_random_pill();
 				state_new_capsule = 0;
 

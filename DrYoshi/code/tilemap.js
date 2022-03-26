@@ -190,14 +190,14 @@ Tilemap.prototype.collisionMoveDown = function (sprite) {
 Tilemap.prototype.addCapsule = function (type1, posx1, posy1, type2, posx2, posy2) {	
 
 	// calculates positions in the tilemap
-	aux_x1 = (posx1 - this.basePos[0]) / 16;
-	aux_y1 = (((posy1-2) - this.basePos[1]) / 16) * this.map.width ;
+	var aux_x1 = (posx1 - this.basePos[0]) / 16;
+	var aux_y1 = (((posy1-2) - this.basePos[1]) / 16) * this.map.width ;
 
-	aux_x2 = (posx2 - this.basePos[0]) / 16;
-	aux_y2 = (((posy2-2) - this.basePos[1]) / 16) * this.map.width ;
+	var aux_x2 = (posx2 - this.basePos[0]) / 16;
+	var aux_y2 = (((posy2-2) - this.basePos[1]) / 16) * this.map.width ;
 
-	position_capsule1 = aux_x1 + aux_y1;
-	position_capsule2 = aux_x2 + aux_y2;
+	var position_capsule1 = aux_x1 + aux_y1;
+	var position_capsule2 = aux_x2 + aux_y2;
 
 	// if there was something, end game
 	if(this.map.layers[0].data[position_capsule1] || 
@@ -384,4 +384,32 @@ Tilemap.prototype.addViruses = function (difficulty_level) {
 
 	this.addCapsule(-1,-1,-1,-1,-1,-1); // DEBUG
 	state_stopped = false;
+}
+
+// check if new capsule is in right position
+Tilemap.prototype.checkNewCapsule = function (posx1, posy1, posx2, posy2) {
+	var res = false;
+
+	// calculates positions in the tilemap
+	var aux_x1 = (posx1 - this.basePos[0]) / 16;
+	var aux_y1 = (((posy1 - 2) - this.basePos[1]) / 16) * this.map.width;
+
+	var aux_x2 = (posx2 - this.basePos[0]) / 16;
+	var aux_y2 = (((posy2 - 2) - this.basePos[1]) / 16) * this.map.width;
+
+	var position_capsule1 = aux_x1 + aux_y1;
+	var position_capsule2 = aux_x2 + aux_y2;
+
+	//console.log("Positions:" + position_capsule1 + " " + position_capsule2)
+
+	// if there was something, end game
+	// console.log(this.map.layers[0].data[position_capsule1]);
+	// console.log(this.map.layers[0].data[position_capsule2]);
+	if(this.map.layers[0].data[position_capsule1] || 
+		this.map.layers[0].data[position_capsule2]){
+
+		res = true;
+	}
+
+	return res;
 }
