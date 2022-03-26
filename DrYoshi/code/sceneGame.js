@@ -414,10 +414,11 @@ SceneGame.prototype.update = function (deltaTime) {
 
 	// new level
 	if (state_nextlevel && !state_end){
-		// SPRITE NEXT LEVEL
+		this.backgroundMusic.stop();
+		
+		// music logic
 
-		//this.nextLevelTimer--;
-		//if(this.nextLevelTimer <= 0){
+
 		if (keyboard[13]) { // ENTER
 			keyboard[13] = false;
 			whichDifficulty++;
