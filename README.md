@@ -38,15 +38,16 @@ Proyecto de la asignatura "Juegos por Computador" del MEI en la UPC.
     - [x] Mostrar nº viruses
     - [x] Mostrar nivel
 - [ ] Asignar Músicas
-    - [ ] Música de fondo (2 para juego, 1 para menu / otras pantallas) [ENCONTRADA]
+    - [x] Música de fondo (2 para juego, 1 para menu / otras pantallas) [ENCONTRADA]
     - [x] Sonido tirar cápsula [ENCONTRADA]
     - [ ] Sonido mover izq/dcha [ENCONTRADA]
     - [ ] Pulsar botón [ENCONTRADA]
     - [ ] Destrucción de cápsulas 
     - [ ] Destrucción de virus
+    - [ ] Destrucción de virus en lupa
     - [ ] Colisión de cápsulas (misma que cuando bajan cápsulas destrucción) [ENCONTRADA]
-    - [ ] Nivel completado [ENCONTRADA]
-    - [ ] Game over [ENCONTRADA]
+    - [x] Nivel completado [ENCONTRADA]
+    - [x] Game over [ENCONTRADA]
 
 - [ ] MISCELÁNEA
     - [x] Pantalla intermedia con dificultades 
@@ -58,6 +59,6 @@ Proyecto de la asignatura "Juegos por Computador" del MEI en la UPC.
     - [x] Cambiar los sprites de viruses a un mismo png (EDA para 3 virus)
     - [ ] PAUSA?
     - [x] Oscurecer huevos de fondo GAME
-    - [ ] Hacer que la maquina de estados funcione con una sola comprobación de estado?
+    - [ ] Oscurecer fondo de lupa
 - [ ] BUGS:
     - [x] Cuando finaliza el juego no se puede reiniciar, solucionar eso LOL

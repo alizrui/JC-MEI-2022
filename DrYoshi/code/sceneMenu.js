@@ -70,7 +70,7 @@ SceneMenu.prototype.update = function (deltaTime) {
 		whichOption = 0;
 		whichDifficulty = 1;
 		whichSpeed = 1;
-		whichMusic = 0;
+		whichMusic = 1;
 		whichScene = whichButton + 1;
 	}
 

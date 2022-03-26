@@ -195,10 +195,10 @@ function SceneGame() {
 	this.playMusic = true;
 	this.playOnce = true;
 	this.gameMusic = AudioFX('../sounds/game_flower_garden.wav', { loop: true, volume: 0.4 });
-	this.tongueSound = AudioFX('../sounds/throw_capsule.wav', { volume: 0.7 });
-	this.nextlevelSound = AudioFX('../sounds/next_level.wav', { volume: 0.7 });
-	this.winSound = AudioFX('../sounds/win.wav', { volume: 0.7 });
-	this.gameoverSound = AudioFX('../sounds/game_over.wav', { volume: 0.7 });
+	this.tongueSound = AudioFX('../sounds/throw_capsule.wav', { volume: 0.8 });
+	this.nextlevelSound = AudioFX('../sounds/next_level.wav', { volume: 0.5 });
+	this.winSound = AudioFX('../sounds/win.wav', { volume: 0.5 });
+	this.gameoverSound = AudioFX('../sounds/game_over.wav', { volume: 0.5 });
 
 }
 
