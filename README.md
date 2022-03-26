@@ -39,13 +39,12 @@ Proyecto de la asignatura "Juegos por Computador" del MEI en la UPC.
     - [x] Mostrar nivel
 - [ ] Asignar Músicas
     - [ ] Música de fondo (2 para juego, 1 para menu / otras pantallas) [ENCONTRADA]
-    - [ ] Sonido tirar cápsula [ENCONTRADA]
-    - [ ] Sonido mover izq/dcha
-    - [ ] Sonido bajar capsula rápido? 
-    - [ ] Pulsar botón
-    - [ ] Destrucción de cápsulas
+    - [x] Sonido tirar cápsula [ENCONTRADA]
+    - [ ] Sonido mover izq/dcha [ENCONTRADA]
+    - [ ] Pulsar botón [ENCONTRADA]
+    - [ ] Destrucción de cápsulas 
     - [ ] Destrucción de virus
-    - [ ] Colisión de cápsulas (misma que cuando bajan cápsulas)
+    - [ ] Colisión de cápsulas (misma que cuando bajan cápsulas destrucción) [ENCONTRADA]
     - [ ] Nivel completado [ENCONTRADA]
     - [ ] Game over [ENCONTRADA]
 

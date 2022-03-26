@@ -36,9 +36,6 @@ var text_speed = "LOW"
 var virus_in_glass = [false, false, false];
 
 // music variables
-this.playTransition = true;
-this.playTongue = true;
-
 
 // Scene GAME . Updates and draws a single scene of the game.
 function SceneGame() {
@@ -195,8 +192,13 @@ function SceneGame() {
 	this.virus_draw = [true, true, true];
 
 	// Prepare sounds
-	this.backgroundMusic = AudioFX('../sounds/game_flower_garden.wav', { loop: true });
-	this.tongueSound = AudioFX('../sounds/throw_capsule.wav');
+	this.playMusic = true;
+	this.playOnce = true;
+	this.gameMusic = AudioFX('../sounds/game_flower_garden.wav', { loop: true, volume: 0.4 });
+	this.tongueSound = AudioFX('../sounds/throw_capsule.wav', { volume: 0.7 });
+	this.nextlevelSound = AudioFX('../sounds/next_level.wav', { volume: 0.7 });
+	this.winSound = AudioFX('../sounds/win.wav', { volume: 0.7 });
+	this.gameoverSound = AudioFX('../sounds/game_over.wav', { volume: 0.7 });
 
 }
 
@@ -209,6 +211,7 @@ SceneGame.prototype.update = function (deltaTime) {
 	// new capsule (232,176) is the starting position
 	if (!state_end && !state_stopped && state_new_capsule && !state_nextlevel) {
 		if(this.numRotations == NUM_ROTATIONS){
+			this.tongueSound.stop();
 			this.tongueSound.play();
 		}
 		this.animationTimer--;
@@ -311,7 +314,7 @@ SceneGame.prototype.update = function (deltaTime) {
 
 		// Move capsule down faster 
 		if (keyboard[40]) { // KEY_DOWN
-			this.capsuleTimerY -= 4;
+			this.capsuleTimerY -= 8;
 		}
 
 
@@ -414,42 +417,54 @@ SceneGame.prototype.update = function (deltaTime) {
 
 	// new level
 	if (state_nextlevel && !state_end){
-		this.backgroundMusic.stop();
+		this.gameMusic.stop();
 		
 		// music logic
-
+		if(this.playOnce && num_score > 0) { 
+			this.nextlevelSound.play(); 
+			this.playOnce = false;
+		}// dirty play i know
 
 		if (keyboard[13]) { // ENTER
 			keyboard[13] = false;
 			whichDifficulty++;
-			this.updateParameters();	
+			this.updateParameters();
+			this.nextlevelSound.stop();
 		}
 	}
 
 	if (state_end){
-		this.backgroundMusic.stop();
+		this.gameMusic.stop();
 		// SPRITE GAME OVER
 		if(num_virus==0){
 			// WIN
 			this.whichYoshi = 1;
-			
+			if (this.playOnce) {
+				this.winSound.play();
+				this.playOnce = false;
+			}
 			// music logic
 		} else {
 			// LOSE
 			this.whichYoshi = 2;
-
+			if(this.playOnce) {
+				this.gameoverSound.play();
+				this.playOnce = false;
+			}
 			// music logic
 		}
 
 		if (keyboard[13]) { // ENTER
 			keyboard[13] = false;
 			whichScene = 1;
+			this.gameoverSound.stop();
+			this.winSound.stop();
 		}
 	}
 
 	// music logic
-	if(!state_end){
-		this.backgroundMusic.play();
+	if(!state_end && this.playMusic){
+		this.gameMusic.play();
 	}
 
 	this.destructionGlass[0] = false;
@@ -627,12 +642,29 @@ SceneGame.prototype.updateParameters = function () {
 		virus_in_glass = [false, false, false];
 
 		this.map.addViruses(whichDifficulty);
-		//whichSpeed // do something with this two
-		//whichMusic
+		// music things
+		switch(whichMusic){
+			case 0: 
+				this.playMusic = true;
+				this.gameMusic.stop();
+				this.gameMusic = AudioFX('../sounds/cool.mp3', { loop: true, volume: 0.4 });
+				break;
+			case 2: 
+				this.playMusic = false;
+				this.gameMusic.stop(); 
+				break;
+			default:
+				this.playMusic = true;
+				this.gameMusic.stop();
+				this.gameMusic = AudioFX('../sounds/game_flower_garden.wav', { loop: true, volume: 0.4 });
+				break;
+		}
+		this.playOnce = true;
+
 		this.virus_draw = [true, true, true];
 
 
-		// texts things
+		// texts things and rotation things
 		switch (whichSpeed) {
 			case 0: text_speed = "LOW"; break;
 			case 1: text_speed = "MID"; break;

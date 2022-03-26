@@ -36,6 +36,10 @@ SceneCreditos.prototype.update = function (deltaTime) {
 
 	// Update sprites
 	this.textoSalir.update(deltaTime+8);
+
+	
+	// music
+	menuMusic.play();
 }
 
 SceneCreditos.prototype.draw = function () // meter argumento

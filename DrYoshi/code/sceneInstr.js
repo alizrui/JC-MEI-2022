@@ -43,6 +43,9 @@ SceneInstr.prototype.update = function (deltaTime) {
 	// Update sprites
 	this.textoSalir.update(deltaTime+8);
 	this.animacionInstr.update(deltaTime+5);
+
+	// music
+	menuMusic.play();
 	
 }
 

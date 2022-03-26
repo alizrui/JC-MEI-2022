@@ -107,6 +107,9 @@ function SceneSelection() {
 
 
 SceneSelection.prototype.update = function (deltaTime) {
+	// music
+	menuMusic.play();
+	
 	// Keep track of time
 	this.currentTime += deltaTime;
 
@@ -172,6 +175,7 @@ SceneSelection.prototype.update = function (deltaTime) {
 			whichScene = whichButton + 4;
 			aux_updateParameters = true;
 			CAPSULE_INIT_TIMER_Y = 40 - whichSpeed * 10;
+			menuMusic.stop();
 		}
 	}
 	
@@ -197,6 +201,8 @@ SceneSelection.prototype.update = function (deltaTime) {
 	this.cool.update(deltaTime+15);
 	this.chill.update(deltaTime+15);
 	this.off.update(deltaTime+15);
+
+	
 }
 
 SceneSelection.prototype.draw = function () // meter argumento

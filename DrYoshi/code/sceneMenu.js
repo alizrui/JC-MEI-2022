@@ -1,3 +1,6 @@
+menuMusic = AudioFX('../sounds/map.mp3', { loop: true, volume: 0.4 });
+
+
 // Scene MENU. Updates and draws a single scene of the game.
 
 function SceneMenu() {
@@ -77,6 +80,9 @@ SceneMenu.prototype.update = function (deltaTime) {
 	this.textoJugar.update(deltaTime+8);
 	this.textoInstr.update(deltaTime+8);
 	this.textoCreditos.update(deltaTime+8);
+
+	// music
+	menuMusic.play();
 
 }
 
