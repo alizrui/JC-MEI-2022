@@ -32,6 +32,8 @@ var num_virus = 0;
 var num_level = 0;
 var text_speed = "LOW"
 
+this.playTransition = false;
+
 // sprite lupa variables
 var virus_in_glass = [false, false, false];
 
@@ -390,10 +392,6 @@ SceneGame.prototype.update = function (deltaTime) {
 		whichScene = 0;
 	}
 
-	if (keyboard[65]) { // PRINT WITH A (DEBUG)
-		keyboard[65] = false;
-		console.log(virus_in_glass);
-	}
 
 	// points things
 	if (top_score < num_score) top_score = num_score;
@@ -422,9 +420,13 @@ SceneGame.prototype.update = function (deltaTime) {
 		if(num_virus==0){
 			// WIN
 			this.whichYoshi = 1;
+			
+			// music logic
 		} else {
 			// LOSE
 			this.whichYoshi = 2;
+
+			// music logic
 		}
 
 		if (keyboard[13]) { // ENTER
