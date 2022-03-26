@@ -32,13 +32,15 @@ var num_virus = 0;
 var num_level = 0;
 var text_speed = "LOW"
 
-this.playTransition = false;
-
 // sprite lupa variables
 var virus_in_glass = [false, false, false];
 
-// Scene GAME . Updates and draws a single scene of the game.
+// music variables
+this.playTransition = true;
+this.playTongue = true;
 
+
+// Scene GAME . Updates and draws a single scene of the game.
 function SceneGame() {
 	// Load textures fondos
 	var fondo_juego = new Texture("../img/fondo_juego_v1.png");
@@ -191,6 +193,11 @@ function SceneGame() {
 	// aux for animation destruction glass
 	this.destructionGlass = [false, 1];
 	this.virus_draw = [true, true, true];
+
+	// Prepare sounds
+	this.backgroundMusic = AudioFX('../sounds/game_flower_garden.wav', { loop: true });
+	this.tongueSound = AudioFX('../sounds/throw_capsule.wav');
+
 }
 
 
@@ -201,6 +208,9 @@ SceneGame.prototype.update = function (deltaTime) {
 	// Game logic
 	// new capsule (232,176) is the starting position
 	if (!state_end && !state_stopped && state_new_capsule && !state_nextlevel) {
+		if(this.numRotations == NUM_ROTATIONS){
+			this.tongueSound.play();
+		}
 		this.animationTimer--;
 		if(this.animationTimer <= 0){
 			this.numRotations--;
@@ -416,6 +426,7 @@ SceneGame.prototype.update = function (deltaTime) {
 	}
 
 	if (state_end){
+		this.backgroundMusic.stop();
 		// SPRITE GAME OVER
 		if(num_virus==0){
 			// WIN
@@ -433,6 +444,11 @@ SceneGame.prototype.update = function (deltaTime) {
 			keyboard[13] = false;
 			whichScene = 1;
 		}
+	}
+
+	// music logic
+	if(!state_end){
+		this.backgroundMusic.play();
 	}
 
 	this.destructionGlass[0] = false;
