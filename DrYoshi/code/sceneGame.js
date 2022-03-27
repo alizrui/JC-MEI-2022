@@ -46,7 +46,7 @@ var rotateSound = AudioFX('../sounds/rotate.mp3', { volume: 1.0 });
 // Scene GAME . Updates and draws a single scene of the game.
 function SceneGame() {
 	// Load textures fondos
-	var fondo_juego = new Texture("../img/fondo_juego_v1.png");
+	var fondo_juego = new Texture("../img/fondo_juego_v2.png");
 
 	// Load texture yoshi
 	var texture_yoshi = new Texture("../sprites/sprites_yoshi.png");
