@@ -55,17 +55,20 @@ SceneMenu.prototype.update = function (deltaTime) {
 	this.currentTime += deltaTime;
 
 	// Select diferent scenes
-	if (keyboard[40]) {
+	if (keyboard[40]) { // key down
+		moveSound.play();
 		keyboard[40] = false;
 		whichButton++;
 		if (whichButton > 2) whichButton = 0;
 
-	} else if (keyboard[38]) {
+	} else if (keyboard[38]) { // key up
+		moveSound.play();
 		keyboard[38] = false;
 		whichButton--;
 		if (whichButton < 0) whichButton = 2;
 
 	} else if (keyboard[13]) {
+		rotateSound.play();
 		keyboard[13] = false;
 		whichOption = 0;
 		whichDifficulty = 1;

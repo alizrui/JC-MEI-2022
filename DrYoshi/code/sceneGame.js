@@ -36,12 +36,17 @@ var text_speed = "LOW"
 var virus_in_glass = [false, false, false];
 
 // music variables
+var playOnceV = [true, true, true];
+var virusGlassSound = AudioFX('../sounds/virus_destruction_glass.mp3', { volume: 1.0 });
+var moveSound = AudioFX('../sounds/move_capsule-1.mp3', { volume: 1.0 });
+var rotateSound = AudioFX('../sounds/rotate.mp3', { volume: 1.0 });
+
 
 // Scene GAME . Updates and draws a single scene of the game.
 function SceneGame() {
 	// Load textures fondos
 	var fondo_juego = new Texture("../img/fondo_juego_v1.png");
-	
+
 	// Load texture yoshi
 	var texture_yoshi = new Texture("../sprites/sprites_yoshi.png");
 
@@ -53,32 +58,32 @@ function SceneGame() {
 	// Create objects
 	this.imageJuego = new StaticImage(0, 0, 512, 480, fondo_juego);
 
-	// Create sceneGame sprites
+	/* START SPRITE CREATION */
 	this.yoshiNeutral = new Sprite(370, 90, 115, 110, 1, texture_yoshi);
 	this.yoshiTongue1 = new Sprite(370, 90, 115, 110, 1, texture_yoshi);
 	this.yoshiTongue2 = new Sprite(370, 90, 115, 110, 1, texture_yoshi);
-	this.yoshiHappy   = new Sprite(370, 90, 115, 110, 1, texture_yoshi);
-	this.yoshiSad     = new Sprite(370, 90, 115, 110, 1, texture_yoshi);
-	this.glass        = new Sprite(10, 300, 150, 159, 1, texture_yoshi);
+	this.yoshiHappy = new Sprite(370, 90, 115, 110, 1, texture_yoshi);
+	this.yoshiSad = new Sprite(370, 90, 115, 110, 1, texture_yoshi);
+	this.glass = new Sprite(10, 300, 150, 159, 1, texture_yoshi);
 	this.virusGlassGreen = new Sprite(50, 380, 32, 32, 1, texture_yoshi); // (50,380)
-	this.virusGlassRed   = new Sprite(70, 320, 32, 32, 1, texture_yoshi); // (70,320)
-	this.virusGlassBlue  = new Sprite(100, 370, 32, 32, 1, texture_yoshi); // (100,370)
+	this.virusGlassRed = new Sprite(70, 320, 32, 32, 1, texture_yoshi); // (70,320)
+	this.virusGlassBlue = new Sprite(100, 370, 32, 32, 1, texture_yoshi); // (100,370)
 	this.virusGlassGreenHappy = new Sprite(50, 380, 32, 32, 1, texture_yoshi);
 	this.virusGlassRedHappy = new Sprite(70, 320, 32, 32, 1, texture_yoshi);
 	this.virusGlassBlueHappy = new Sprite(100, 370, 32, 32, 1, texture_yoshi);
 	this.virusDestruction = new Sprite(0, 0, 32, 32, 1, texture_yoshi);
-	
-	this.signSprite =     new Sprite(190, 190, 133, 102, 1, texture_yoshi); // faltan coordenadas buenas
-	this.spriteSalir =    new Sprite(230, 250, 45, 19, 1, texture_yoshi);
-	this.spriteGanaste =  new Sprite(215, 210, 81, 19, 1, texture_yoshi);
+
+	this.signSprite = new Sprite(190, 190, 133, 102, 1, texture_yoshi); // faltan coordenadas buenas
+	this.spriteSalir = new Sprite(230, 250, 45, 19, 1, texture_yoshi);
+	this.spriteGanaste = new Sprite(215, 210, 81, 19, 1, texture_yoshi);
 	this.spritePerdiste = new Sprite(210, 210, 90, 19, 1, texture_yoshi);
-	this.spriteSNivel =   new Sprite(215, 240, 81, 38, 1, texture_yoshi);
-	this.spriteBien =     new Sprite(203, 210, 108, 19, 1, texture_yoshi);
+	this.spriteSNivel = new Sprite(215, 240, 81, 38, 1, texture_yoshi);
+	this.spriteBien = new Sprite(203, 210, 108, 19, 1, texture_yoshi);
 
 
 	this.yoshiNeutral.addAnimation();
 	this.yoshiTongue1.addAnimation();
-	this.yoshiTongue2.addAnimation();	
+	this.yoshiTongue2.addAnimation();
 	this.yoshiHappy.addAnimation();
 	this.yoshiSad.addAnimation();
 	this.glass.addAnimation();
@@ -107,30 +112,30 @@ function SceneGame() {
 	this.yoshiSad.addKeyframe(0, [345, 110, 115, 110]);
 	this.glass.addKeyframe(0, [0, 220, 150, 159]);
 	this.glass.addKeyframe(0, [150, 220, 150, 159]);
-	
+
 	this.virusGlassGreen.addKeyframe(0, [300, 220, 32, 32]);
-	this.virusGlassRed.addKeyframe(0,   [332, 220, 32, 32]);
-	this.virusGlassBlue.addKeyframe(0,  [364, 220, 32, 32]);
+	this.virusGlassRed.addKeyframe(0, [332, 220, 32, 32]);
+	this.virusGlassBlue.addKeyframe(0, [364, 220, 32, 32]);
 	this.virusGlassGreen.addKeyframe(0, [300, 252, 32, 32]);
-	this.virusGlassRed.addKeyframe(0,   [332, 252, 32, 32]);
-	this.virusGlassBlue.addKeyframe(0,  [364, 252, 32, 32]);
+	this.virusGlassRed.addKeyframe(0, [332, 252, 32, 32]);
+	this.virusGlassBlue.addKeyframe(0, [364, 252, 32, 32]);
 	this.virusGlassGreen.addKeyframe(0, [300, 284, 32, 32]);
-	this.virusGlassRed.addKeyframe(0,   [332, 284, 32, 32]);
-	this.virusGlassBlue.addKeyframe(0,  [364, 284, 32, 32]);
+	this.virusGlassRed.addKeyframe(0, [332, 284, 32, 32]);
+	this.virusGlassBlue.addKeyframe(0, [364, 284, 32, 32]);
 	this.virusGlassGreen.addKeyframe(0, [300, 316, 32, 32]);
-	this.virusGlassRed.addKeyframe(0,   [332, 316, 32, 32]);
-	this.virusGlassBlue.addKeyframe(0,  [364, 316, 32, 32]);
+	this.virusGlassRed.addKeyframe(0, [332, 316, 32, 32]);
+	this.virusGlassBlue.addKeyframe(0, [364, 316, 32, 32]);
 	this.virusGlassGreenHappy.addKeyframe(0, [396, 220, 32, 32]);
-	this.virusGlassRedHappy.addKeyframe(0,   [428, 220, 32, 32]);
-	this.virusGlassBlueHappy.addKeyframe(0,  [460, 220, 32, 32]);
+	this.virusGlassRedHappy.addKeyframe(0, [428, 220, 32, 32]);
+	this.virusGlassBlueHappy.addKeyframe(0, [460, 220, 32, 32]);
 	this.virusGlassGreenHappy.addKeyframe(0, [396, 252, 32, 32]);
-	this.virusGlassRedHappy.addKeyframe(0,   [428, 252, 32, 32]);
-	this.virusGlassBlueHappy.addKeyframe(0,  [460, 252, 32, 32]);
-	this.virusDestruction.addKeyframe(0,  [396, 284, 32, 32]);
+	this.virusGlassRedHappy.addKeyframe(0, [428, 252, 32, 32]);
+	this.virusGlassBlueHappy.addKeyframe(0, [460, 252, 32, 32]);
+	this.virusDestruction.addKeyframe(0, [396, 284, 32, 32]);
 	this.virusDestruction.addKeyframe(0, [428, 284, 32, 32]);
 	this.virusDestruction.addKeyframe(0, [396, 316, 32, 32]);
 	this.virusDestruction.addKeyframe(0, [428, 316, 32, 32]);
-	
+
 	this.signSprite.addKeyframe(0, [0, 379, 133, 102]);
 	this.signSprite.addKeyframe(0, [133, 379, 133, 102]);
 	this.spriteSalir.addKeyframe(0, [300, 348, 45, 19]);
@@ -142,7 +147,7 @@ function SceneGame() {
 	this.spriteSNivel.addKeyframe(0, [374, 379, 81, 38]);
 	this.spriteSNivel.addKeyframe(0, [374, 417, 81, 38]);
 	// this.spriteBien.addKeyframe(0, [266, 379, 108,19]);
-	this.spriteBien.addKeyframe(0, [266, 398, 108,19]);
+	this.spriteBien.addKeyframe(0, [266, 398, 108, 19]);
 
 	this.yoshiNeutral.setAnimation(0);
 	this.yoshiTongue1.setAnimation(0);
@@ -163,7 +168,9 @@ function SceneGame() {
 	this.spritePerdiste.setAnimation(0);
 	this.spriteSNivel.setAnimation(0);
 	this.spriteBien.setAnimation(0);
-	
+
+	/* END SPRITE CREATION */
+
 	// Loading texture to use in a TileMap
 	var tilesheet = new Texture("../tiles/tiles16.png");
 
@@ -193,13 +200,13 @@ function SceneGame() {
 
 	// Prepare sounds
 	this.playMusic = true;
-	this.playOnce = true;
+	this.playOnceT = true;
+	playOnceV = [true, true, true];
 	this.gameMusic = AudioFX('../sounds/game_flower_garden.wav', { loop: true, volume: 0.4 });
-	this.tongueSound = AudioFX('../sounds/throw_capsule.wav', { volume: 0.8 });
-	this.nextlevelSound = AudioFX('../sounds/next_level.wav', { volume: 0.5 });
-	this.winSound = AudioFX('../sounds/win.wav', { volume: 0.5 });
-	this.gameoverSound = AudioFX('../sounds/game_over.wav', { volume: 0.5 });
-
+	this.tongueSound = AudioFX('../sounds/throw_capsule.wav', { volume: 0.4 });
+	this.nextlevelSound = AudioFX('../sounds/next_level.wav', { volume: 0.35 });
+	this.winSound = AudioFX('../sounds/win.wav', { volume: 0.35 });
+	this.gameoverSound = AudioFX('../sounds/game_over.wav', { volume: 0.35 });
 }
 
 
@@ -210,12 +217,12 @@ SceneGame.prototype.update = function (deltaTime) {
 	// Game logic
 	// new capsule (232,176) is the starting position
 	if (!state_end && !state_stopped && state_new_capsule && !state_nextlevel) {
-		if(this.numRotations == NUM_ROTATIONS){
+		if (this.numRotations == NUM_ROTATIONS) {
 			this.tongueSound.stop();
 			this.tongueSound.play();
 		}
 		this.animationTimer--;
-		if(this.animationTimer <= 0){
+		if (this.animationTimer <= 0) {
 			this.numRotations--;
 			this.animationTimer = ANIMATION_TIMER;
 
@@ -224,13 +231,13 @@ SceneGame.prototype.update = function (deltaTime) {
 					this.cellPastillasSprites[init_pastilla1].x, this.cellPastillasSprites[init_pastilla1].y);
 				var init_data2 = rotate_position(init_pastilla2,
 					this.cellPastillasSprites[init_pastilla2].x, this.cellPastillasSprites[init_pastilla2].y);
-	
+
 				// new form of pastilla
 				init_pastilla1 = init_data1[0];
 				init_pastilla2 = init_data2[0];
 
 				var despl = computeAnimationPositions(this.numRotations);
-	
+
 				// new positions of pastilla
 				this.cellPastillasSprites[init_pastilla1].x = init_data1[1] + despl[0];
 				this.cellPastillasSprites[init_pastilla1].y = init_data1[2] + despl[1];
@@ -244,7 +251,7 @@ SceneGame.prototype.update = function (deltaTime) {
 					this.whichYoshi = 4;
 				}
 
-			} else { 
+			} else {
 				// capsule in tilemap
 				pastilla1 = init_pastilla1;
 				pastilla2 = init_pastilla2;
@@ -256,12 +263,12 @@ SceneGame.prototype.update = function (deltaTime) {
 				this.pastillasSprites[pastilla2].y = 176 + 2;
 
 				// check if can be drawn
-				if(this.map.checkNewCapsule(this.pastillasSprites[pastilla1].x,
+				if (this.map.checkNewCapsule(this.pastillasSprites[pastilla1].x,
 					this.pastillasSprites[pastilla1].y,
 					this.pastillasSprites[pastilla2].x,
-					this.pastillasSprites[pastilla2].y)){
-						state_end = true;
-					};
+					this.pastillasSprites[pastilla2].y)) {
+					state_end = true;
+				};
 
 				this.create_random_pill();
 				state_new_capsule = 0;
@@ -320,12 +327,15 @@ SceneGame.prototype.update = function (deltaTime) {
 
 		// Move capsule left & right
 		if (this.capsuleTimerX <= 0) {
+			//moveSound.stop();
 			if (keyboard[37]) // KEY_LEFT
 			{
+				moveSound.play();
 				this.pastillasSprites[pastilla1].x -= 16;
 				this.pastillasSprites[pastilla2].x -= 16;
 				if (this.map.collisionMoveLeft(this.pastillasSprites[pastilla1])
 					|| this.map.collisionMoveLeft(this.pastillasSprites[pastilla2])) {
+					moveSound.stop();
 					this.pastillasSprites[pastilla1].x += 16;
 					this.pastillasSprites[pastilla2].x += 16;
 				}
@@ -334,10 +344,12 @@ SceneGame.prototype.update = function (deltaTime) {
 
 			if (keyboard[39]) // KEY_RIGHT
 			{
+				moveSound.play();
 				this.pastillasSprites[pastilla1].x += 16;
 				this.pastillasSprites[pastilla2].x += 16;
 				if (this.map.collisionMoveRight(this.pastillasSprites[pastilla1])
 					|| this.map.collisionMoveRight(this.pastillasSprites[pastilla2])) {
+					moveSound.stop();
 					this.pastillasSprites[pastilla1].x -= 16;
 					this.pastillasSprites[pastilla2].x -= 16;
 				}
@@ -355,6 +367,9 @@ SceneGame.prototype.update = function (deltaTime) {
 		if (keyboard[38]) { // KEY UP
 			keyboard[38] = false;
 			aux_rotated = true;
+
+			rotateSound.play();
+
 			// which capsule changes
 			//compute new positions
 			data1 = rotate_position(pastilla1,
@@ -398,31 +413,31 @@ SceneGame.prototype.update = function (deltaTime) {
 		}
 	}
 
-	// EXIT (WITH Q) (DEBUG)
-	if (keyboard[81]) {
-		keyboard[81] = false;
-		state_end = true;
-		whichScene = 0;
-	}
+	// // EXIT (WITH Q) (DEBUG)
+	// if (keyboard[81]) {
+	// 	keyboard[81] = false;
+	// 	state_end = true;
+	// 	whichScene = 0;
+	// }
 
 
 	// points things
 	if (top_score < num_score) top_score = num_score;
-	
 
-	if(num_virus <= 0){
+
+	if (num_virus <= 0) {
 		state_nextlevel = true;
 		this.whichYoshi = 1;
 	}
 
 	// new level
-	if (state_nextlevel && !state_end){
+	if (state_nextlevel && !state_end) {
 		this.gameMusic.stop();
-		
+
 		// music logic
-		if(this.playOnce && num_score > 0) { 
-			this.nextlevelSound.play(); 
-			this.playOnce = false;
+		if (this.playOnceT && num_score > 0) {
+			this.nextlevelSound.play();
+			this.playOnceT = false;
 		}// dirty play i know
 
 		if (keyboard[13]) { // ENTER
@@ -433,23 +448,23 @@ SceneGame.prototype.update = function (deltaTime) {
 		}
 	}
 
-	if (state_end){
+	if (state_end) {
 		this.gameMusic.stop();
 		// SPRITE GAME OVER
-		if(num_virus==0){
+		if (num_virus == 0) {
 			// WIN
 			this.whichYoshi = 1;
-			if (this.playOnce) {
+			if (this.playOnceT) {
 				this.winSound.play();
-				this.playOnce = false;
+				this.playOnceT = false;
 			}
 			// music logic
 		} else {
 			// LOSE
 			this.whichYoshi = 2;
-			if(this.playOnce) {
+			if (this.playOnceT) {
 				this.gameoverSound.play();
-				this.playOnce = false;
+				this.playOnceT = false;
 			}
 			// music logic
 		}
@@ -463,7 +478,7 @@ SceneGame.prototype.update = function (deltaTime) {
 	}
 
 	// music logic
-	if(!state_end && this.playMusic){
+	if (!state_end && this.playMusic) {
 		this.gameMusic.play();
 	}
 
@@ -471,33 +486,45 @@ SceneGame.prototype.update = function (deltaTime) {
 
 	// destroying glass virus
 	if (!virus_in_glass[0] && this.virus_draw[0]) { // green destroyed
+		if (playOnceV[0]) {
+			playOnceV[0] = false;
+		}
+		virusGlassSound.play();
 		this.destructionGlass[0] = true;
 		this.virusDestruction.x = 50;
 		this.virusDestruction.y = 380;
 		this.destructionGlassTimer--;
-		if(this.destructionGlassTimer <= 0) {
+		if (this.destructionGlassTimer <= 0) {
 			this.virus_draw[0] = false;
 			this.destructionGlassTimer = GLASS_DESTRUCTION_TIMER;
 			this.destructionGlass[0] = false;
 		}
-	} 
+	}
 	if (!virus_in_glass[1] && this.virus_draw[1]) { // red destroyed
+		if (playOnceV[1]) {
+			playOnceV[1] = false;
+		}
+		virusGlassSound.play();
 		this.destructionGlass[0] = true;
 		this.virusDestruction.x = 70;
 		this.virusDestruction.y = 320;
 		this.destructionGlassTimer--;
-		if(this.destructionGlassTimer <= 0) {
+		if (this.destructionGlassTimer <= 0) {
 			this.virus_draw[1] = false;
 			this.destructionGlassTimer = GLASS_DESTRUCTION_TIMER;
 			this.destructionGlass[0] = false;
 		}
-	} 
+	}
 	if (!virus_in_glass[2] && this.virus_draw[2]) { // blue destroyed
+		if (playOnceV[2]) {
+			playOnceV[2] = false;
+		}
+		virusGlassSound.play();
 		this.destructionGlass[0] = true;
 		this.virusDestruction.x = 100;
-		this.virusDestruction.y = 370;	
+		this.virusDestruction.y = 370;
 		this.destructionGlassTimer--;
-		if(this.destructionGlassTimer <= 0) {
+		if (this.destructionGlassTimer <= 0) {
 			this.virus_draw[2] = false;
 			this.destructionGlassTimer = GLASS_DESTRUCTION_TIMER;
 			this.destructionGlass[0] = false;
@@ -554,7 +581,7 @@ SceneGame.prototype.draw = function () // meter argumento
 	this.cellPastillasSprites[init_pastilla1].draw();
 	this.cellPastillasSprites[init_pastilla2].draw();
 
-	if(!state_new_capsule){
+	if (!state_new_capsule) {
 		this.pastillasSprites[pastilla1].draw();
 		this.pastillasSprites[pastilla2].draw();
 	}
@@ -569,7 +596,7 @@ SceneGame.prototype.draw = function () // meter argumento
 		if (virus_in_glass[0]) this.virusGlassGreenHappy.draw();
 		if (virus_in_glass[1]) this.virusGlassRedHappy.draw();
 		if (virus_in_glass[2]) { this.virusGlassBlueHappy.draw(); }
-		
+
 		this.signSprite.draw();
 		this.spritePerdiste.draw();
 		this.spriteSalir.draw();
@@ -578,9 +605,9 @@ SceneGame.prototype.draw = function () // meter argumento
 		this.signSprite.draw();
 		this.spriteGanaste.draw();
 		this.spriteSalir.draw();
-	}	
+	}
 
-	if(state_nextlevel && !state_end){
+	if (state_nextlevel && !state_end) {
 		this.signSprite.draw();
 		this.spriteBien.draw();
 		this.spriteSNivel.draw();
@@ -631,7 +658,7 @@ SceneGame.prototype.updateParameters = function () {
 		state_nextlevel = false;
 
 		// reset timers
-		this.capsuleTimerY = CAPSULE_INIT_TIMER_Y; 
+		this.capsuleTimerY = CAPSULE_INIT_TIMER_Y;
 		this.capsuleTimerX = CAPSULE_INIT_TIMER_X;
 		this.animationTimer = ANIMATION_TIMER;
 		this.numRotations = NUM_ROTATIONS;
@@ -643,23 +670,24 @@ SceneGame.prototype.updateParameters = function () {
 
 		this.map.addViruses(whichDifficulty);
 		// music things
-		switch(whichMusic){
-			case 0: 
+		switch (whichMusic) {
+			case 0:
 				this.playMusic = true;
 				this.gameMusic.stop();
-				this.gameMusic = AudioFX('../sounds/cool.mp3', { loop: true, volume: 0.4 });
+				this.gameMusic = AudioFX('../sounds/cool.mp3', { loop: true, volume: 0.25 });
 				break;
-			case 2: 
+			case 2:
 				this.playMusic = false;
-				this.gameMusic.stop(); 
+				this.gameMusic.stop();
 				break;
 			default:
 				this.playMusic = true;
 				this.gameMusic.stop();
-				this.gameMusic = AudioFX('../sounds/game_flower_garden.wav', { loop: true, volume: 0.4 });
+				this.gameMusic = AudioFX('../sounds/game_flower_garden.wav', { loop: true, volume: 0.25 });
 				break;
 		}
-		this.playOnce = true;
+		this.playOnceT = true;
+		playOnceV = [true, true, true];
 
 		this.virus_draw = [true, true, true];
 
@@ -712,8 +740,8 @@ function createPastillas() {
 	return pastillasSprites;
 }
 
-function computeAnimationPositions(state){
-	res = [0,0];
+function computeAnimationPositions(state) {
+	res = [0, 0];
 
 	switch (state) {
 		case 16: res = [-8, -12]; break;
@@ -721,10 +749,10 @@ function computeAnimationPositions(state){
 
 		case 14: res = [-12, -16]; break;
 		case 13: res = [-12, -16]; break;
-		
+
 		case 12: res = [-8, -8]; break;
 		case 11: res = [-8, -8]; break;
-		
+
 		case 10: res = [-8, -4]; break;
 		case 9: res = [-8, -4]; break;
 
@@ -733,10 +761,10 @@ function computeAnimationPositions(state){
 
 		case 6: res = [-8, 8]; break;
 		case 5: res = [-8, 8]; break;
-		
+
 		case 4: res = [-8, 16]; break;
 		case 3: res = [-8, 16]; break;
-		
+
 		case 2: res = [-12, 20]; break;
 		case 1: res = [-12, 20]; break;
 		default: break;

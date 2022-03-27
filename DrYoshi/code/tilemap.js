@@ -34,6 +34,10 @@ function Tilemap(tilesheet, tileSize, blockGrid, basePos, map) {
 	this.breakingTimer = BREAKING_TIMER;
 	this.fallingTimer = FALLING_TIMER;
 
+	// sounds in tilemap
+	this.collisionSound = AudioFX('../sounds/collision.mp3', { volume: 1.0 });
+	this.capsuleDestructionSound = AudioFX('../sounds/delete_capsules.mp3', { volume: 1.0 });
+	this.virusDestructionSound = AudioFX('../sounds/virus_destruction.mp3', { volume: 1.0 });
 }
 
 Tilemap.prototype.update = function (deltaTime) {
@@ -82,6 +86,7 @@ Tilemap.prototype.update = function (deltaTime) {
 					this.map.layers[0].data[pos + this.map.width] = this.map.layers[0].data[pos];
 					this.map.layers[0].data[pos] = 0;
 				}
+				this.collisionSound.play();
 				this.positions_to_fall = [];
 
 			}
@@ -126,6 +131,10 @@ Tilemap.prototype.draw = function () {
 
 				// has to drawed in glass
 				virus_in_glass[tileId - 21] = true;
+				if(!playOnceV[tileId - 21]){
+					virusGlassSound.stop();
+					playOnceV[tileId - 21] = true;
+				}
 			} 
 			if (tileId > 0 && tileId != 20 && tileId != 24 && tileId != 25) { // DEBUGGING, FAKE SOLUTION
 				context.drawImage(this.tilesheet.img, tilePositions[tileId - 1][0], tilePositions[tileId - 1][1], blockSize[0], blockSize[1],
@@ -209,6 +218,8 @@ Tilemap.prototype.addCapsule = function (type1, posx1, posy1, type2, posx2, posy
 	this.map.layers[0].data[position_capsule1] = type1 + 1;
 	this.map.layers[0].data[position_capsule2] = type2 + 1;
 
+	this.collisionSound.play();
+
 	this.checkPositions();
 }
 
@@ -267,9 +278,10 @@ Tilemap.prototype.checkPositions = function () {
 
 	// delete positions marked 
 	var b = this.positions_to_break.length;
-	if (b > 0) {
+	if (b) {
 		state_stopped = true;
 		this.breakingState = true;
+		this.capsuleDestructionSound.play();
 	}
 
 	var points = 0;
@@ -294,6 +306,7 @@ Tilemap.prototype.checkPositions = function () {
 			
 			// SCORE AND VIRUS COUNTER
 			if(color == 19){ 
+				this.virusDestructionSound.play();
 				num_virus--;
 				points += 100;
 				virus_in_glass = [false,false,false];

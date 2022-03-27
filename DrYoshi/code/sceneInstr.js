@@ -36,6 +36,7 @@ SceneInstr.prototype.update = function (deltaTime) {
 
 	// Game logic
 	if (keyboard[13]) {
+		rotateSound.play();
 		keyboard[13] = false;
 		whichScene = 0;
 	}	
