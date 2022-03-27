@@ -153,7 +153,6 @@ Tilemap.prototype.addCapsule = function (type1, posx1, posy1, type2, posx2, posy
 	// check ALL THE ROWS AND COLUMNS
 	// CHECK COLUMNS
 	var c = positions_to_check.length;
-	// if(l>0) console.log(positions_to_check);
 	for (var n = 0; n < c; n++) {
 		var pos = positions_to_check.pop();
 
@@ -180,7 +179,7 @@ Tilemap.prototype.addCapsule = function (type1, posx1, posy1, type2, posx2, posy
 	var b = positions_to_break.length;
 
 	if (!b) { return false; }
-	// if(d>0) console.log(positions_to_break);
+
 	for (var n = 0; n < b; n++) {
 		var pos = positions_to_break.pop();
 		var pos_type = (this.map.layers[0].data[pos] - 1) % 5;
@@ -200,7 +199,6 @@ Tilemap.prototype.addCapsule = function (type1, posx1, posy1, type2, posx2, posy
 		if (positions_to_delete.indexOf(pos) == -1) positions_to_delete.push(pos);
 	}
 
-	console.log(positions_to_delete)
 
 	// delete all broken capsules
 	var d = positions_to_delete.length;

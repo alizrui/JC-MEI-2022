@@ -52,7 +52,7 @@ Tilemap.prototype.update = function (deltaTime) {
 		if (this.breakingTimer <= 0) {
 			// delete all broken capsules
 			var d = this.positions_to_delete.length;
-			//if (d) { console.log(this.positions_to_delete); } // DEBUG
+			
 			for (var n = 0; n < d; n++) {
 				var pos = this.positions_to_delete.pop();
 				this.map.layers[0].data[pos] = 0;
@@ -413,11 +413,7 @@ Tilemap.prototype.checkNewCapsule = function (posx1, posy1, posx2, posy2) {
 	var position_capsule1 = aux_x1 + aux_y1;
 	var position_capsule2 = aux_x2 + aux_y2;
 
-	//console.log("Positions:" + position_capsule1 + " " + position_capsule2)
-
 	// if there was something, end game
-	// console.log(this.map.layers[0].data[position_capsule1]);
-	// console.log(this.map.layers[0].data[position_capsule2]);
 	if(this.map.layers[0].data[position_capsule1] || 
 		this.map.layers[0].data[position_capsule2]){
 
