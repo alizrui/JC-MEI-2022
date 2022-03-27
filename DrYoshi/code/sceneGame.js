@@ -23,6 +23,7 @@ var state_new_capsule = true;
 var state_stopped = true;
 var state_end = false;
 var state_nextlevel = false;
+var state_pause = false;
 
 
 // text variables
@@ -49,7 +50,7 @@ function SceneGame() {
 
 	// Load texture yoshi
 	var texture_yoshi = new Texture("../sprites/sprites_yoshi.png");
-
+	var sprite_pausa = new Texture("../sprites/sprite_pausa.png")
 
 	// data estructures with all capsules
 	this.pastillasSprites = createPastillas();
@@ -80,6 +81,8 @@ function SceneGame() {
 	this.spriteSNivel = new Sprite(215, 240, 81, 38, 1, texture_yoshi);
 	this.spriteBien = new Sprite(203, 210, 108, 19, 1, texture_yoshi);
 
+	this.spritePausa = new Sprite(0, 0, 512, 480, 1, sprite_pausa);
+
 
 	this.yoshiNeutral.addAnimation();
 	this.yoshiTongue1.addAnimation();
@@ -100,6 +103,8 @@ function SceneGame() {
 	this.spritePerdiste.addAnimation();
 	this.spriteSNivel.addAnimation();
 	this.spriteBien.addAnimation();
+
+	this.spritePausa.addAnimation();
 
 
 	this.yoshiNeutral.addKeyframe(0, [0, 0, 115, 110]);
@@ -149,6 +154,9 @@ function SceneGame() {
 	// this.spriteBien.addKeyframe(0, [266, 379, 108,19]);
 	this.spriteBien.addKeyframe(0, [266, 398, 108, 19]);
 
+	this.spritePausa.addKeyframe(0, [0, 0, 512, 480]);
+
+
 	this.yoshiNeutral.setAnimation(0);
 	this.yoshiTongue1.setAnimation(0);
 	this.yoshiTongue2.setAnimation(0);
@@ -168,6 +176,8 @@ function SceneGame() {
 	this.spritePerdiste.setAnimation(0);
 	this.spriteSNivel.setAnimation(0);
 	this.spriteBien.setAnimation(0);
+
+	this.spritePausa.setAnimation(0);
 
 	/* END SPRITE CREATION */
 
@@ -216,7 +226,7 @@ SceneGame.prototype.update = function (deltaTime) {
 
 	// Game logic
 	// new capsule (232,176) is the starting position
-	if (!state_end && !state_stopped && state_new_capsule && !state_nextlevel) {
+	if (!state_end && !state_stopped && state_new_capsule && !state_nextlevel && !state_pause) {
 		if (this.numRotations == NUM_ROTATIONS) {
 			this.tongueSound.stop();
 			this.tongueSound.play();
@@ -282,7 +292,7 @@ SceneGame.prototype.update = function (deltaTime) {
 	}
 
 	// Move capsule down
-	if (!state_end && !state_stopped && !state_new_capsule && !state_nextlevel) {
+	if (!state_end && !state_stopped && !state_new_capsule && !state_nextlevel && !state_pause) {
 		this.capsuleTimerY--;
 		if (this.capsuleTimerY <= 0) {
 			this.capsuleTimerY = CAPSULE_INIT_TIMER_Y;
@@ -531,6 +541,17 @@ SceneGame.prototype.update = function (deltaTime) {
 		}
 	}
 
+	// pause
+	if(keyboard[80]){ // P
+		keyboard[80] = false;
+		if(state_pause){
+			state_pause = false;
+		}
+		else if(!state_end && !state_new_capsule && !state_nextlevel){
+			state_pause = true;
+		}
+	}
+
 	// update sprites
 	this.map.update(deltaTime + 16);
 
@@ -624,7 +645,7 @@ SceneGame.prototype.draw = function () // meter argumento
 		case 2: this.yoshiSad.draw(); break;
 		case 3: this.yoshiTongue1.draw(); break;
 		case 4: this.yoshiTongue2.draw(); break;
-		default: this.yoshiNeutral.draw();; break;
+		default: this.yoshiNeutral.draw(); break;
 	}
 
 	// draw texts
@@ -643,6 +664,8 @@ SceneGame.prototype.draw = function () // meter argumento
 	context.fillText(text_speed, 370, 360); // SPEED (NUM)
 	context.fillText(texts[4], 370, 390); // VIRUS TEXT
 	context.fillText(num_virus, 370, 410); // VIRUS COUNT
+
+	if(state_pause) this.spritePausa.draw();
 }
 
 SceneGame.prototype.updateParameters = function () {
