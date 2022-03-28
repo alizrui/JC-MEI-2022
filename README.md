@@ -8,7 +8,7 @@ Proyecto de la asignatura "Juegos por Computador" del MEI en la UPC.
     - [x] Letras brillantes,
     - [x] Virus bailando
     - [x] Yoshi bailando
-- [ ] Animaciones y retoques de lógica
+- [x] Animaciones y retoques de lógica
     - [x] Reset cápsula cada vez que se empieza
     - [x] Generación aleatoria de virus
     - [x] Animación destrucción capsula (DOING) -> FALTA LO DEL TIMER, Ha dicho que cuando hay una eliminación una capsula debería empezar un timer
@@ -50,7 +50,7 @@ Proyecto de la asignatura "Juegos por Computador" del MEI en la UPC.
     - [x] Nivel completado [ENCONTRADA]
     - [x] Game over [ENCONTRADA]
 
-- [ ] MISCELÁNEA
+- [x] MISCELÁNEA
     - [x] Pantalla intermedia con dificultades 
         - [x] Navegación por la pantalla
         - [x] Número de virus (generación aleatoria) (5 niveles) (DOING)
@@ -60,6 +60,6 @@ Proyecto de la asignatura "Juegos por Computador" del MEI en la UPC.
     - [x] Cambiar los sprites de viruses a un mismo png (EDA para 3 virus)
     - [x] PAUSA?
     - [x] Oscurecer huevos de fondo GAME
-    - [ ] Oscurecer fondo de lupa
-- [ ] BUGS:
+    - [x] Oscurecer fondo de lupa
+- [x] BUGS:
     - [x] Cuando finaliza el juego no se puede reiniciar, solucionar eso LOL
